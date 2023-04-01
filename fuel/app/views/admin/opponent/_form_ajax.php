@@ -1,0 +1,47 @@
+<?= Form::open(['action' => 'ajax/opponent/create', 'id' => 'ajax_form_opponent']); ?>
+
+<fieldset>
+    <div class="form-group">
+        <?= Form::label('Place', 'place_id', ['class' => 'control-label']); ?>
+        <div class="input-group">
+            <?= Form::select('place_id', Input::post('place_id', isset($opponent) ? $opponent->place_id : ''),$places, ['id' => 'ajax_form_place_id', 'class' => 'form-control', 'placeholder' => 'Place Id']); ?>
+            <?php if(\Fuel\Core\Uri::segment(3) == 'create') : ?>
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#PlaceModal">New</button>
+            </div>
+            <?php endif; ?>        
+        </div>    
+    </div>
+
+    <div class="form-group">
+        <?= Form::label('Name', 'opponent_name', ['class' => 'control-label']); ?>
+
+        <?= Form::input('opponent_name', Input::post('opponent_name', isset($opponent) ? $opponent->opponent_name : ''), ['class' => 'form-control', 'placeholder' => 'Opponent name']); ?>
+    </div>
+
+    <div class="form-group">
+        <?= Form::label('Mascot', 'opponent_mascot', ['class' => 'control-label']); ?>
+
+        <?= Form::input('opponent_mascot', Input::post('opponent_mascot', isset($opponent) ? $opponent->opponent_mascot : ''), ['class' => 'form-control', 'placeholder' => 'Opponent mascot']); ?>
+    </div>
+
+    <div class="form-group">
+        <?= Form::label('Short', 'opponent_short', ['class' => 'control-label']); ?>
+
+        <?= Form::input('opponent_short', Input::post('opponent_short', isset($opponent) ? $opponent->opponent_short : ''), ['class' => 'form-control', 'placeholder' => 'Opponent short']); ?>
+    </div>
+
+    <div class="form-group">
+        <?= Form::label('Abbr', 'opponent_abbr', ['class' => 'control-label']); ?>
+
+        <?= Form::input('opponent_abbr', Input::post('opponent_abbr', isset($opponent) ? $opponent->opponent_abbr : ''), ['class' => 'form-control', 'placeholder' => 'Opponent abbr']); ?>
+    </div>
+
+    <div class="form-group">
+        <?= Form::submit('ajax', 'Save', ['class' => 'btn btn-primary']); ?>
+
+    </div>
+</fieldset>
+
+
+<?= Form::close(); ?>
