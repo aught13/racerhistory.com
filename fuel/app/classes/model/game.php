@@ -93,16 +93,21 @@ class Model_Game extends \Orm\Model {
         $val = \Fuel\Core\Validation::forge('score');
         $x = 1;
         while ($x <= $param['periods']) {
-            $val->add_field('mur_'.$x, 'Mur '.$x , 'required|valid_string[numeric]');
-            $val->add_field('opp_'.$x, 'Opp '.$x , 'required|valid_string[numeric]');
+            $val->add_field('mur_'.$x, 'Mur '.$x , ($x > 1 ? 'required_with[mur_1]|' : '').'valid_string[numeric]');
+            $val->add_field('opp_'.$x, 'Opp '.$x , ($x > 1 ? 'required_with[mur_1]|' : '').'valid_string[numeric]');
             $x++;
         }
         $x = 1;
         while ($x <= $param['ot']) {
-            $val->add_field('mur_ot_'.$x, 'Mur OT '.$x , 'required|valid_string[numeric]');
-            $val->add_field('opp_ot_'.$x, 'Opp OT '.$x , 'required|valid_string[numeric]');
+            $val->add_field('mur_ot_'.$x, 'Mur OT '.$x , 'required_with[mur_1]|valid_string[numeric]');
+            $val->add_field('opp_ot_'.$x, 'Opp OT '.$x , 'required_with[mur_1]|valid_string[numeric]');
             $x++;
         }
+        
+        $val->add_field('pts_mur', 'Pts Mur', 'valid_string[numeric]');
+        $val->add_field('pts_opp', 'Pts Opp', 'valid_string[numeric]');
+        $val->add_field('ot', 'OT', 'valid_string[numeric]');
+        
         
         return $val;
     }

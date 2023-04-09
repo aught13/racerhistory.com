@@ -91,7 +91,7 @@
             </table>            
             <?php endif; ?>
             <span class=""><?= $game->game_types->game_type_name; ?></span>
-            <?= empty($game->pts_mur) ? '' : (Html::anchor('admin/game/edit/'.$game->id.'/score', isset($game->mur_1) ? 'Edit Score' : 'Add Score', ['class' => 'btn btn-success'])); ?>
+            <?= Html::anchor('admin/game/edit/'.$game->id.'/score', isset($game->mur_1) ? 'Edit Score' : 'Add Score', ['class' => 'btn btn-success']); ?>
         </div>
     </div>
     <hr> <!-- Game Details -->
@@ -106,7 +106,7 @@
             <span>
             <?= !empty($game->ref_1 ?? null) ? $game->ref_1 : ''; ?><?= ($game->ref_1 ?? false && ($game->ref_2 ?? false || $game->ref_3 ?? false)) ? ', ' : ''?><?= !empty($game->ref_2 ?? null) ? $game->ref_2 : ''; ?><?= $game->ref_3 ?? false ? ', ' : ''; ?><?= $game->ref_3 ?? ''; ?>
             </span>
-            <?= Html::anchor('admin/game/edit/'.$game->id.'/refs' , isset($game->ref_1) ? 'Edit Refs' : 'Add Refs', ['class' => 'btn btn-success']); ?>
+            <?= Html::anchor('admin/game/edit/'.$game->id.'/ref' , isset($game->ref_1) ? 'Edit Refs' : 'Add Refs', ['class' => 'btn btn-success']); ?>
         </div>
         <!-- Time -->
         <div class="col-sm-3">

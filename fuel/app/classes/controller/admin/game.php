@@ -1,6 +1,8 @@
 <?php
 
 class Controller_Admin_Game extends Controller_Admin {
+    
+    private $data = [];
 
     public function action_index() {
         $query = Model_Game::query();
@@ -10,14 +12,14 @@ class Controller_Admin_Game extends Controller_Admin {
                     'uri_segment' => 'page',
         ]);
 
-        $data['games'] = $query->rows_offset($pagination->offset)
+        $this->data['games'] = $query->rows_offset($pagination->offset)
                 ->rows_limit($pagination->per_page)
                 ->get();
 
         $this->template->set_global('pagination', $pagination, false);
 
         $this->template->title = "Games";
-        $this->template->content = View::forge('admin/game/index', $data);
+        $this->template->content = View::forge('admin/game/index', $this->data);
     }
 
     public function action_view($id = null) {
@@ -26,19 +28,19 @@ class Controller_Admin_Game extends Controller_Admin {
         }
         $game = Model_Game::find($id);
 
-        $data['person_box'] = Model_Stat_Basket_Game_Person::query()->where('game_id', $id)->get();
-        $data['team_box'] = Model_Stat_Basket_Game_Team::query()->where('game_id', $id)->where('opp', 0)->get();
-        $data['game_box_mur'] = Model_Stat_Basket_Game_Box::query()->where('game_id', $id)->where('opponent_id', 0)->order_by('period', 'asc')->get();
-        $data['game_box_opp'] = Model_Stat_Basket_Game_Box::query()->where('game_id', $id)->where('opponent_id', $game->opponent_id)->order_by('period', 'asc')->get();
-        $data['opponent_box'] = Model_Stat_Basket_Game_Opponent::query()->where('game_id', $id)->get();
-        $data['team_box_opp'] = Model_Stat_Basket_Game_Team::query()->where('game_id', $id)->where('opp', 1)->get();
-        $data['techs'] = $this->getTechs($id);
+        $this->data['person_box'] = Model_Stat_Basket_Game_Person::query()->where('game_id', $id)->get();
+        $this->data['team_box'] = Model_Stat_Basket_Game_Team::query()->where('game_id', $id)->where('opp', 0)->get();
+        $this->data['game_box_mur'] = Model_Stat_Basket_Game_Box::query()->where('game_id', $id)->where('opponent_id', 0)->order_by('period', 'asc')->get();
+        $this->data['game_box_opp'] = Model_Stat_Basket_Game_Box::query()->where('game_id', $id)->where('opponent_id', $game->opponent_id)->order_by('period', 'asc')->get();
+        $this->data['opponent_box'] = Model_Stat_Basket_Game_Opponent::query()->where('game_id', $id)->get();
+        $this->data['team_box_opp'] = Model_Stat_Basket_Game_Team::query()->where('game_id', $id)->where('opp', 1)->get();
+        $this->data['techs'] = $this->getTechs($id);
 
         $this->template->set_global('stats', $this->getStats($id), false);
         $this->template->set_global('game', $game, false);
 
         $this->template->title = "Murray State " . ($game->hrn == 1 ? 'Vs' : ($game->hrn == 2 ? '@' : 'Vs')) . " " . $game->opponents->opponent_name . " - " .date_format(date_create($game->game_date), "m/d/Y");
-        $this->template->content = View::forge('admin/game/view', $data, false);
+        $this->template->content = View::forge('admin/game/view', $this->data, false);
     }
 
     public function action_create($id = null) {
@@ -80,84 +82,33 @@ class Controller_Admin_Game extends Controller_Admin {
         $this->template->content = View::forge('admin/game/create', $this->set_opts(), false);
     }
 
-    public function action_edit($id = null) {
-        $game = Model_Game::find($id);
-        $val = Model_Game::validate('edit');
-
-        if ($val->run()) {
-            $game->team_season_id = Input::post('team_season_id');
-            $game->game_date = Input::post('game_date');
-            $game->game_time = Input::post('game_time');
-            $game->game_duration = Input::post('game_duration');
-            $game->game_type_id = Input::post('game_type_id');
-            $game->opponent_id = Input::post('opponent_id');
-            $game->place_id = Input::post('place_id');
-            $game->site_id = Input::post('site_id');
-            $game->hrn = Input::post('hrn');
-            $game->post = Input::post('post');
-            $game->w = Input::post('w');
-            $game->l = Input::post('l');
-            $game->pts_mur = Input::post('pts_mur');
-            $game->pts_opp = Input::post('pts_opp');
-            $game->mur_rk = Input::post('mur_rk');
-            $game->opp_rk = Input::post('opp_rk');
-            $game->periods = Input::post('periods');
-            $game->ot = Input::post('ot');
-            $game->attendance = Input::post('attendance');
-            $game->game_preview = Input::post('game_preview');
-            $game->game_recap = Input::post('game_recap');
-            $game->game_notes = Input::post('game_notes');
-
-            if ($game->save()) {
-
-                $this->cleanPoints($game);
-
-                Session::set_flash('success', e('Updated game #' . $id));
-
-                Response::redirect('admin/game/view/' . $id);
-            } else {
-                Session::set_flash('error', e('Could not update game #' . $id));
-            }
-        } else {
-            if (Input::method() == 'POST') {
-                $game->team_season_id = $val->validated('team_season_id');
-                $game->game_date = $val->validated('game_date');
-                $game->game_time = $val->validated('game_time');
-                $game->game_duration = $val->validated('game_duration');
-                $game->game_type_id = $val->validated('game_type_id');
-                $game->opponent_id = $val->validated('opponent_id');
-                $game->place_id = $val->validated('place_id');
-                $game->site_id = $val->validated('site_id');
-                $game->hrn = $val->validated('hrn');
-                $game->post = $val->validated('post');
-                $game->w = $val->validated('w');
-                $game->l = $val->validated('l');
-                $game->pts_mur = $val->validated('pts_mur');
-                $game->pts_opp = $val->validated('pts_opp');
-                $game->mur_rk = $val->validated('mur_rk');
-                $game->opp_rk = $val->validated('opp_rk');
-                $game->periods = $val->validated('periods');
-                $game->ot = $val->validated('ot');
-                $game->attendance = $val->validated('attendance');
-                $game->game_preview = $val->validated('game_preview');
-                $game->game_recap = $val->validated('game_recap');
-                $game->game_notes = $val->validated('game_notes');
-
-                Session::set_flash('error', $val->error());
-            }
-
-            $this->template->set_global('game', $game, false);
-        }
+    public function action_edit($id = null, $attribute = null) {
+        $game = Model_Game::find($id) ?? Response::redirect('admin/game/');
         
+        switch ($attribute) {
+            case 'score':
+                $game = $this->editScore($game);
+                break;
+            case 'ref':
+                $game = $this->editRefs($game);
+                break;
+
+            default:
+                $game = $this->editGame($game);
+                break;
+        }
+
+        $this->template->set_global('game', $game, false);
         $this->template->set_global('options' ,$this->set_opts(), false);
+        
 
         $this->template->title = "Games";
-        $this->template->content = View::forge('admin/game/edit');
+        $this->template->content = View::forge('admin/game/edit_'.($attribute ?? 'game'), $this->data, false);
     }
 
-    public function action_refs($id = null) {
-        $game = Model_Game::find($id);
-        $val = Model_Game::val_Refs('edit');
+    public function editRefs($game) {
+        
+        $val = Model_Game::val_Refs('editref');
 
         if ($val->run()) {
 
@@ -178,11 +129,11 @@ class Controller_Admin_Game extends Controller_Admin {
             }
 
             if ($game->save()) {
-                Session::set_flash('success', e('Updated game #' . $id));
+                Session::set_flash('success', e('Updated game #' . $game->id));
 
-                Response::redirect('admin/game/view/'.$id);
+                Response::redirect('admin/game/view/'.$game->id);
             } else {
-                Session::set_flash('error', e('Could not update game #' . $id));
+                Session::set_flash('error', e('Could not update game #' . $game->id));
             }
         } else {
             if (Input::method() == 'POST') {
@@ -192,49 +143,38 @@ class Controller_Admin_Game extends Controller_Admin {
 
                 Session::set_flash('error', $val->error());
             }
-
-            $this->template->set_global('game', $game, false);
         }
-
-        $this->template->title = "Game Referees";
-        $this->template->content = View::forge('admin/game/edit_ref');
+        return $game;
     }
 
-    public function action_score($id = null) {
-        $game = Model_Game::find($id);
+    public function editScore($game = null) {        
         //get the periods, OT if needed
-        $data['periods'] = (int) $game->periods;
-        !empty($game->ot) ? $data['ot'] = (int) $game->ot : $data['ot'] = 0;
+        $this->data['periods'] = (int) $game->periods;
+        !empty($game->ot) ? $this->data['ot'] = (int) $game->ot : $this->data['ot'] = 0;
 
-        $val = Model_Game::val_score($data);
+        $val = Model_Game::val_score($this->data);
 
-        if ($val->run()) {
+        if ($val->run() && $this->totalPoints($val, $game)) {
             //we don't know how many periods we have so do all of $_POST
             foreach ($val->validated() as $key => $value) {
                 $game->{$key} = $value;
             }
-
             if ($game->save()) {
-                Session::set_flash('success', e('Updated game #' . $id));
-
-                Response::redirect('admin/game/view/' . $id);
+                $this->cleanPoints($game);
+                
+                Response::redirect('admin/game/view/' . $game->id);
             } else {
-                Session::set_flash('error', e('Could not update game #' . $id));
+                Session::set_flash('error', e('Could not update game #' . $game->id));
             }
         } else {
             if (Input::method() == 'POST') {
                 foreach ($val->input() as $key) {
                     $game->{$key} = $val->validated($key);
                 }
-
-                Session::set_flash('error', $val->error());
-            }
-
-            $this->template->set_global('game', $game, false);
+            }            
         }
-
-        $this->template->title = "Game Score";
-        $this->template->content = View::forge('admin/game/score', $data);
+        
+       return $game;       
     }
 
     public function action_delete($id = null) {
@@ -317,22 +257,33 @@ class Controller_Admin_Game extends Controller_Admin {
     }
 
     private static function cleanPoints($game) {
-        $per = Model_Game_Eav::query()->where('game_id', $game->id)->and_where_open()->where('key', 'like', 'mur_%')->or_where('key', 'like', 'opp_%')->and_where_close();
+        $per = Model_Game_Eav::query()->where('game_id', $game->id)->and_where_open()->where('key', 'like', 'mur_%')->or_where('key', 'like', 'opp_%')->and_where_close()->and_where_open()->where('value', '!=', NULL)->and_where_close();
         $setper = $per->count();
-        $ot = Model_Game_Eav::query()->where('game_id', $game->id)->and_where_open()->where('key', 'like', 'mur_ot_%')->or_where('key', 'like', 'opp_ot%')->and_where_close();
-        $setot = $ot->count();
+        $ot = Model_Game_Eav::query()->where('game_id', $game->id)->and_where_open()->where('key', 'like', 'mur_ot_%')->or_where('key', 'like', 'opp_ot_%')->and_where_close()->and_where_open()->where('value', '!=', NULL)->and_where_close();
+        $setot = Model_Game_Eav::query()->where('game_id', $game->id)->and_where_open()->where('key', 'like', 'mur_ot_%')->or_where('key', 'like', 'opp_ot_%')->and_where_close()->and_where_open()->where('value', '!=', NULL)->or_where('value', '!=', '')->and_where_close()->count();
         $setper -= $setot;
         $x = false;
-        if ($setper > ((empty($game->periods) ? 0 : $game->periods) * 2)) {
+        if ($setper != (((int)$game->periods ?? 0) * 2)) {
             foreach ($per->get() as $value) {
                 $value->value = null;
+                $value->save();
+            }   
+        } else {
+            foreach ($per->get() as $value) {
+                $value->value === '' ? $value->value = null : '';
                 $value->save();
             }
             $x = true;
         }
-        if ($setot > ((empty($game->ot) ? 0 : $game->ot) * 2)) {
+        if ($setot > (((int)$game->ot ?? 0) * 2)) {
             foreach ($ot->get() as $value) {
                 $value->value = null;
+                $value->save();
+            }
+            $x = true;
+        } else {
+            foreach ($ot->get() as $value) {
+                $value->value === '' ? $value->value = null : '';
                 $value->save();
             }
             $x = true;
@@ -379,6 +330,81 @@ class Controller_Admin_Game extends Controller_Admin {
         }
         
         return $techs;
+    }
+    
+    private function editGame($game) {
+        $val = Model_Game::validate('edit');
+
+        if ($val->run()) {
+            $game->team_season_id = Input::post('team_season_id');
+            $game->game_date = Input::post('game_date');
+            $game->game_time = Input::post('game_time');
+            $game->game_duration = Input::post('game_duration');
+            $game->game_type_id = Input::post('game_type_id');
+            $game->opponent_id = Input::post('opponent_id');
+            $game->place_id = Input::post('place_id');
+            $game->site_id = Input::post('site_id');
+            $game->hrn = Input::post('hrn');
+            $game->post = Input::post('post');
+            $game->mur_rk = Input::post('mur_rk');
+            $game->opp_rk = Input::post('opp_rk');
+            $game->periods = Input::post('periods');
+
+            if ($game->save()) {
+
+                $this->cleanPoints($game);
+
+                Session::set_flash('success', e('Updated game #' . $game->id));
+
+                Response::redirect('admin/game/view/' . $game->id);
+            } else {
+                Session::set_flash('error', e('Could not update game #' . $game->id));
+            }
+        } else {
+            if (Input::method() == 'POST') {
+                $game->team_season_id = $val->validated('team_season_id');
+                $game->game_date = $val->validated('game_date');
+                $game->game_time = $val->validated('game_time');
+                $game->game_duration = $val->validated('game_duration');
+                $game->game_type_id = $val->validated('game_type_id');
+                $game->opponent_id = $val->validated('opponent_id');
+                $game->place_id = $val->validated('place_id');
+                $game->site_id = $val->validated('site_id');
+                $game->hrn = $val->validated('hrn');
+                $game->post = $val->validated('post');
+                $game->mur_rk = $val->validated('mur_rk');
+                $game->opp_rk = $val->validated('opp_rk');
+                $game->periods = $val->validated('periods');
+
+                Session::set_flash('error', $val->error());
+            }
+        }       
+        
+        return $game;        
+    }
+    
+    private function totalPoints($val, $game) {
+        if ($val->run(Input::post())) {
+            $pts_mur = $game->pts_mur;
+            $pts_opp = $game->pts_opp;            
+            foreach (Input::post() as $key => $value) {
+                (strpos($key, 'mur') === 0) ? ($pts_mur -= (int)$value) : ((strpos($key, 'opp') === 0) ? ($pts_opp -= (int)$value) : '');
+            }
+            if ($pts_mur == 0 && $pts_opp == 0) {
+                return true;
+            } else if ($pts_mur == $game->pts_mur && $pts_opp == $game->pts_opp) {
+                return true;
+            } else {
+                Session::set_flash('error', e('Points don\'t add up for:'. ($pts_mur != 0 ? ' MURRAY '.'(off '.$pts_mur.') '.($pts_opp != 0 ? '&' : '') : '') .' '.($pts_opp != 0 ? $game->opponents->opponent_short.' (off '.$pts_opp.')' : '')));
+                return false;
+            }
+            
+        } else {
+            Session::set_flash('error', e('Something is wrong'));
+        }
+        
+        Session::set_flash('error', e($val->error()));
+        return false;
     }
 
 

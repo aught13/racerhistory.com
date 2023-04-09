@@ -26,12 +26,6 @@
     </div>
 
     <div class="form-group">
-        <?= Form::label('Game duration', 'game_duration', ['class' => 'control-label']); ?>
-
-        <?= Form::input('game_duration', Input::post('game_duration', isset($game) ? $game->game_duration : ''), ['type' => 'time', 'class' => 'form-control', 'placeholder' => 'Game duration']); ?>
-    </div>
-
-    <div class="form-group">
         <?= Form::label('Game type', 'game_type_id', ['class' => 'control-label']); ?>
         <div class='input-group'>
             <?= Form::select('game_type_id', Input::post('game_type_id', isset($game) ? $game->game_type_id : ''),$options['game_types'], ['class' => 'form-control', 'placeholder' => 'Game type id']); ?>
