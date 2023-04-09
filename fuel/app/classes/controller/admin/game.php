@@ -290,7 +290,7 @@ class Controller_Admin_Game extends Controller_Admin {
             }
             $x = true;
         }
-        if (empty($game->pts_mur) || empty($game->pts_opp)) {
+        if ((empty($game->pts_mur) && $game->pts_mur != 0) || (empty($game->pts_opp) && $game->pts_opp !=0)) {
             $game->pts_mur = null;
             $game->pts_opp = null;
             $game->save();
@@ -429,7 +429,7 @@ class Controller_Admin_Game extends Controller_Admin {
             $game->w = 0;
             $game->l = 1;
             $this->data['message'] = 'Murray lost';
-        } else if ($game->pts_mur == $game->pts_opp && ($this->data['w'] == 0 || $this->data['w'] == 1) && !empty($game->pts_mur)) {
+        } else if ($game->pts_mur == $game->pts_opp && ($this->data['w'] == 0 || $this->data['w'] == 1) && !empty($game->pts_mur ?? true)) {
             $game->w = 0;
             $game->l = 0;
             $this->data['message'] = 'Game tied';
