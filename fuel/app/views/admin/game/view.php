@@ -30,7 +30,7 @@
                 <tbody>
                     <tr>
                         <td style="font-size: 40px; font-weight: <?= ($game->w == '1' ? 'bold' : 'normal'); ?>;" ><?= $game->pts_mur; ?></td>
-                        <td><?= empty($game->pts_mur) ? (Html::anchor('admin/game/edit/'.$game->id.'/final', 'Add Final', ['class' => 'btn btn-success'])) : ''; ?></td>
+                        <td><?= empty($game->pts_mur) ? (Html::anchor('admin/game/edit/'.$game->id.'/score', 'Add Final', ['class' => 'btn btn-success'])) : ''; ?></td>
                         <td style="font-size: 40px; font-weight: <?= ($game->l == '1' ? 'bold' : 'normal'); ?>;"><?= $game->pts_opp; ?></td>
                     </tr>
                 </tbody>

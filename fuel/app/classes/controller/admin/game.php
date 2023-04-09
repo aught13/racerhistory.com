@@ -162,6 +162,7 @@ class Controller_Admin_Game extends Controller_Admin {
             if ($game->save()) {
                 $this->cleanPoints($game);
                 
+                Session::set_flash('success', e('Updated score'.($this->whoWon($game) ? ' & '.$this->data['message'] : '')));
                 Response::redirect('admin/game/view/' . $game->id);
             } else {
                 Session::set_flash('error', e('Could not update game #' . $game->id));
@@ -384,15 +385,19 @@ class Controller_Admin_Game extends Controller_Admin {
     }
     
     private function totalPoints($val, $game) {
+        $this->data['pts_mur'] = $game->pts_mur;
+        $this->data['pts_mur'] = $game->pts_opp;
         if ($val->run(Input::post())) {
-            $pts_mur = $game->pts_mur;
-            $pts_opp = $game->pts_opp;            
+            $pts_mur = (int)Input::post('pts_mur');
+            $pts_opp = (int)Input::post('pts_opp');            
             foreach (Input::post() as $key => $value) {
                 (strpos($key, 'mur') === 0) ? ($pts_mur -= (int)$value) : ((strpos($key, 'opp') === 0) ? ($pts_opp -= (int)$value) : '');
             }
             if ($pts_mur == 0 && $pts_opp == 0) {
                 return true;
-            } else if ($pts_mur == $game->pts_mur && $pts_opp == $game->pts_opp) {
+            } else if (($pts_mur == $game->pts_mur && $pts_opp == $game->pts_opp) || (empty($game->pts_mur) || empty($game->pts_opp))) {
+                return true;
+            } else if (($this->data['pts_mur'] != $game->pts_mur && $pts_mur == (int)Input::post('pts_mur')) || ($this->data['pts_opp'] != $game->pts_opp && $pts_opp == (int)Input::post('pts_opp'))) {
                 return true;
             } else {
                 Session::set_flash('error', e('Points don\'t add up for:'. ($pts_mur != 0 ? ' MURRAY '.'(off '.$pts_mur.') '.($pts_opp != 0 ? '&' : '') : '') .' '.($pts_opp != 0 ? $game->opponents->opponent_short.' (off '.$pts_opp.')' : '')));
@@ -406,6 +411,28 @@ class Controller_Admin_Game extends Controller_Admin {
         Session::set_flash('error', e($val->error()));
         return false;
     }
-
+    
+    private function whoWon($game) {
+        $this->data['w'] = $game->w;
+        $this->data['l'] = $game->l;
+        if ($game->pts_mur > $game->pts_opp) {
+            $game->w = 1;
+            $game->l = 0;
+            $this->data['message'] = 'Murray won';
+        } elseif ($game->pts_mur < $game->pts_opp) {
+            $game->w = 0;
+            $game->l = 1;
+            $this->data['message'] = 'Murray lost';
+        } elseif ($game->pts_mur == $game->pts_opp && ($this->data['w'] == 0 || $this->data['w'] == 1)) {
+            $game->w = 0;
+            $game->l = 0;
+            $this->data['message'] = 'Game tied';
+        }
+        if ($this->data['w'] != $game->w || $this->data['l'] != $game->l) {
+            $game->save();
+            return true;
+        }
+        return false;        
+    }
 
 }
