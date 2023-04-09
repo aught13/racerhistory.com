@@ -268,7 +268,8 @@ class Controller_Admin_Game extends Controller_Admin {
             foreach ($per->get() as $value) {
                 $value->value = null;
                 $value->save();
-            }   
+            }
+            $x = true;   
         } else {
             foreach ($per->get() as $value) {
                 $value->value === '' ? $value->value = null : '';
@@ -288,6 +289,11 @@ class Controller_Admin_Game extends Controller_Admin {
                 $value->save();
             }
             $x = true;
+        }
+        if (empty($game->pts_mur) || empty($game->pts_opp)) {
+            $game->pts_mur = null;
+            $game->pts_opp = null;
+            $game->save();
         }
 
         return $x;
@@ -419,16 +425,20 @@ class Controller_Admin_Game extends Controller_Admin {
             $game->w = 1;
             $game->l = 0;
             $this->data['message'] = 'Murray won';
-        } elseif ($game->pts_mur < $game->pts_opp) {
+        } else if ($game->pts_mur < $game->pts_opp) {
             $game->w = 0;
             $game->l = 1;
             $this->data['message'] = 'Murray lost';
-        } elseif ($game->pts_mur == $game->pts_opp && ($this->data['w'] == 0 || $this->data['w'] == 1)) {
+        } else if ($game->pts_mur == $game->pts_opp && ($this->data['w'] == 0 || $this->data['w'] == 1) && !empty($game->pts_mur)) {
             $game->w = 0;
             $game->l = 0;
             $this->data['message'] = 'Game tied';
+        } else if (empty($game->pts_mur)) {
+            $game->w = null;
+            $game->l = null;
+            $this->data['message'] = 'No Results';
         }
-        if ($this->data['w'] != $game->w || $this->data['l'] != $game->l) {
+        if ($this->data['w'] !== $game->w || $this->data['l'] !== $game->l) {
             $game->save();
             return true;
         }
