@@ -112,6 +112,24 @@ class Model_Game extends \Orm\Model {
         return $val;
     }
     
+    public static function val_details($param) {
+        $val = Validation::forge($param);
+        $val->add_field('place_id', 'Place Id', 'required|numeric_min[1]');
+        $val->add_field('site_id', 'Site Id', 'numeric_min[0]');
+        $val->add_field('game_time', 'Game Time', 'max_length[5]');
+        $val->add_field('game_duration', 'Game Duration', 'max_length[5]');
+        $val->add_field('attendance', 'Attendance', 'valid_string[numeric]');
+
+        return $val;
+    }
+    
+    public static function val_story($param) {
+        $val = Validation::forge('edit');
+        $val->add_field('game_'.$param, 'Game '.$param, 'max_length[16777215]');
+
+        return $val;
+    }
+    
     public static function getRecords($type, $scope, $param = null) {
         switch ($type) {
             case 'team':

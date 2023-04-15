@@ -1,6 +1,6 @@
 <!-- Single game view -->
 <div class="col-md-12">
-    <h1><?= "Murray State " . ($game->hrn == 1 ? 'Vs' : ($game->hrn == 2 ? '@' : 'Vs')) . " " . $game->opponents->opponent_name; ?><?= Html::anchor('admin/game/edit/' . $game->id, 'Edit', ['class' => 'btn btn-warning']); ?></h1>
+    <h1><?= "Murray State " . ($game->hrn == 1 ? 'Vs' : ($game->hrn == 2 ? '@' : 'Vs')) . " " . $game->opponents->opponent_name; ?><?= Html::anchor('admin/game/edit/' . $game->id, 'Edit Game', ['class' => 'btn btn-success']); ?></h1>
     <hr>
 </div>
 <div class='container'>
@@ -119,6 +119,7 @@
         <!-- Attendance -->
         <div class="col-sm-6">
             <span><?= !empty($game->attendance) ? 'Attendance: '. number_format(floatval($game->attendance)) : '';?></span>
+            <?= Html::anchor('admin/game/edit/'.$game->id.'/details' , (!empty($game->game_time) || !empty($game->game_duration) || !empty($game->attendance) || !empty($game->site_id)) ? 'Edit Details' : 'Add Details', ['class' => 'btn btn-success']); ?>
         </div>
     </div>
 </div>
@@ -542,12 +543,15 @@
 <dl>
     <dt>Game preview</dt>
     <dd><?= $game->game_preview; ?></dd>
+    <?= Html::anchor('admin/game/edit/'.$game->id.'/preview' , !empty($game->game_preview) ? 'Edit Preview' : 'Add Preview', ['class' => 'btn btn-success']); ?>
     <br>
     <dt>Game recap</dt>
     <dd><?= $game->game_recap; ?></dd>
+    <?= Html::anchor('admin/game/edit/'.$game->id.'/recap' , !empty($game->game_recap) ? 'Edit Recap' : 'Add Recap', ['class' => 'btn btn-success']); ?>
     <br>
     <dt>Game notes</dt>
     <dd><?= $game->game_notes; ?></dd>
+    <?= Html::anchor('admin/game/edit/'.$game->id.'/notes' , !empty($game->game_notes) ? 'Edit Notes' : 'Add Notes', ['class' => 'btn btn-success']); ?>
     <br>
 </dl>
 <div class="btn-group">
