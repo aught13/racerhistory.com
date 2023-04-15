@@ -1,6 +1,8 @@
 <?php
 
 class Controller_Admin_Person extends Controller_Admin {
+    
+    private $stats = [];
 
     public function action_index() {
         $query = Model_Person::query();
@@ -22,6 +24,12 @@ class Controller_Admin_Person extends Controller_Admin {
 
     public function action_view($id = null) {
         $data['person'] = Model_Person::find($id);
+        
+        foreach ($data['person']->team_season_roster as $season) {
+            $this->getStats($season->id);
+        }
+        
+        $this->template->set_global('stats', $this->stats, false);
 
         $this->template->title = "Person";
         $this->template->content = View::forge('admin/person/view', $data);
@@ -132,6 +140,21 @@ class Controller_Admin_Person extends Controller_Admin {
         }
 
         Response::redirect('admin/person');
+    }
+    
+    private function getStats($id = null) {
+        $query_person = Model_Stat_Basket_Season_Person::query()->where('team_season_roster_id', $id);
+        if ($query_person->count() > 0) {
+            foreach ($query_person->get() as $result) {
+                foreach ($result as $key => $value) {
+                    if ($value >= 0) {
+                        $this->stats[$key] = true;
+                    }
+                }   
+            }
+        }
+
+        return true;
     }
 
 }
