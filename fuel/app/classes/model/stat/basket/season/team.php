@@ -39,7 +39,9 @@ class Model_Stat_Basket_Season_Team extends \Orm\Model {
     
     protected static $_table_name = 'stat_basket_season_team';
     
-    protected static $_belongs_to = ['team_season'];
+    protected static $_belongs_to = [
+        'team_season'
+    ];
 
         public static function validate($factory)
     {

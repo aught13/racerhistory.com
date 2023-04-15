@@ -41,9 +41,22 @@ class Model_Game extends \Orm\Model {
         ],
     ];
     
-    protected static $_belongs_to = ['game_types', 'opponents', 'places', 'sites', 'team_season'];
+    protected static $_belongs_to = [
+        'game_types', 
+        'opponents', 
+        'places', 
+        'sites', 
+        'team_season'
+    ];
             
-    protected static $_has_many = ['game_eav', 'stat_basket_game_box'];
+    protected static $_has_many = [
+        'game_eav' => [
+            'cascade_delete' => true
+        ], 
+        'stat_basket_game_box' => [
+            'cascade_delete' => true
+        ]
+    ];
     
     protected static $_eav = [
         'game_eav' => [

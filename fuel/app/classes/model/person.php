@@ -28,7 +28,11 @@ class Model_Person extends \Orm\Model {
         ],
     ];
     
-    protected static $_has_many = ['team_season_roster', 'stat_basket_season_person'];
+    protected static $_has_many = [
+        'team_season_roster' => [
+            'cascade_delete' => true
+        ]
+    ];
 
     public static function validate($factory) {
         $val = Validation::forge($factory);

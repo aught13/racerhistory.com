@@ -15,11 +15,22 @@ class Model_Team_Season_Roster extends \Orm\Model {
     
     protected static $_table_name = 'team_season_roster';
     
-    protected static $_belongs_to = ['team_season', 'persons'];
+    protected static $_belongs_to = [
+        'team_season', 
+        'persons'
+    ];
     
-    protected static $_has_many = ['stat_basket_game_person'];
+    protected static $_has_many = [
+        'stat_basket_game_person' => [
+            'cascade_delete' => true
+        ]
+    ];
     
-    protected static $_has_one = ['stat_basket_season_person'];
+    protected static $_has_one = [
+        'stat_basket_season_person' => [
+            'cascade_delete' => true
+        ]
+    ];
 
     public static function validate($factory) {
         $val = Validation::forge($factory);

@@ -31,9 +31,25 @@ class Model_Team_Season extends \Orm\Model {
         ],
     ];
     
-    protected static $_belongs_to = ['teams' , 'seasons'];
+    protected static $_belongs_to = [
+        'teams' , 
+        'seasons'
+    ];
     
-    protected static $_has_many = ['team_season_roster', 'games', 'stat_basket_season_team', 'stat_basket_season_person', 'stat_basket_season_opponent'];
+    protected static $_has_many = [
+        'team_season_roster' => [
+            'cascade_delete' => true
+        ], 
+        'games' => [  
+            'cascade_delete' => true
+        ], 
+        'stat_basket_season_team' => [
+            'cascade_delete' => true
+        ], 
+        'stat_basket_season_opponent' => [
+            'cascade_delete' => true
+        ]
+    ];
 
     public static function validate($factory) {
         $val = Validation::forge($factory);
