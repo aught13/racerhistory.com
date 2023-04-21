@@ -109,7 +109,7 @@ class Controller_Admin_Opponent extends Controller_Admin {
     
     private static function set_ops() {
         $data = [
-            'places' => [0=>''],
+            'places' => [0=>'N/A'],
             'opp' => [0=>'']];
         $places = Model_Place::find('all', ['order_by' => ['place_name'=>'asc']]);
         foreach ($places as $value) {

@@ -23,7 +23,13 @@ class Model_Site extends \Orm\Model {
         ],
     ];
     
-    protected static $_belongs_to = ['places', 'games'];
+    protected static $_has_many = ['games'];
+    
+    protected static $_belongs_to = [
+        'places' => [
+            'cascade_delete' => false
+        ]
+    ];
 
     public static function validate($factory) {
         $val = Validation::forge($factory);

@@ -3,7 +3,7 @@
 
 <dl class="dl-horizontal">
     <dt>Place</dt>
-    <dd><?= $opponent->places->place_name.', '.$opponent->places->place_state; ?></dd>
+    <dd><?= ($opponent->places->place_name ?? 'N/A').(isset($opponent->places->place_state) ? ', '.$opponent->places->place_state : ''); ?></dd>
     <br>
     <dt>Full Name</dt>
     <dd><?= $opponent->opponent_name; ?></dd>

@@ -24,7 +24,14 @@ class Model_Opponent extends \Orm\Model {
         ],
     ];
     
-    protected static $_belongs_to = ['games', 'places'];
+    protected static $_belongs_to = [
+        'games' => [
+            'cascade_delete' => true
+        ], 
+        'places' => [
+            'cascade_delete' => false
+        ]
+    ];
 
     public static function validate($factory) {
         $val = Validation::forge($factory);

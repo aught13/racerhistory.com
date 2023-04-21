@@ -26,12 +26,12 @@ class Controller_Admin_Game extends Controller_Admin {
         if (!isset($id)) {
             Response::redirect('admin/game/');
         }
-        $game = Model_Game::find($id);
+        $game = Model_Game::find($id) ?? Response::redirect('admin/game/');
 
         $this->data['person_box'] = Model_Stat_Basket_Game_Person::query()->where('game_id', $id)->get();
         $this->data['team_box'] = Model_Stat_Basket_Game_Team::query()->where('game_id', $id)->where('opp', 0)->get();
         $this->data['game_box_mur'] = Model_Stat_Basket_Game_Box::query()->where('game_id', $id)->where('opponent_id', 0)->order_by('period', 'asc')->get();
-        $this->data['game_box_opp'] = Model_Stat_Basket_Game_Box::query()->where('game_id', $id)->where('opponent_id', $game->opponent_id)->order_by('period', 'asc')->get();
+        $this->data['game_box_opp'] = Model_Stat_Basket_Game_Box::query()->where('game_id', $id)->where('opponent_id', $game->opponent_id ?? 0)->order_by('period', 'asc')->get();
         $this->data['opponent_box'] = Model_Stat_Basket_Game_Opponent::query()->where('game_id', $id)->get();
         $this->data['team_box_opp'] = Model_Stat_Basket_Game_Team::query()->where('game_id', $id)->where('opp', 1)->get();
         $this->data['techs'] = $this->getTechs($id);

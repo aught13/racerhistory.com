@@ -19,7 +19,7 @@
             <tbody>
                 <?php foreach ($opponents as $item): ?>
                     <tr>
-                        <td><?= $item->places->place_name.', '.$item->places->place_state; ?></td>
+                        <td><?= ($item->places->place_name ?? 'N/A').(isset($item->places->place_state) ? ', '.$item->places->place_state ?? '' : ''); ?></td>
                         <td><?= $item->opponent_name; ?></td>
                         <td><?= $item->opponent_mascot; ?></td>
                         <td><?= $item->opponent_current; ?></td>
