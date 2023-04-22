@@ -64,13 +64,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New Place</h4>
+        <h4 class="modal-title">New Opponent</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/opponent/_form_ajax',$options); ?>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="close-modal-opp" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -98,7 +98,7 @@
             var message = $(xml).find('message').first().text();
             alert(message);
         })  .always(function() {
-            $("#close-modal").click();
+            $("#close-modal-opp").click();
         })
     });
 </script>
@@ -109,13 +109,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New Place</h4>
+        <h4 class="modal-title">New Site</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/site/_form_ajax', $options); ?>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="close-modal-site" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -143,7 +143,7 @@
             var message = $(xml).find('message').first().text();
             alert(message);
         })  .always(function() {
-            $("#close-modal").click();
+            $("#close-modal-site").click();
         })
         });
 </script>
@@ -154,13 +154,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New Place</h4>
+        <h4 class="modal-title">New Game Type</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/game/type/_form_ajax'); ?>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="close-modal-type" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -188,7 +188,7 @@
             var message = $(xml).find('message').first().text();
             alert(message);
         })  .always(function() {
-            $("#close-modal").click();
+            $("#close-modal-type").click();
         })
     });
 </script>

@@ -16,12 +16,12 @@ class Controller_Ajax_Opponent extends Controller_Ajax {
                             'opponent_current' => 0,
                 ]);
 
-                if ($opponent and $opponent->save()) {
+                if ($opponent && $opponent->save()) {
                     
                     $this->response([   
-                        'message' => 'Success, Added opponent #' . $opponent->opponent_name . '.',
+                        'message' => 'Success, Added opponent ' . $opponent->opponent_name . '.',
                         'opponent_id' => $opponent->id,
-                        'opponent_name' => $opponent->opponent_name.' - '.($value->places ? $value->places->place_state : '')], 200);
+                        'opponent_name' => $opponent->opponent_name.' - '.($opponent->places ? $opponent->places->place_state : '')], 200);
                 } else {
                     
                     $this->response(['message' => 'Fail, could not save place'], 200);
