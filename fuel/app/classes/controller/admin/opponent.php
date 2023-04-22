@@ -35,7 +35,7 @@ class Controller_Admin_Opponent extends Controller_Admin {
                 $opponent = Model_Opponent::forge([
                     'opponent_name' => Input::post('opponent_name'),
                     'opponent_mascot' => Input::post('opponent_mascot'),
-                    'opponent_current' => Input::post('opponent_current'),
+                    'opponent_current' => (int)Input::post('opponent_current') ,
                     'opponent_short' => Input::post('opponent_short'),
                     'opponent_abbr' => Input::post('opponent_abbr'),
                     'place_id' => Input::post('place_id')
@@ -64,7 +64,7 @@ class Controller_Admin_Opponent extends Controller_Admin {
         if ($val->run()) {
             $opponent->opponent_name = Input::post('opponent_name');
             $opponent->opponent_mascot = Input::post('opponent_mascot');
-            $opponent->opponent_current = Input::post('opponent_current');
+            $opponent->opponent_current = (int)Input::post('opponent_current');
             $opponent->opponent_short = Input::post('opponent_short');
             $opponent->opponent_abbr = Input::post('opponent_abbr');
             $opponent->place_id = Input::post('place_id');
@@ -117,7 +117,7 @@ class Controller_Admin_Opponent extends Controller_Admin {
         }
         $opponents = Model_Opponent::find('all', ['order_by' => ['opponent_name'=>'asc']]);
         foreach ($opponents as $value) {
-            $data['opp'][$value->id] = $value->opponent_name.' - '.$value->places->place_state;
+            $data['opp'][$value->id] = $value->opponent_name.' - '.($value->places ? $value->places->place_state : 'N/A');
         }
         
         return $data;

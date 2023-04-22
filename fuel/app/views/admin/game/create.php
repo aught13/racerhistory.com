@@ -19,7 +19,7 @@
         <?= render('admin/place/_form_ajax'); ?>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="close-modal-place" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -41,18 +41,21 @@
             var place_name = $(xml).find('place_name').first().text();
             alert(message);
             var select = $('#form_place_id');
-            select.append('<option value="'+ place_id +'">'+ place_name +'</option>');
+            select.append('<option value="'+ place_id +'">'+ place_name +'</option>');            
+            select.val(place_id);
             var select2 = $('#ajax_form_place_id');
             select2.append('<option value="'+ place_id +'">'+ place_name +'</option>');
+            select2.val(place_id);
             var select3 = $('#ajax_form_site_place_id');
             select3.append('<option value="'+ place_id +'">'+ place_name +'</option>');
+            select3.val(place_id);
         })  .fail(function(xml) {
             var message = $(xml).find('message').first().text();
             alert(message);
-        })  .always(function() {
-            $( ".in" ).removeClass( "in" )
-        })
+        })  .always(function() {            
+            $("#close-modal-place").click();
         });
+    });
 </script>
 <div id="OppModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -89,14 +92,15 @@
             var opponent_name = $(xml).find('opponent_name').first().text();
             alert(message);
             var select = $('#form_opponent_id');
-            select.empty().append('<option value="'+ opponent_id +'">'+ opponent_name +'</option>');
+            select.append('<option value="'+ opponent_id +'">'+ opponent_name +'</option>');
+            select.val(opponent_id);
         })  .fail(function(xml) {
             var message = $(xml).find('message').first().text();
             alert(message);
         })  .always(function() {
-            $( ".in" ).removeClass( "in" )
+            $("#close-modal").click();
         })
-        });
+    });
 </script>
 <div id="SiteModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -133,12 +137,13 @@
             var site_name = $(xml).find('site_name').first().text();
             alert(message);
             var select = $('#form_site_id');
-            select.empty().append('<option value="'+ site_id +'">'+ site_name +'</option>');
+            select.append('<option value="'+ site_id +'">'+ site_name +'</option>');            
+            select.val(site_id);
         })  .fail(function(xml) {
             var message = $(xml).find('message').first().text();
             alert(message);
         })  .always(function() {
-            $( ".in" ).removeClass( "in" )
+            $("#close-modal").click();
         })
         });
 </script>
@@ -177,12 +182,13 @@
             var game_type_name = $(xml).find('game_type_name').first().text();
             alert(message);
             var select = $('#form_game_type_id');
-            select.empty().append('<option value="'+ game_type_id +'">'+ game_type_name +'</option>');
+            select.append('<option value="'+ game_type_id +'">'+ game_type_name +'</option>');
+            select.val(game_type_id);
         })  .fail(function(xml) {
             var message = $(xml).find('message').first().text();
             alert(message);
         })  .always(function() {
-            $( ".in" ).removeClass( "in" )
+            $("#close-modal").click();
         })
-        });
+    });
 </script>

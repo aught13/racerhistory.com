@@ -14,12 +14,14 @@
             <th>Home</th>
             <th>Road</th>
             <th>Neutral</th>
+            <th>Post</th>
         </tr>
         <tr>
             <td><?= $record['w']; ?> - <?= $record['l']; ?></td>
             <td><?= $record['hw']; ?> - <?= $record['hl']; ?></td>
             <td><?= $record['rw']; ?> - <?= $record['rl']; ?></td>
             <td><?= $record['nw']; ?> - <?= $record['nl']; ?></td>
+            <td><?= $record['pw']; ?> - <?= $record['pl']; ?></td>
         </tr>
     </table>
 <?php else: ?>
@@ -33,12 +35,14 @@
             <th>Home</th>
             <th>Road</th>
             <th>Finish</th>
+            <th>Tourn</th>
         </tr>
         <tr>
             <td><?= $record['cw']; ?> - <?= $record['cl']; ?></td>   
             <td><?= $record['chw']; ?> - <?= $record['chl']; ?></td>   
             <td><?= $record['crw']; ?> - <?= $record['crl']; ?></td>
             <td><?= !empty($team_season->league_finish)?$team_season->league_finish:''; ?></td>
+            <td><?= $record['ctw']; ?> - <?= $record['ctl']; ?></td>
         </tr>
     </table>
     <?php if (!empty($team_season->league_torunament_finish)): ?>
@@ -48,9 +52,7 @@
     <!-- POSTSEASON RECORD -->
 <?php if (!empty($record['pw'] | !empty($record['pl']))): ?>
     <div class="row">
-        <span class="col-sm-3">Postseason</span>
-        <span class="col-sm-1">(record)</span>
-        <span class="col-sm-8"><?= $team_season->last_post_game; ?></span>
+        <span class="col-sm-6">Postseason: <?= $team_season->last_post_game; ?></span>
     </div>    
 <?php endif; ?>
     <!-- SEASON NOTES -->
@@ -65,7 +67,7 @@
     </div>
     <?php endif; ?>
     <?php if (!empty($team_season->team_season_recap)): ?>
-    <span>Preview <a href="#recap" data-toggle="collapse">^</a></span>
+    <span>Recap <a href="#recap" data-toggle="collapse">^</a></span>
     <div id="recap" class="col-sm-12 collapse in">
         <?= $team_season->team_season_recap; ?>
     </div>
@@ -100,7 +102,7 @@
                         <td><?= $item->game_date; ?></td>
                         <td><?= $item->mur_rk; ?> Racers <?= $item->hrn == '1' ? 'Vs' : ($item->hrn == '2' ? '@' : 'Vs'); ?></td>
                         <td><?= $item->opp_rk; ?> <?= $item->opponents->opponent_name; ?></td>
-                        <td><?= ($item->game_types->conf == '1' ? '*' : ($item->game_types->post == '1' ? '+' : '')); ?></td>
+                        <td><?= (($item->game_types->conf == '1' && $item->game_types->post == '1')? 't' : ($item->game_types->post == '1' ? '^' : ($item->game_types->conf == '1' ? '*' : ''))); ?></td>
                         <td><?= $item->places->place_name; ?>, <?= $item->places->place_state; ?></td>
                         <td><?= $item->w == '1' ? 'W' : ($item->l == '1' ? 'L' : ''); ?></td>
                         <td><?= $item->pts_mur; ?> - <?= $item->pts_opp; ?></td>
@@ -172,7 +174,9 @@
             <thead>
                 <tr>
                     <th rowspan="2" colspan="<?= $team_season->team_season_roster ? 1 : (isset($stats['MIN']) ? 4 : 3) ; ?>"><?= $team_season->team_season_roster ? '#' : '' ; ?></th>
-                    <?= $team_season->team_season_roster ? '<th rowspan="2" colspan="2">Name</th>' : '' ; ?>
+                    <?= $team_season->team_season_roster ? '<th rowspan="2" colspan="1">Name</th>' : '' ; ?>
+                    <?= isset($stats['GP']) ? '<th rowspan="2" colspan="1">GP</th>' : '' ; ?>                    
+                    <?= isset($stats['GS']) ? '<th rowspan="2" colspan="1">GS</th>' : '' ; ?>
                     <?= (isset($stats['MIN']) && $team_season->team_season_roster) ? '<th rowspan="2" colspan="1">Min</th>' : '' ; ?>
                     <th class="text-center" rowspan="<?= isset($stats['FGA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FGA']) ? 2 : 1 ;?>">FG</th>
                     <?= isset($stats['TPM']) ? '<th class="text-center" rowspan="1" colspan="'.(isset($stats['TPA']) ? 2 : 1).'">3P</th>' : '' ; ?>
@@ -203,13 +207,14 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if ($team_season->team_season_roster): ?> <!-- Individual Box -->
-                <?php foreach ($team_season->team_season_roster as $value): ?>
+                <?php if ($stats['person']): ?> <!-- Individual Box -->
+                <?php foreach ($stats['person'] as $value): ?>
                 <?php if ($value->stat_basket_season_person): ?>
                 <tr>                    
                     <?= '<td class="text-center">'.$value->roster_number.'</td>' ;?>
                     <?= '<td>'.$value->persons->display.'</td>' ;?>
-                    <?= !empty($value->stat_basket_season_person->GS) ? '<td class="text-center">'.(empty($value->roster_position) ? '*' : $value->roster_position).'</td>' : '<td></td>' ;?>
+                    <?= isset($stats['GP']) ? '<td class="text-center">'.$value->stat_basket_season_person->GP.'</td>' : '' ; ?>
+                    <?= isset($stats['GS']) ? '<td class="text-center">'.$value->stat_basket_season_person->GS.'</td>' : '' ; ?>
                     <?= isset($stats['MIN']) ? '<td class="text-center">'.$value->stat_basket_season_person->MIN.'</td>' : '' ; ?>
                     <?= isset($stats['FGM']) ? '<td class="text-center">'.$value->stat_basket_season_person->FGM.'</td>' : '' ; ?>
                     <?= isset($stats['FGA']) ? '<td class="text-center">'.$value->stat_basket_season_person->FGA.'</td>' : '' ; ?>
@@ -241,7 +246,9 @@
                 <?php if ($team_season->stat_basket_season_team): ?>
                     <?php foreach ($team_season->stat_basket_season_team as $value): ?>
                     <tr>
-                        <th colspan="<?= isset($stats['MIN']) ? 4 : 3 ; ?>">TEAM TOTAL</th>
+                        <th colspan="<?= isset($stats['GS']) ? 3 : 2 ; ?>">TEAM TOTAL</th>
+                        <?= isset($stats['GP']) ? '<th '.($team_season->stat_basket_season_opponent ? ' rowspan="2" ' : '').'class="text-center">'.$value->GP.'</th>' : ''; ?>
+                        <?= isset($stats['MIN']) ? '<th '.($team_season->stat_basket_season_opponent ? ' rowspan="2" ' : '').'class="text-center">'.$value->MIN.'</th>' : ''; ?>
                         <?= isset($stats['FGM']) ? '<th class="text-center">'.$value->FGM.'</th>' : ''; ?>
                         <?= isset($stats['FGA']) ? '<th class="text-center">'.$value->FGA.'</th>' : ''; ?>
                         <?= isset($stats['TPM']) ? '<th class="text-center">'.$value->TPM.'</th>' : ''; ?>
@@ -264,7 +271,7 @@
                 <?php if ($team_season->stat_basket_season_opponent): ?>    
                     <?php foreach ($team_season->stat_basket_season_opponent as $value): ?>
                     <tr>
-                        <th colspan="<?= isset($stats['MIN']) ? 4 : 3 ; ?>">OPPONENT TOTAL</th>
+                        <th colspan="<?= isset($stats['GS']) ? 3 : 2 ; ?>">OPPONENT TOTAL</th>
                         <?= isset($stats['FGM']) ? '<th class="text-center">'.$value->FGM.'</th>' : ''; ?>
                         <?= isset($stats['FGA']) ? '<th class="text-center">'.$value->FGA.'</th>' : ''; ?>
                         <?= isset($stats['TPM']) ? '<th class="text-center">'.$value->TPM.'</th>' : ''; ?>

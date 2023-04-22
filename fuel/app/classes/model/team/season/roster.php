@@ -30,14 +30,21 @@ class Model_Team_Season_Roster extends \Orm\Model {
         'stat_basket_season_person' => [
             'cascade_delete' => true
         ]
-    ];
+    ];   
+    
+    protected static $_conditions = [
+        'order_by' => [
+            'roster_number' => 'asc'
+        ]      
+   ];
+
 
     public static function validate($factory) {
         $val = Validation::forge($factory);
         $val->add_field('team_season_id', 'Team Season Id', 'required|valid_string[numeric]');
         $val->add_field('person_id', 'Person Id', 'required|valid_string[numeric]');
         $val->add_field('roster_year', 'Roster Year', 'max_length[162]');
-        $val->add_field('roster_number', 'Roster Number', 'max_length[162]');
+        $val->add_field('roster_number', 'Roster Number', 'max_length[162]|valid_string[numeric]');
         $val->add_field('roster_position', 'Roster Position', 'max_length[162]');
         $val->add_field('roster_height', 'Roster Height', 'max_length[162]');
         $val->add_field('roster_weight', 'Roster Weight', 'max_length[162]');

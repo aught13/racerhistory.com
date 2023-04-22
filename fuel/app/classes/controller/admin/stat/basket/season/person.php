@@ -27,25 +27,25 @@ class Controller_Admin_Stat_Basket_Season_Person extends Controller_Admin {
             if ($val->run()) {
                 $stat_basket_season_person = Model_Stat_Basket_Season_Person::forge([
                 'team_season_roster_id' => Input::Post('team_season_roster_id'),    
-                'GP' => Input::post('GP'),
-                'GS' => Input::post('GS'),
-                'MIN' => Input::post('MIN'),
-                'FGM' => Input::post('FGM'),
-                'FGA' => Input::post('FGA'),
-                'TPM' => Input::post('TPM'),
-                'TPA' => Input::post('TPA'),
-                'FTM' => Input::post('FTM'),
-                'FTA' => Input::post('FTA'),
-                'ORB' => Input::post('ORB'),
-                'DRB' => Input::post('DRB'),
-                'RB' => Input::post('RB'),
-                'AST' => Input::post('AST'),
-                'STL' => Input::post('STL'),
-                'BS' => Input::post('BS'),
-                'TRN' => Input::post('TRN'),
-                'PF' => Input::post('PF'),
-                'TF' => Input::post('TF'),
-                'PTS' => Input::post('PTS'),
+                'GP' => Input::post('GP') !== '' ? (int)Input::post('GP') : NULL,
+                'GS' => Input::post('GS') !== '' ? (int)Input::post('GS') : NULL,
+                'MIN' => Input::post('MIN') !== '' ? (int)Input::post('MIN') : NULL,
+                'FGM' => Input::post('FGM') !== '' ? (int)Input::post('FGM') : NULL,
+                'FGA' => Input::post('FGA') !== '' ? (int)Input::post('FGA') : NULL,
+                'TPM' => Input::post('TPM') !== '' ? (int)Input::post('TPM') : NULL,
+                'TPA' => Input::post('TPA') !== '' ? (int)Input::post('TPA') : NULL,
+                'FTM' => Input::post('FTM') !== '' ? (int)Input::post('FTM') : NULL,
+                'FTA' => Input::post('FTA') !== '' ? (int)Input::post('FTA') : NULL,
+                'ORB' => Input::post('ORB') !== '' ? (int)Input::post('ORB') : NULL,
+                'DRB' => Input::post('DRB') !== '' ? (int)Input::post('DRB') : NULL,
+                'RB' => Input::post('RB') !== '' ? (int)Input::post('RB') : NULL,
+                'AST' => Input::post('AST') !== '' ? (int)Input::post('AST') : NULL,
+                'STL' => Input::post('STL') !== '' ? (int)Input::post('STL') : NULL,
+                'BS' => Input::post('BS') !== '' ? (int)Input::post('BS') : NULL,
+                'TRN' => Input::post('TRN') !== '' ? (int)Input::post('TRN') : NULL,
+                'PF' => Input::post('PF') !== '' ? (int)Input::post('PF') : NULL,
+                'TF' => Input::post('TF') !== '' ? Input::post('TF') : NULL,
+                'PTS' => Input::post('PTS') !== '' ? (int)Input::post('PTS') : NULL,
                 ]);
                 
                 if ($stat_basket_season_person and $stat_basket_season_person->save()) {
@@ -70,25 +70,25 @@ class Controller_Admin_Stat_Basket_Season_Person extends Controller_Admin {
         $val = Model_Stat_Basket_Season_Person::validate('edit');
 
         if ($val->run()) { 
-        $stat_basket_season_person->GP = Input::post('GP');
-        $stat_basket_season_person->GS = Input::post('GS');
-        $stat_basket_season_person->MIN = Input::post('MIN');
-        $stat_basket_season_person->FGM = Input::post('FGM');
-        $stat_basket_season_person->FGA = Input::post('FGA');
-        $stat_basket_season_person->TPM = Input::post('TPM');
-        $stat_basket_season_person->TPA = Input::post('TPA');
-        $stat_basket_season_person->FTM = Input::post('FTM');
-        $stat_basket_season_person->FTA = Input::post('FTA');
-        $stat_basket_season_person->ORB = Input::post('ORB');
-        $stat_basket_season_person->DRB = Input::post('DRB');
-        $stat_basket_season_person->RB = Input::post('RB');
-        $stat_basket_season_person->AST = Input::post('AST');
-        $stat_basket_season_person->STL = Input::post('STL');
-        $stat_basket_season_person->BS = Input::post('BS');
-        $stat_basket_season_person->TRN = Input::post('TRN');
-        $stat_basket_season_person->PF = Input::post('PF');
-        $stat_basket_season_person->TF = Input::post('TF');
-        $stat_basket_season_person->PTS = Input::post('PTS');
+            $stat_basket_season_person->GP = Input::post('GP') !== '' ? (int)Input::post('GP') : NULL;
+            $stat_basket_season_person->GS = Input::post('GS') !== '' ? (int)Input::post('GS') : NULL;
+            $stat_basket_season_person->MIN = Input::post('MIN') !== '' ? (int)Input::post('MIN') : NULL;
+            $stat_basket_season_person->FGM = Input::post('FGM') !== '' ? (int)Input::post('FGM') : NULL;
+            $stat_basket_season_person->FGA = Input::post('FGA') !== '' ? (int)Input::post('FGA') : NULL;
+            $stat_basket_season_person->TPM = Input::post('TPM') !== '' ? (int)Input::post('TPM') : NULL;
+            $stat_basket_season_person->TPA = Input::post('TPA') !== '' ? (int)Input::post('TPA') : NULL;
+            $stat_basket_season_person->FTM = Input::post('FTM') !== '' ? (int)Input::post('FTM') : NULL;
+            $stat_basket_season_person->FTA = Input::post('FTA') !== '' ? (int)Input::post('FTA') : NULL;
+            $stat_basket_season_person->ORB = Input::post('ORB') !== '' ? (int)Input::post('ORB') : NULL;
+            $stat_basket_season_person->DRB = Input::post('DRB') !== '' ? (int)Input::post('DRB') : NULL;
+            $stat_basket_season_person->RB = Input::post('RB') !== '' ? (int)Input::post('RB') : NULL;
+            $stat_basket_season_person->AST = Input::post('AST') !== '' ? (int)Input::post('AST') : NULL;
+            $stat_basket_season_person->STL = Input::post('STL') !== '' ? (int)Input::post('STL') : NULL;
+            $stat_basket_season_person->BS = Input::post('BS') !== '' ? (int)Input::post('BS') : NULL;
+            $stat_basket_season_person->TRN = Input::post('TRN') !== '' ? (int)Input::post('TRN') : NULL;
+            $stat_basket_season_person->PF = Input::post('PF') !== '' ? (int)Input::post('PF') : NULL;
+            $stat_basket_season_person->TF = Input::post('TF') !== '' ? Input::post('TF') : NULL;
+            $stat_basket_season_person->PTS = Input::post('PTS') !== '' ? (int)Input::post('PTS') : NULL;
             
             if ($stat_basket_season_person->save()) {            
                 Session::set_flash('success', e('Updated Player Season Stats #' . $id));                

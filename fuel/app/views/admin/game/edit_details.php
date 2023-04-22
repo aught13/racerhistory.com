@@ -5,6 +5,16 @@
     <div class="col-md-6">
         <?= Form::open(); ?>
         <fieldset>
+            <div class="form-group">
+                <?= Form::label('Murray Rank', 'mur_rk', ['class' => 'control-label']); ?>
+
+                <?= Form::input('mur_rk', Input::post('mur_rk', isset($game) ? $game->mur_rk : ''), ['class' => 'form-control', 'placeholder' => 'Murray Rank']); ?>
+            </div>
+            <div class="form-group">
+                <?= Form::label((isset($game) ? $game->opponents->opponent_short : 'Opponent').' Rank', 'opp_rk', ['class' => 'control-label']); ?>
+
+                <?= Form::input('opp_rk', Input::post('opp_rk', isset($game) ? $game->opp_rk : ''), ['class' => 'form-control', 'placeholder' => (isset($game) ? $game->opponents->opponent_short : 'Opponent').' Rank']); ?>
+            </div>
 
             <div class="form-group">
                 <?= Form::label('Game time', 'game_time', ['class' => 'control-label']); ?>

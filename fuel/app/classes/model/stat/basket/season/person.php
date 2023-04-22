@@ -41,6 +41,13 @@ class Model_Stat_Basket_Season_Person extends \Orm\Model {
     protected static $_table_name = 'stat_basket_season_person';
     
     protected static $_belongs_to = ['team_season_roster'];
+    
+    protected static $_conditions = [
+        'order_by' => [
+            'PTS' => 'desc',
+            'GP' => 'desc'
+        ],        
+   ];
 
     public static function validate($factory)
     {

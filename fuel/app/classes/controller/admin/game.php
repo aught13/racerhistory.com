@@ -175,7 +175,7 @@ class Controller_Admin_Game extends Controller_Admin {
         }
         $opponent = Model_Opponent::find('all', ['order_by' => ['opponent_name' => 'asc']]);
         foreach ($opponent as $value) {
-            $opponents[$value->id] = $value->opponent_name . ' ' . $value->places->place_state;
+            $opponents[$value->id] = $value->opponent_name . ' ' . ($value->places ? $value->places->place_state : '');
         }
         $place = Model_Place::find('all', ['order_by' => ['place_name' => 'desc']]);
         foreach ($place as $value) {
@@ -392,7 +392,7 @@ class Controller_Admin_Game extends Controller_Admin {
         
     private function totalPoints($val, $game) {
         $this->data['pts_mur'] = $game->pts_mur;
-        $this->data['pts_mur'] = $game->pts_opp;
+        $this->data['pts_opp'] = $game->pts_opp;
         if ($val->run(Input::post())) {
             $pts_mur = (int)Input::post('pts_mur');
             $pts_opp = (int)Input::post('pts_opp');            
@@ -455,6 +455,8 @@ class Controller_Admin_Game extends Controller_Admin {
             $game->place_id = Input::post('place_id');
             $game->site_id = Input::post('site_id');
             $game->attendance = Input::post('attendance');
+            $game->mur_rk = Input::post('mur_rk');
+            $game->opp_rk = Input::post('opp_rk');
 
             if ($game->save()) {
 

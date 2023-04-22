@@ -25,11 +25,12 @@ class Model_Opponent extends \Orm\Model {
     ];
     
     protected static $_belongs_to = [
+        'places'
+    ];
+                
+    protected static $_has_many = [
         'games' => [
             'cascade_delete' => true
-        ], 
-        'places' => [
-            'cascade_delete' => false
         ]
     ];
 
@@ -40,7 +41,7 @@ class Model_Opponent extends \Orm\Model {
         $val->add_field('opponent_current', 'Opponent Current', 'valid_string[numeric]');
         $val->add_field('opponent_short', 'Opponent Short', 'required|max_length[30]');
         $val->add_field('opponent_abbr', 'Opponent Abbr', 'required|max_length[6]');
-        $val->add_field('place_id', 'Place Id', 'required|valid_string[numeric]');
+        $val->add_field('place_id', 'Place Id', 'valid_string[numeric]');
 
         return $val;
     }

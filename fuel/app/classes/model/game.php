@@ -50,9 +50,7 @@ class Model_Game extends \Orm\Model {
     ];
             
     protected static $_has_many = [
-        'game_eav' => [
-            'cascade_delete' => true
-        ], 
+        'game_eav', 
         'stat_basket_game_box' => [
             'cascade_delete' => true
         ]
@@ -63,6 +61,13 @@ class Model_Game extends \Orm\Model {
             'attribute' => 'key',
             'value' => 'value',
         ],
+    ];
+    
+    protected static $_conditions = [
+        'order_by' => [
+            'game_date' => 'asc',
+            'game_time' => 'asc',
+        ]      
     ];
 
     public static function validate($factory) {
@@ -95,9 +100,9 @@ class Model_Game extends \Orm\Model {
     
     public static function val_Refs($param) {
         $val = \Fuel\Core\Validation::forge($param);
-        $val->add_field('ref_1', 'Ref 1', 'valid_string[alpha,spaces]|max_length[162]');
-        $val->add_field('ref_2', 'Ref 2', 'valid_string[alpha,spaces]|max_length[162]');
-        $val->add_field('ref_3', 'Ref 3', 'valid_string[alpha,spaces]|max_length[162]');
+        $val->add_field('ref_1', 'Ref 1', 'valid_string[alpha,spaces,singlequotes]|max_length[162]');
+        $val->add_field('ref_2', 'Ref 2', 'valid_string[alpha,spaces,singlequotes]|max_length[162]');
+        $val->add_field('ref_3', 'Ref 3', 'valid_string[alpha,spaces,singlequotes]|max_length[162]');
         
         return $val;
     }
@@ -132,6 +137,8 @@ class Model_Game extends \Orm\Model {
         $val->add_field('game_time', 'Game Time', 'max_length[5]');
         $val->add_field('game_duration', 'Game Duration', 'max_length[5]');
         $val->add_field('attendance', 'Attendance', 'valid_string[numeric]');
+        $val->add_field('mur_rk', 'Mur Rk', 'valid_string[numeric]');
+        $val->add_field('opp_rk', 'Opp Rk', 'valid_string[numeric]');
 
         return $val;
     }

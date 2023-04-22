@@ -37,7 +37,7 @@ class Controller_Admin_Team_Season_Roster extends Controller_Admin {
                     'team_season_id' => Input::post('team_season_id'),
                     'person_id' => Input::post('person_id'),
                     'roster_year' => Input::post('roster_year'),
-                    'roster_number' => Input::post('roster_number'),
+                    'roster_number' => Input::post('roster_number') !== '' ? (int)Input::post('roster_number') : NULL,
                     'roster_position' => Input::post('roster_position'),
                     'roster_height' => Input::post('roster_height'),
                     'roster_weight' => Input::post('roster_weight'),
@@ -69,7 +69,7 @@ class Controller_Admin_Team_Season_Roster extends Controller_Admin {
             $team_season_roster->team_season_id = Input::post('team_season_id');
             $team_season_roster->person_id = Input::post('person_id');
             $team_season_roster->roster_year = Input::post('roster_year');
-            $team_season_roster->roster_number = Input::post('roster_number');
+            $team_season_roster->roster_number = (int)Input::post('roster_number');
             $team_season_roster->roster_position = Input::post('roster_position');
             $team_season_roster->roster_height = Input::post('roster_height');
             $team_season_roster->roster_weight = Input::post('roster_weight');

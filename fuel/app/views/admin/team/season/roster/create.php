@@ -13,12 +13,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New Place</h4>
+        <h4 class="modal-title">New Person</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/person/_form') ?>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="close-modal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -41,11 +41,12 @@
             alert(message);
             var select = $('#form_person_id');
             select.append('<option value="'+ person_id +'">'+ person_name +'</option>');
+            select.val(person_id);
         })  .fail(function(xml) {
             var message = $(xml).find('message').first().text();
             alert(message);
         })  .always(function() {
-            $( ".in" ).removeClass( "in" );
+            $("#close-modal").click();
         });
     });
 </script>
