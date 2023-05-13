@@ -11,6 +11,8 @@
  * @link       https://fuelphp.com
  */
 class Controller_Base extends Controller_Hybrid {
+    
+    private $current_user;
 
     public function before() {
         parent::before();
