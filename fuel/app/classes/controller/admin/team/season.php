@@ -149,7 +149,7 @@ class Controller_Admin_Team_Season extends Controller_Admin {
         return $data;
     }
     
-        private static function getStats($season) {
+    private static function getStats($season) {
         $stats = [];
         $query_team = Model_Stat_Basket_Season_Team::query()->where('team_season_id', $season);
         $query_person = Model_Team_Season_Roster::query()->related('stat_basket_season_person')->where('team_season_id', $season)->order_by('stat_basket_season_person.PTS', 'DESC');
