@@ -23,101 +23,11 @@ class Controller_Admin_Game extends Controller_Admin {
     }
 
     public function action_view($id = null) {
-        if (!isset($id)) {
-            Response::redirect('admin/game/');
-        }
-        $game = Model_Game::find($id) ?? Response::redirect('admin/game/');
+        is_null($id) and Response::redirect('game');
+        $this->data = Data_Gameview::getData($id) ?? Response::redirect('admin/game/');
 
-        $this->data['person_box'] = Model_Stat_Basket_Game_Person::query()->where('game_id', $id)->get();
-        $this->data['team_box'] = Model_Stat_Basket_Game_Team::query()->where('game_id', $id)->where('opp', 0)->get();
-        $this->data['game_box_mur'] = Model_Stat_Basket_Game_Box::query()->where('game_id', $id)->where('opponent_id', 0)->order_by('period', 'asc')->get();
-        $this->data['game_box_opp'] = Model_Stat_Basket_Game_Box::query()->where('game_id', $id)->where('opponent_id', $game->opponent_id ?? 0)->order_by('period', 'asc')->get();
-        $this->data['opponent_box'] = Model_Stat_Basket_Game_Opponent::query()->where('game_id', $id)->get();
-        $this->data['team_box_opp'] = Model_Stat_Basket_Game_Team::query()->where('game_id', $id)->where('opp', 1)->get();
-        $this->data['techs'] = $this->getTechs($id);
-
-        $this->template->set_global('stats', $this->getStats($id), false);
-        $this->template->set_global('game', $game, false);
-
-        $this->template->title = "Murray State " . ($game->hrn == 1 ? 'Vs' : ($game->hrn == 2 ? '@' : 'Vs')) . " " . $game->opponents->opponent_name . " - " .date_format(date_create($game->game_date), "m/d/Y");
+        $this->template->title = "Murray State " . ($this->data['game']->hrn == 1 ? 'Vs' : ($this->data['game']->hrn == 2 ? '@' : 'Vs')) . " " . $this->data['game']->opponents->opponent_name . " - " .date_format(date_create($this->data['game']->game_date), "m/d/Y");
         $this->template->content = View::forge('admin/game/view', $this->data, false);
-    }
-
-    private static function getStats($game) {
-        $stats = [];
-        $query_person = Model_Stat_Basket_Game_Person::query()->where('game_id', $game);
-        $query_team = Model_Stat_Basket_Game_Team::query()->where('game_id', $game);
-        $query_game_box_mur = Model_Stat_Basket_Game_Box::query()->where('game_id', $game)->where('opponent_id', 0);
-        if ($query_person->count() > 0) {
-            foreach ($query_person->get() as $result) {
-                foreach ($result as $key => $value) {
-                    if ($value >= 0) {
-                        $stats[$key] = true;
-                    }
-                }
-            }
-        }
-        if ($query_team->count() > 0) {
-            $query = $query_team->get();
-            foreach ($query as $result) {
-                foreach ($result as $key => $value) {
-                    if ($value >= 0) {
-                        $stats[$key] = true;
-                    }
-                }
-            }
-        }
-        if ($query_game_box_mur->count() > 0) {
-            foreach ($query_game_box_mur->get() as $result) {
-                foreach ($result as $key => $value) {
-                    if (!empty($value) || $value == '0') {
-                        $stats[$key] = true;
-                    }
-                }
-            }
-        }
-
-        return $stats;
-    }
-
-    private function getTechs($game) {
-        $techs = [];
-        $opp = Model_Stat_Basket_Game_Box::query()->select('TF')->where('game_id', $game)->and_where_open()->where('opponent_id', '>', 0 )->where('period', 'Z')->where('TF', '>', 0)->and_where_close()->get_one() ?? false;
-        if ($opp) {
-            $query = Model_Stat_Basket_Game_Opponent::query()->select('name', 'TF')->where('game_id', $game)->and_where_open()->where('TF', '>', 0 )->where('period', 'Z')->and_where_close();
-            $q = 0;
-            $w = 0;
-            foreach ($query->get() as $value) {
-                $techs['opp'][$value->name] = $value->TF;
-                $q += $value->TF;
-                $w++;
-            }
-            if ($q < $opp->TF) {
-                $techs['opp']['TEAM'] = $opp->TF - $q;
-                $w++;
-            }
-            $techs['opptot'] = $opp->TF;
-            $techs['oppcnt'] = $w;
-        }
-        $mur = Model_Stat_Basket_Game_Box::query()->select('TF')->where('game_id', $game)->and_where_open()->where('opponent_id', 0 )->where('period', 'Z')->where('TF', '>', 0)->and_where_close()->get_one() ?? false;
-        if ($mur) {
-            $query = Model_Stat_Basket_Game_Person::query()->select('TF')->where('game_id', $game)->and_where_open()->where('TF', '>', 0 )->where('period', 'Z')->and_where_close();
-            $e = 0;
-            $r = 0;
-            foreach ($query->get() as $value) {
-                $techs['mur'][$value->name] = $value->TF;
-                $r += $value->TF;
-                $e++;
-            }
-            if ($r < $mur->TF) {
-                $techs['mur']['TEAM'] = ($mur->TF - $r);
-                $e++;
-            } 
-            $techs['murtot'] = $mur->TF;
-            $techs['murcnt'] = $e;
-        }
-        
-        return $techs;
     }
 
     public function action_create($id = null) {
