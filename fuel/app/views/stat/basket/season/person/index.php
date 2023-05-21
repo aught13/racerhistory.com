@@ -1,72 +1,79 @@
-<h2>Listing <span class='muted'>Stat_basket_season_people</span></h2>
+<?php 
+/**
+ * /app/views/stat/basket/season/person/index
+ * 
+ * Single season stats index
+ *
+ */
+?>
+<h2>Listing Player Season Stats</h2>
 <br>
+
 <?php if ($stat_basket_season_people): ?>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>Id</th>
-			<th>Team season roster id</th>
-			<th>GP</th>
-			<th>GS</th>
-			<th>MIN</th>
-			<th>FGM</th>
-			<th>FGA</th>
-			<th>TPM</th>
-			<th>TPA</th>
-			<th>FTM</th>
-			<th>FTA</th>
-			<th>ORB</th>
-			<th>DRB</th>
-			<th>RB</th>
-			<th>AST</th>
-			<th>STL</th>
-			<th>BS</th>
-			<th>TRN</th>
-			<th>PF</th>
-			<th>TF</th>
-			<th>PTS</th>
-			<th>&nbsp;</th>
-		</tr>
-	</thead>
-	<tbody>
-<?php foreach ($stat_basket_season_people as $item): ?>		<tr>
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Person</th>
+                    <th>Season</th>
+                    <th>GP</th>
+                    <th>GS</th>
+                    <th>MIN</th>
+                    <th>FGM</th>
+                    <th>FGA</th>
+                    <th>TPM</th>
+                    <th>TPA</th>
+                    <th>FTM</th>
+                    <th>FTA</th>
+                    <th>ORB</th>
+                    <th>DRB</th>
+                    <th>RB</th>
+                    <th>AST</th>
+                    <th>STL</th>
+                    <th>BS</th>
+                    <th>TRN</th>
+                    <th>PF</th>
+                    <th>TF</th>
+                    <th>PTS</th>
+                    <th></th>
+                </tr>
+            </thead>
 
-			<td><?php echo $item->id; ?></td>
-			<td><?php echo $item->team_season_roster_id; ?></td>
-			<td><?php echo $item->GP; ?></td>
-			<td><?php echo $item->GS; ?></td>
-			<td><?php echo $item->MIN; ?></td>
-			<td><?php echo $item->FGM; ?></td>
-			<td><?php echo $item->FGA; ?></td>
-			<td><?php echo $item->TPM; ?></td>
-			<td><?php echo $item->TPA; ?></td>
-			<td><?php echo $item->FTM; ?></td>
-			<td><?php echo $item->FTA; ?></td>
-			<td><?php echo $item->ORB; ?></td>
-			<td><?php echo $item->DRB; ?></td>
-			<td><?php echo $item->RB; ?></td>
-			<td><?php echo $item->AST; ?></td>
-			<td><?php echo $item->STL; ?></td>
-			<td><?php echo $item->BS; ?></td>
-			<td><?php echo $item->TRN; ?></td>
-			<td><?php echo $item->PF; ?></td>
-			<td><?php echo $item->TF; ?></td>
-			<td><?php echo $item->PTS; ?></td>
-			<td>
-				<div class="btn-toolbar">
-					<div class="btn-group">
-						<?php echo Html::anchor('stat/basket/season/person/view/'.$item->id, '<i class="icon-eye-open"></i> View', array('class' => 'btn btn-default btn-sm')); ?>						<?php echo Html::anchor('stat/basket/season/person/edit/'.$item->id, '<i class="icon-wrench"></i> Edit', array('class' => 'btn btn-default btn-sm')); ?>						<?php echo Html::anchor('stat/basket/season/person/delete/'.$item->id, '<i class="icon-trash icon-white"></i> Delete', array('class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Are you sure?')")); ?>					</div>
-				</div>
+            <tbody>
+                <?php foreach ($stat_basket_season_people as $item): ?>
+                    <tr>
+                        <td><?= $item->team_season_roster->persons->display; ?></td>
+                        <td><?= $item->team_season_roster->team_season->seasons->start.'-'.$item->team_season_roster->team_season->seasons->end; ?></td>
+                        <td><?= $item->GP; ?></td>
+                        <td><?= $item->GS; ?></td>
+                        <td><?= $item->MIN; ?></td>
+                        <td><?= $item->FGM; ?></td>
+                        <td><?= $item->FGA; ?></td>
+                        <td><?= $item->TPM; ?></td>
+                        <td><?= $item->TPA; ?></td>
+                        <td><?= $item->FTM; ?></td>
+                        <td><?= $item->FTA; ?></td>
+                        <td><?= $item->ORB; ?></td>
+                        <td><?= $item->DRB; ?></td>
+                        <td><?= $item->RB; ?></td>
+                        <td><?= $item->AST; ?></td>
+                        <td><?= $item->STL; ?></td>
+                        <td><?= $item->BS; ?></td>
+                        <td><?= $item->TRN; ?></td>
+                        <td><?= $item->PF; ?></td>
+                        <td><?= $item->TF; ?></td>
+                        <td><?= $item->PTS; ?></td>
 
-			</td>
-		</tr>
-<?php endforeach; ?>	</tbody>
-</table>
+                        <td>
+                            <?= Html::anchor('stat/basket/season/person/view/' . $item->id, 'View'); ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 
+    <?= $pagination ?>
 <?php else: ?>
-<p>No Stat_basket_season_people.</p>
-
-<?php endif; ?><p>
-	<?php echo Html::anchor('stat/basket/season/person/create', 'Add new Stat basket season person', array('class' => 'btn btn-success')); ?>
-
-</p>
+    <p>No Stats.</p>
+<?php endif; ?>

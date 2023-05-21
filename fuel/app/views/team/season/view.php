@@ -1,4 +1,12 @@
-<!-- TEAM SEASON VIEW -->
+<?php 
+/**
+ * /app/views/team/season/view
+ * 
+ * Single season view
+ *
+ */
+?>
+<h1><?= $title; ?></h1>
 <?php if (!empty($team_season->team_season_image)): ?>
     <div class="container">
         <div class="jumbotron">
@@ -9,44 +17,51 @@
 <!-- RECORD ROW -->
 <?php if (!empty($record)): ?>
     <table class="table">
-        <tr>
-            <th>Overall</th>
-            <th>Home</th>
-            <th>Road</th>
-            <th>Neutral</th>
-            <th>Post</th>
-        </tr>
-        <tr>
-            <td><?= $record['w']; ?> - <?= $record['l']; ?></td>
-            <td><?= $record['hw']; ?> - <?= $record['hl']; ?></td>
-            <td><?= $record['rw']; ?> - <?= $record['rl']; ?></td>
-            <td><?= $record['nw']; ?> - <?= $record['nl']; ?></td>
-            <td><?= $record['pw']; ?> - <?= $record['pl']; ?></td>
-        </tr>
+        <thead>
+            <tr>
+                <th>Overall</th>
+                <th>Home</th>
+                <th>Road</th>
+                <th>Neutral</th>
+                <th>Post</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?= $record['w']; ?> - <?= $record['l']; ?></td>
+                <td><?= $record['hw']; ?> - <?= $record['hl']; ?></td>
+                <td><?= $record['rw']; ?> - <?= $record['rl']; ?></td>
+                <td><?= $record['nw']; ?> - <?= $record['nl']; ?></td>
+                <td><?= $record['pw']; ?> - <?= $record['pl']; ?></td>
+            </tr>
+        </tbody>
+     <!-- CONFERENCE RECORDS -->
+<?php if (!empty($record['cw']) | !empty($record['cl']) ): ?>
+        <tfoot>
+            <tr>
+                <th>Conference</th>
+                <th>Home</th>
+                <th>Road</th>
+                <th>Finish</th>
+                <th>Tourn</th>
+            </tr>
+            <tr>
+                <td><?= $record['cw']; ?> - <?= $record['cl']; ?></td>   
+                <td><?= $record['chw']; ?> - <?= $record['chl']; ?></td>   
+                <td><?= $record['crw']; ?> - <?= $record['crl']; ?></td>
+                <td><?= !empty($team_season->league_finish)?$team_season->league_finish:''; ?></td>
+                <td><?= $record['ctw']; ?> - <?= $record['ctl']; ?></td>
+            </tr>
+        </tfoot> 
+<?php endif; ?>        
     </table>
 <?php else: ?>
     NO RECORDS
 <?php endif; ?>
     <!-- CONFERENCE RECORDS -->
 <?php if (!empty($record['cw']) | !empty($record['cl']) ): ?>
-    <table class="table">
-        <tr>
-            <th>Conference</th>
-            <th>Home</th>
-            <th>Road</th>
-            <th>Finish</th>
-            <th>Tourn</th>
-        </tr>
-        <tr>
-            <td><?= $record['cw']; ?> - <?= $record['cl']; ?></td>   
-            <td><?= $record['chw']; ?> - <?= $record['chl']; ?></td>   
-            <td><?= $record['crw']; ?> - <?= $record['crl']; ?></td>
-            <td><?= !empty($team_season->league_finish)?$team_season->league_finish:''; ?></td>
-            <td><?= $record['ctw']; ?> - <?= $record['ctl']; ?></td>
-        </tr>
-    </table>
     <?php if (!empty($team_season->league_torunament_finish)): ?>
-    <span class="col-sm-12"><?= $team_season->league_torunament_finish; ?></span>
+    <span class="col-sm-12">Conference Tournament <?= $team_season->league_torunament_finish; ?></span>
     <?php endif; ?>
 <?php endif; ?>
     <!-- POSTSEASON RECORD -->
@@ -56,7 +71,7 @@
     </div>    
 <?php endif; ?>
     <!-- SEASON NOTES -->
-<?= !empty($team_season->team_season_notes) ? '<div class="row">'.$team_season->team_season_notes.'</div>':''; ?>
+<?= !empty($team_season->team_season_notes) ? '<div class="row"><span class="col-sm-6">'.$team_season->team_season_notes.'</span></div>':''; ?>
 <hr>
     <!-- RECAP AND PREVIEW -->
 <div class="row">    
@@ -80,7 +95,7 @@
     <!-- SEASON GAMES -->
 <?php if (isset($team_season->games)): ?>
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-sm table-striped">
             <thead>
                 <tr>
                     <th>Date</th>
@@ -118,7 +133,7 @@
 <h2>Roster</h2>
 <?php if ($team_season->team_season_roster): ?>
     <div class="table-responsive">
-        <table class="table table-striped table-bordered table-condensed">
+        <table class="table table-striped table-bordered table-sm">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -153,7 +168,7 @@
 <div class="row">
     <?php if ($team_season->team_season_roster || $team_season->stat_basket_season_team): ?>
     <div class="col-sm-<?= $team_season->stat_basket_season_team && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA'])) ? 12 : 9 ;?>"> 
-        <table class="table table-condensed table-bordered table-striped">
+        <table class="table table-sm table-bordered table-striped">
             <thead>
                 <tr>
                     <th rowspan="2" colspan="<?= $team_season->team_season_roster ? 1 : (isset($stats['MIN']) ? 4 : 3) ; ?>"><?= $team_season->team_season_roster ? '#' : '' ; ?></th>

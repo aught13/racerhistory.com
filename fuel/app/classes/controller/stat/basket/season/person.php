@@ -3,8 +3,19 @@
 class Controller_Stat_Basket_Season_Person extends Controller_Template {
 
     public function action_index() {
-        $data['stat_basket_season_people'] = Model_Stat_Basket_Season_Person::find('all');
-        $this->template->title = "Stat_basket_season_people";
+        $query = Model_Stat_Basket_Season_Person::query();
+        
+        $pagination = Pagination::forge('stat_basket_season_people_pagination', [
+            'uri_segment' => 'page',
+        ]);
+        
+        $data['stat_basket_season_people'] = $query->rows_offset($pagination->offset)
+            ->rows_limit($pagination->per_page)
+            ->get();
+            
+        $this->template->set_global('pagination', $pagination, false);
+        
+        $this->template->title   = "Player Season Stats";
         $this->template->content = View::forge('stat/basket/season/person/index', $data);
     }
 
