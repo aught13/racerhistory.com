@@ -125,15 +125,15 @@
 </div>
 <hr><!-- Begin Stats -->
 <div class="row"><!-- Murray Stats -->
-    <?php if ($person_box || $game_box_mur): ?>
-    <div class="col-sm-<?= $game_box_mur && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA'])) ? 12 : 9 ;?>"> <!-- Murray Box -->
+    <?php if ($game->person_box || $game->game_box_mur): ?>
+    <div class="col-sm-<?= $game->game_box_mur && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA'])) ? 12 : 9 ;?>"> <!-- Murray Box -->
         <span class="h4">Murray State - <?= !empty($game->pts_mur) ? $game->pts_mur : '' ?></span>
         <table class="table table-condensed table-bordered table-striped">
             <thead>
                 <tr>
-                    <th rowspan="2" colspan="<?= $person_box ? 1 : (isset($stats['MIN']) ? 4 : 3) ; ?>"><?= $person_box ? '#' : '' ; ?></th>
-                    <?= $person_box ? '<th rowspan="2" colspan="2">Name</th>' : '' ; ?>
-                    <?= (isset($stats['MIN']) && $person_box) ? '<th rowspan="2" colspan="1">Min</th>' : '' ; ?>
+                    <th rowspan="2" colspan="<?= $game->person_box ? 1 : (isset($stats['MIN']) ? 4 : 3) ; ?>"><?= $game->person_box ? '#' : '' ; ?></th>
+                    <?= $game->person_box ? '<th rowspan="2" colspan="2">Name</th>' : '' ; ?>
+                    <?= (isset($stats['MIN']) && $game->person_box) ? '<th rowspan="2" colspan="1">Min</th>' : '' ; ?>
                     <th class="text-center" rowspan="<?= isset($stats['FGA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FGA']) ? 2 : 1 ;?>">FG</th>
                     <?= isset($stats['TPM']) ? '<th class="text-center" rowspan="1" colspan="'.(isset($stats['TPA']) ? 2 : 1).'">3P</th>' : '' ; ?>
                     <th class="text-center" rowspan="<?= isset($stats['FTA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FTA']) ? 2 : 1 ;?>">FT</th>
@@ -163,8 +163,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if ($person_box): ?> <!-- Individual Box -->
-                <?php foreach ($person_box as $value): ?>
+                <?php if ($game->person_box): ?> <!-- Individual Box -->
+                <?php foreach ($game->person_box as $value): ?>
                 <tr>
                     <?= '<td class="text-center">'.$value->team_season_roster->roster_number.'</td>' ;?>
                     <?= '<td>'.$value->team_season_roster->persons->display.'</td>' ;?>
@@ -193,8 +193,8 @@
                 <?php else: ?>
                 <tr></tr>
                 <?php endif; ?>
-                <?php if ($team_box): ?><!-- team -->
-                <?php foreach ($team_box as $value): ?>
+                <?php if ($game->team_box_opp): ?><!-- team -->
+                <?php foreach ($game->team_box_opp as $value): ?>
                 <tr>
                     <td colspan="<?= 3+count(array_filter(array(isset($stats['MIN']),isset($stats['FGM']),isset($stats['FGA']),isset($stats['TPM']),isset($stats['TPA']),isset($stats['FTM']),isset($stats['FTA'])))); ?>">Team</td>
                     <?= isset($stats['ORB']) ? '<td class="text-center">'.$value->ORB.'</td>' : ''; ?>
@@ -210,9 +210,9 @@
                 <?php endif; ?>
                 
             </tbody>    
-            <?php if ($game_box_mur): ?><!-- totals -->
+            <?php if ($game->game_box_mur): ?><!-- totals -->
             <tfoot>
-                <?php foreach ($game_box_mur as $value): ?>
+                <?php foreach ($game->game_box_mur as $value): ?>
                 <?php if ($value->period == 'Z'): ?>
                 <tr>
                     <th colspan="<?= isset($stats['MIN']) ? 4 : 3 ; ?>"><?= $value->period == 'Z' ? 'TOTALS' : Inflector::ordinalize($value->period).' Half'; ?></th>
@@ -250,8 +250,8 @@
     <?php endif; ?>
     <?= Html::anchor('admin/stat/basket/game/person/create/' . $game->id, 'Add Player Box', ['class' => 'btn btn-success']); ?>
     <?= Html::anchor('admin/stat/basket/game/box/create/' . $game->id, 'Add Game Box', ['class' => 'btn btn-success']); ?>
-    <?= ($team_box ? '' : Html::anchor('admin/stat/basket/game/team/create/' . $game->id, 'Add Team Box', ['class' => 'btn btn-success'])); ?>
-    <?php if ($game_box_mur && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA']))): ?>
+    <?= ($game->team_box_opp ? '' : Html::anchor('admin/stat/basket/game/team/create/' . $game->id, 'Add Team Box', ['class' => 'btn btn-success'])); ?>
+    <?php if ($game->game_box_mur && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA']))): ?>
     <div class="col-sm-12"><!-- Murray Shooting -->        
         <table class="table table-condensed table-striped">
             <thead>
@@ -264,7 +264,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($game_box_mur as $box): ?>
+                <?php foreach ($game->game_box_mur as $box): ?>
                 <?php if ($box->period != 'Z'):?>
                 <tr>
                     <th rowspan="1" colspan="1"><?= is_numeric($box->period) ? Inflector::ordinalize($box->period) : $box->period; ?></th>
@@ -282,7 +282,7 @@
                <?php endforeach; ?>
             </tbody>
             <tfoot>
-                <?php foreach ($game_box_mur as $box): ?>
+                <?php foreach ($game->game_box_mur as $box): ?>
                 <?php if ($box->period == 'Z'):?>
                 <tr>
                     <th rowspan="1" colspan="1">TOTALS</th>
@@ -303,15 +303,15 @@
     <?php endif; ?>
 </div>
 <div class="row"><!-- Opponent Stats -->
-    <?php if ($opponent_box || $game_box_opp): ?>
-    <div class="col-sm-<?= $game_box_opp && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA'])) ? 12 : 9 ;?>"> <!-- Opponent Box -->
+    <?php if ($game->opponent_box || $game->game_box_opp): ?>
+    <div class="col-sm-<?= $game->game_box_opp && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA'])) ? 12 : 9 ;?>"> <!-- Opponent Box -->
         <span class="h4"><?=$game->opponents->opponent_name; ?> - <?= !empty($game->pts_opp) ? $game->pts_opp : '' ?></span>
         <table class="table table-condensed table-bordered table-striped">
             <thead>
                 <tr>
-                    <th rowspan="2" colspan="<?= $opponent_box ? 1 : (isset($stats['MIN']) ? 4 : 3) ; ?>"><?= $opponent_box ? '#' : '' ; ?></th>
-                    <?= $opponent_box ? '<th rowspan="2" colspan="2">Name</th>' : '' ; ?>
-                    <?= (isset($stats['MIN']) && $opponent_box) ? '<th rowspan="2" colspan="1">Min</th>' : '' ; ?>
+                    <th rowspan="2" colspan="<?= $game->opponent_box ? 1 : (isset($stats['MIN']) ? 4 : 3) ; ?>"><?= $game->opponent_box ? '#' : '' ; ?></th>
+                    <?= $game->opponent_box ? '<th rowspan="2" colspan="2">Name</th>' : '' ; ?>
+                    <?= (isset($stats['MIN']) && $game->opponent_box) ? '<th rowspan="2" colspan="1">Min</th>' : '' ; ?>
                     <th class="text-center" rowspan="<?= isset($stats['FGA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FGA']) ? 2 : 1 ;?>">FG</th>
                     <?= isset($stats['TPM']) ? '<th class="text-center" rowspan="1" colspan="'.(isset($stats['TPA']) ? 2 : 1).'">3P</th>' : '' ; ?>
                     <th class="text-center" rowspan="<?= isset($stats['FTA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FTA']) ? 2 : 1 ;?>">FT</th>
@@ -341,8 +341,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if ($opponent_box): ?> <!-- Individual Box -->
-                <?php foreach ($opponent_box as $value): ?>
+                <?php if ($game->opponent_box): ?> <!-- Individual Box -->
+                <?php foreach ($game->opponent_box as $value): ?>
                 <tr>
                     <?= '<td class="text-center">'.$value->jersey.'</td>' ;?>
                     <?= '<td>'.$value->name.'</td>' ;?>
@@ -371,8 +371,8 @@
                 <?php else: ?>
                 <tr></tr>
                 <?php endif; ?>
-                <?php if ($team_box_opp): ?><!-- team box opp -->
-                <?php foreach ($team_box_opp as $value): ?>
+                <?php if ($game->team_box_opp): ?><!-- team box opp -->
+                <?php foreach ($game->team_box_opp as $value): ?>
                 <tr>
                     <td colspan="<?= 3+count(array_filter(array(isset($stats['MIN']),isset($stats['FGM']),isset($stats['FGA']),isset($stats['TPM']),isset($stats['TPA']),isset($stats['FTM']),isset($stats['FTA'])))); ?>">Team</td>
                     <?= isset($stats['ORB']) ? '<td class="text-center">'.$value->ORB.'</td>' : ''; ?>
@@ -387,9 +387,9 @@
                 <?php endforeach; ?>
                 <?php endif; ?>
             </tbody>    
-            <?php if ($game_box_opp): ?><!-- totals -->
+            <?php if ($game->game_box_opp): ?><!-- totals -->
             <tfoot>
-                <?php foreach ($game_box_opp as $value): ?>
+                <?php foreach ($game->game_box_opp as $value): ?>
                 <?php if ($value->period == 'Z'):?>
                 <tr>
                     <th colspan="<?= isset($stats['MIN']) ? 4 : 3 ; ?>"><?= $value->period == 'Z' ? 'TOTALS' : Inflector::ordinalize($value->period).' Half'; ?></th>
@@ -427,8 +427,8 @@
     <?php endif; ?>
     <?= Html::anchor('admin/stat/basket/game/opponent/create/' . $game->id, 'Add Opponent Box', ['class' => 'btn btn-success']); ?>
     <?= Html::anchor('admin/stat/basket/game/box/create/' . $game->id, 'Add Game Box', ['class' => 'btn btn-success']); ?>    
-    <?= $team_box_opp ? '' : Html::anchor('admin/stat/basket/game/team/create/'.$game->id.'/1', 'Add Team Box', ['class' => 'btn btn-success']); ?>
-    <?php if ($game_box_opp && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA']))): ?>
+    <?= $game->team_box_opp ? '' : Html::anchor('admin/stat/basket/game/team/create/'.$game->id.'/1', 'Add Team Box', ['class' => 'btn btn-success']); ?>
+    <?php if ($game->game_box_opp && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA']))): ?>
     <div class="col-sm-12"><!-- Opponent Shooting -->        
         <table class="table table-condensed table-striped">
             <thead>
@@ -441,7 +441,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($game_box_opp as $box): ?>
+                <?php foreach ($game->game_box_opp as $box): ?>
                 <?php if ($box->period != 'Z'):?>
                 <tr>
                     <th rowspan="1" colspan="1"><?= is_numeric($box->period) ? Inflector::ordinalize($box->period) : $box->period; ?></th>
@@ -459,7 +459,7 @@
                <?php endforeach; ?>
             </tbody>
             <tfoot>
-                <?php foreach ($game_box_opp as $box): ?>
+                <?php foreach ($game->game_box_opp as $box): ?>
                 <?php if ($box->period == 'Z'):?>
                 <tr>
                     <th rowspan="1" colspan="1">TOTALS</th>
@@ -479,7 +479,7 @@
     </div> 
     <?php endif; ?>
 </div>
-<?php if ($game_box_opp && $game_box_mur && (isset($stats['PNT']) ||isset($stats['OTO']) ||isset($stats['SND']) ||isset($stats['FB']) ||isset($stats['BN'])||isset($stats['TIED']) ||isset($stats['LC']))): ?>
+<?php if ($game->game_box_opp && $game->game_box_mur && (isset($stats['PNT']) ||isset($stats['OTO']) ||isset($stats['SND']) ||isset($stats['FB']) ||isset($stats['BN'])||isset($stats['TIED']) ||isset($stats['LC']))): ?>
 <?php 
     $scorecol = 0;
     isset($stats['PNT']) ? $scorecol++ : '';
@@ -507,7 +507,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($game_box_mur as $value): 
+            <?php foreach ($game->game_box_mur as $value): 
                 if ($value->period == 'Z'): ?>            
             <tr>
                 <th>Murray St</th>
@@ -521,7 +521,7 @@
             </tr>            
             <?php endif; 
             endforeach; ?>
-            <?php foreach ($game_box_opp as $value): 
+            <?php foreach ($game->game_box_opp as $value): 
                 if ($value->period == 'Z'): ?>
             <tr>
                 <th><?= $game->opponents->opponent_name ?></th>

@@ -51,7 +51,42 @@ class Model_Game extends \Orm\Model {
             
     protected static $_has_many = [
         'game_eav', 
-        'stat_basket_game_box' => [
+        'opponent_box' => [
+            'model_to' => 'Model_Stat_Basket_Game_Opponent',
+            'cascade_delete' => true
+        ], 
+        'team_box' => [
+            'model_to' => 'Model_Stat_Basket_Game_Team',
+            'conditions' => [
+                'where' => [['opp', '=', 0]]
+            ],            
+            'cascade_delete' => true
+        ], 
+        'team_box_opp' => [
+            'model_to' => 'Model_Stat_Basket_Game_Team',
+            'conditions' => [
+                'where' => [['opp', '=', 1]]
+            ],            
+            'cascade_delete' => true
+        ],  
+        'person_box' => [
+            'model_to' => 'Model_Stat_Basket_Game_Person',
+            'cascade_delete' => true
+        ], 
+        'game_box_mur' => [
+            'model_to' => 'Model_Stat_Basket_Game_Box',
+            'conditions' => [
+                'where' => [['opponent_id', '=', 0]],
+                'order_by' => ['period' => 'ASC']
+            ],            
+            'cascade_delete' => true
+        ], 
+        'game_box_opp' => [
+            'model_to' => 'Model_Stat_Basket_Game_Box',
+            'conditions' => [
+                'where' => [['opponent_id', '<>', 0]],
+                'order_by' => ['period' => 'ASC']
+            ],            
             'cascade_delete' => true
         ]
     ];
