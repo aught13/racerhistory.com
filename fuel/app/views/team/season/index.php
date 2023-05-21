@@ -1,3 +1,11 @@
+<?php 
+/**
+ * /app/views/team/season/index
+ * 
+ * Team season list
+ *
+ */
+?>
 <h2>Listing Team Seasons</h2>
 <br>
 

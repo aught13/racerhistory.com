@@ -1,3 +1,11 @@
+<?php 
+/**
+ * /app/views/admin/stat/basket/season/person/index
+ * 
+ * Single season view
+ *
+ */
+?>
 <h2>Listing Player Season Stats</h2>
 <br>
 
