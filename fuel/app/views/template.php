@@ -16,7 +16,7 @@
     </head>
 
     <body>
-        <div class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+        <div class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">RacerHistory.com</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -113,7 +113,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-sm">
+        <div class="container-lg">
             <div class="row">
                 <div class="col-md-12">
                     <?php if (Session::get_flash('success')): ?>
