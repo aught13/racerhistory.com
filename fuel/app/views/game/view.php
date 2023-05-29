@@ -6,27 +6,25 @@
  *
  */
 ?>
-<div class="col-md-12">
-    <span class="h3">
-        <?= "Murray State " . $game->team_season->teams->team_name.' '.$game->team_season->seasons->start.'-'.$game->team_season->seasons->end." " . ($game->hrn == 1 ? 'Vs' : ($game->hrn == 2 ? '@' : 'Vs')) . " " . $game->opponents->opponent_name . " - " .date_format(date_create($game->game_date), "l, F jS, Y"); ?>
+<div class="row">
+    <span class="h3 col-xl-6 text-center text-nowrap text-break">
+        <?= "Murray State " . $game->team_season->teams->team_name.' '.$game->team_season->seasons->start.'-'.$game->team_season->seasons->end; ?>    
+    </span>
+    <span class="h3 col-xl-1 text-center text-nowrap">
+        <?= $game->hrn == 1 ? 'Vs' : ($game->hrn == 2 ? '@' : 'Vs'); ?>
+    </span>
+    <span class="h3 col-xl-5 text-center text-nowrap">
+        <?= $game->opponents->opponent_name ;?>
+    </span>
+    <span class="h3 col-sm-12 text-center text-nowrap">
+        <?= date_format(date_create($game->game_date), "l, F jS, Y"); ?>
     </span>
     <hr>
 </div>
 <div class='container'>
-    <div>
-        <div class='row'>
-            <!-- Full date -->
-            <div class='col-sm-8 text-center'>
-                <span class="h3"><?= date_format(date_create($game->game_date), "l, F jS, Y") ?></span>
-            </div>
-            <!-- Team Season -->
-            <div class='col-sm-4'>
-            </div>
-        </div>
-    </div>
     <!-- Score -->
     <div class='row'>
-        <div class='col-sm-8'>
+        <div class='col-md-8'>
             <table class='table text-center'>
                 <thead>
                     <tr>
@@ -44,7 +42,7 @@
                 </tbody>
             </table>
         </div>
-        <div class='col-sm-4'><!-- Points by period -->            
+        <div class='col-md-4'><!-- Points by period -->            
             <?php if (isset($game->mur_1)) : ?>
             <table class='table table-condensed table-bordered '>
                 <thead>
@@ -103,28 +101,33 @@
     </div>
     <hr> <!-- Game Details -->
     <div class="row">
-        <!-- Site -->
-        <div class='col-sm-6'>
-            <span class="h4"><?= $game->places->place_name.', '.$game->places->place_state; ?> <?= empty($game->site_id) ? '' : $game->sites->site_name; ?></span>
+        <div class="col-md-8">
+            <div class="row">
+                <!-- Site -->
+                <div class='col-lg-9 h4'>
+                    <?= $game->places->place_name.', '.$game->places->place_state; ?> <?= empty($game->site_id) ? '' : $game->sites->site_name; ?>
+                </div>
+                <!-- Attendance -->
+                <div class="col-lg-3">
+                    <?= !empty($game->attendance) ? 'Attendance: '. number_format(floatval($game->attendance)) : '';?>
+                </div>
+            </div>
+            <!-- Refs -->
+            <div>
+                <?= ($game->ref_1 ?? false && ($game->ref_2 ?? false || $game->ref_3 ?? false)) ? 'Referees:' : ''?>
+                <?= !empty($game->ref_1 ?? null) ? $game->ref_1 : ''; ?><?= ($game->ref_1 ?? false && ($game->ref_2 ?? false || $game->ref_3 ?? false)) ? ', ' : ''?><?= !empty($game->ref_2 ?? null) ? $game->ref_2 : ''; ?><?= $game->ref_3 ?? false ? ', ' : ''; ?><?= $game->ref_3 ?? ''; ?>
+            </div>
+            
         </div>
-        <!-- Refs -->
-        <div class="col-sm-6">
-            <span><?= ($game->ref_1 ?? false && ($game->ref_2 ?? false || $game->ref_3 ?? false)) ? 'Referees:' : ''?></span>
-            <span>
-            <?= !empty($game->ref_1 ?? null) ? $game->ref_1 : ''; ?><?= ($game->ref_1 ?? false && ($game->ref_2 ?? false || $game->ref_3 ?? false)) ? ', ' : ''?><?= !empty($game->ref_2 ?? null) ? $game->ref_2 : ''; ?><?= $game->ref_3 ?? false ? ', ' : ''; ?><?= $game->ref_3 ?? ''; ?>
-            </span>
-        </div>
-        <!-- Time -->
-        <div class="col-sm-3">
-            <span><?= !empty($game->game_time) ? 'Game Time: '.date_format(date_create($game->game_time), 'g:i A') : '';?></span>
-        </div>
-        <!-- Duration -->
-        <div class="col-sm-3">
-            <span><?= !empty($game->game_duration) ? 'Duration: '.date_format(date_create($game->game_duration), 'G\h i\m') : '';?></span>
-        </div>
-        <!-- Attendance -->
-        <div class="col-sm-6">
-            <span><?= !empty($game->attendance) ? 'Attendance: '. number_format(floatval($game->attendance)) : '';?></span>
+        <div class="col-md-4">
+             <!-- Time -->
+            <div>
+                <span><?= !empty($game->game_time) ? 'Game Time: '.date_format(date_create($game->game_time), 'g:i A') : '';?></span>
+            </div>
+            <!-- Duration -->
+            <div>
+                <span><?= !empty($game->game_duration) ? 'Duration: '.date_format(date_create($game->game_duration), 'G\h i\m') : '';?></span>
+            </div>
         </div>
     </div>
 </div>
@@ -133,64 +136,64 @@
     <?php if ($game->person_box || $game->game_box_mur): ?>
     <div class="col-sm-<?= $game->game_box_mur && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA'])) ? 12 : 9 ;?> table-responsive"> <!-- Murray Box -->
         <span class="h4">Murray State - <?= !empty($game->pts_mur) ? $game->pts_mur : '' ?></span>
-        <table class="table table-sm table-bordered table-striped">
+        <table class="table table-sm table-striped border align-middle">
             <thead>
-                <tr>
-                    <th rowspan="2" colspan="<?= $game->person_box ? 1 : (isset($stats['MIN']) ? 4 : 3) ; ?>"><?= $game->person_box ? '#' : '' ; ?></th>
-                    <?= $game->person_box ? '<th rowspan="2" colspan="2">Name</th>' : '' ; ?>
-                    <?= (isset($stats['MIN']) && $game->person_box) ? '<th rowspan="2" colspan="1">Min</th>' : '' ; ?>
-                    <th class="text-center" rowspan="<?= isset($stats['FGA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FGA']) ? 2 : 1 ;?>">FG</th>
-                    <?= isset($stats['TPM']) ? '<th class="text-center" rowspan="1" colspan="'.(isset($stats['TPA']) ? 2 : 1).'">3P</th>' : '' ; ?>
-                    <th class="text-center" rowspan="<?= isset($stats['FTA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FTA']) ? 2 : 1 ;?>">FT</th>
-                    <?= isset($stats['ORB']) ? '<th class="text-center" rowspan="1" colspan="'.(isset($stats['DRB']) ? 3 : 2).'">Rebounds</th>' : (isset($stats['RB']) ? '<th rowspan="2" colspan="1">RB</th>' : '') ; ?>
-                    <?= isset($stats['PF']) ? '<th class="text-center" rowspan="'.(isset($stats['FD']) ? 1 : 2).'" colspan="'.(isset($stats['FD']) ? 2 : 1).'">'.(isset($stats['FD']) ? 'Fouls' : 'PF').'</th>' : '' ; ?>
-                    <?= isset($stats['AST']) ? '<th class="text-center" rowspan="2" colspan="1">AS</th>' : '' ; ?>
-                    <?= isset($stats['TRN']) ? '<th class="text-center" rowspan="2" colspan="1">TO</th>' : '' ; ?>
-                    <?= isset($stats['STL']) ? '<th class="text-center" rowspan="2" colspan="1">ST</th>' : '' ; ?>
-                    <?= isset($stats['BS']) ? '<th class="text-center" rowspan="'.(isset($stats['BD']) ? 1 : 2).'" colspan="'.(isset($stats['BD']) ? 2 : 1).'">'.(isset($stats['BD']) ? 'Blocks' : 'BS').'</th>' : '' ; ?>
-                    <th class="text-center" rowspan="2" colspan="1">PTS</th>
+                <tr class="border">
+                    <th class="border border-end-0 text-center" rowspan="2" colspan="<?= $game->person_box ? 1 : 3 ; ?>"><?= $game->person_box ? '#' : '' ; ?></th>
+                    <?= $game->person_box ? '<th class="border border-start-0" rowspan="2" colspan="2">Name</th>' : '' ; ?>
+                    <?= (isset($stats['MIN']) && $game->person_box) ? '<th class="border d-none d-md-table-cell" rowspan="2" colspan="1">Min</th>' : '' ; ?>
+                    <th class="border text-center" rowspan="<?= isset($stats['FGA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FGA']) ? 2 : 1 ;?>">FG</th>
+                    <?= isset($stats['TPM']) ? '<th class="border text-center" rowspan="1" colspan="'.(isset($stats['TPA']) ? 2 : 1).'">3P</th>' : '' ; ?>
+                    <th class="border text-center d-none d-md-table-cell" rowspan="<?= isset($stats['FTA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FTA']) ? 2 : 1 ;?>">FT</th>
+                    <?= isset($stats['ORB']) ? '<th class="border text-center d-none d-md-table-cell" rowspan="1" colspan="'.(isset($stats['DRB']) ? 3 : 2).'">Rebounds</th><th class="border d-md-none"rowspan="2" colspan="1">RB</th>' : (isset($stats['RB']) ? '<th class="border " rowspan="2" colspan="1">RB</th>' : '') ; ?>
+                    <?= isset($stats['PF']) ? '<th class="border text-center" rowspan="'.(isset($stats['FD']) ? 1 : 2).'" colspan="'.(isset($stats['FD']) ? 2 : 1).'">'.(isset($stats['FD']) ? 'Fouls' : 'PF').'</th>' : '' ; ?>
+                    <?= isset($stats['AST']) ? '<th class="border text-center" rowspan="2" colspan="1">AS</th>' : '' ; ?>
+                    <?= isset($stats['TRN']) ? '<th class="border text-center d-none d-md-table-cell" rowspan="2" colspan="1">TO</th>' : '' ; ?>
+                    <?= isset($stats['STL']) ? '<th class="border text-center d-none d-md-table-cell" rowspan="2" colspan="1">ST</th>' : '' ; ?>
+                    <?= isset($stats['BS']) ? '<th class="border text-center d-none d-md-table-cell" rowspan="'.(isset($stats['BD']) ? 1 : 2).'" colspan="'.(isset($stats['BD']) ? 2 : 1).'">'.(isset($stats['BD']) ? 'Blocks' : 'BS').'</th>' : '' ; ?>
+                    <th class="border text-center" rowspan="2" colspan="1">PTS</th>
                 </tr>
                 <tr>
-                    <?= isset($stats['FGA']) ? '<th class="text-center">M</th>' : '' ; ?>
-                    <?= isset($stats['FGA']) ? '<th class="text-center">A</th>' : '' ; ?>
-                    <?= isset($stats['TPA']) ? '<th class="text-center">M</th>' : '' ; ?>
-                    <?= isset($stats['TPA']) ? '<th class="text-center">A</th>' : '' ; ?>
-                    <?= isset($stats['FTA']) ? '<th class="text-center">M</th>' : '' ; ?>
-                    <?= isset($stats['FTA']) ? '<th class="text-center">A</th>' : '' ; ?>
-                    <?= isset($stats['ORB']) ? '<th class="text-center">OR</th>' : '' ; ?>
-                    <?= isset($stats['DRB']) ? '<th class="text-center">DR</th>' : '' ; ?>
-                    <?= (isset($stats['ORB']) || isset($stats['DRB'])) ? '<th class="text-center">TOT</th>' : '' ; ?>
-                    <?= isset($stats['FD']) ? '<th class="text-center">PF</th>' : '' ; ?>
-                    <?= isset($stats['FD']) ? '<th class="text-center">FD</th>' : '' ; ?>
-                    <?= isset($stats['BD']) ? '<th class="text-center">BS</th>' : '' ; ?>
-                    <?= isset($stats['BD']) ? '<th class="text-center">BA</th>' : '' ; ?>
+                    <?= isset($stats['FGA']) ? '<th class="text-center border">M</th>' : '' ; ?>
+                    <?= isset($stats['FGA']) ? '<th class="border text-center">A</th>' : '' ; ?>
+                    <?= isset($stats['TPA']) ? '<th class="border text-center">M</th>' : '' ; ?>
+                    <?= isset($stats['TPA']) ? '<th class="border text-center">A</th>' : '' ; ?>
+                    <?= isset($stats['FTA']) ? '<th class="border text-center d-none d-md-table-cell">M</th>' : '' ; ?>
+                    <?= isset($stats['FTA']) ? '<th class="border text-center d-none d-md-table-cell">A</th>' : '' ; ?>
+                    <?= isset($stats['ORB']) ? '<th class="border text-center d-none d-md-table-cell">OR</th>' : '' ; ?>
+                    <?= isset($stats['DRB']) ? '<th class="border text-center d-none d-md-table-cell">DR</th>' : '' ; ?>
+                    <?= (isset($stats['ORB']) || isset($stats['DRB'])) ? '<th class="border text-center d-none d-md-table-cell">TRB</th>' : '' ; ?>
+                    <?= isset($stats['FD']) ? '<th class="border text-center">PF</th>' : '' ; ?>
+                    <?= isset($stats['FD']) ? '<th class="border text-center d-none d-md-table-cell">FD</th>' : '' ; ?>
+                    <?= isset($stats['BD']) ? '<th class="border text-center d-none d-md-table-cell">BS</th>' : '' ; ?>
+                    <?= isset($stats['BD']) ? '<th class="border text-center d-none d-md-table-cell">BA</th>' : '' ; ?>
                 </tr>
             </thead>
             <tbody>
                 <?php if ($game->person_box): ?> <!-- Individual Box -->
                 <?php foreach ($game->person_box as $value): ?>
-                <tr>
+                <tr class="border">
                     <?= '<td class="text-center">'.$value->team_season_roster->roster_number.'</td>' ;?>
                     <?= '<td>'.$value->team_season_roster->persons->display.'</td>' ;?>
                     <?= !empty($value->GS) ? '<td class="text-center">'.(empty($value->team_season_roster->roster_position) ? '*' : $value->team_season_roster->roster_position).'</td>' : '<td></td>' ;?>
-                    <?= isset($stats['MIN']) ? '<td class="text-center">'.$value->MIN.'</td>' : '' ; ?>
-                    <?= isset($stats['FGM']) ? '<td class="text-center">'.$value->FGM.'</td>' : '' ; ?>
-                    <?= isset($stats['FGA']) ? '<td class="text-center">'.$value->FGA.'</td>' : '' ; ?>
-                    <?= isset($stats['TPM']) ? '<td class="text-center">'.$value->TPM.'</td>' : '' ; ?>
-                    <?= isset($stats['TPA']) ? '<td class="text-center">'.$value->TPA.'</td>' : '' ; ?>
-                    <?= isset($stats['FTM']) ? '<td class="text-center">'.$value->FTM.'</td>' : '' ; ?>
-                    <?= isset($stats['FTA']) ? '<td class="text-center">'.$value->FTA.'</td>' : '' ; ?>
-                    <?= isset($stats['ORB']) ? '<td class="text-center">'.$value->ORB.'</td>' : '' ; ?>
-                    <?= isset($stats['DRB']) ? '<td class="text-center">'.$value->DRB.'</td>' : '' ; ?>
-                    <?= isset($stats['RB']) ? '<td class="text-center">'.$value->RB.'</td>' : '' ; ?>
-                    <?= isset($stats['PF']) ? '<td class="text-center">'.$value->PF.'</td>' : '' ; ?>
-                    <?= isset($stats['FD']) ? '<td class="text-center">'.$value->FD.'</td>' : '' ; ?>
-                    <?= isset($stats['AST']) ? '<td class="text-center">'.$value->AST.'</td>' : '' ; ?>
-                    <?= isset($stats['TRN']) ? '<td class="text-center">'.$value->TRN.'</td>' : '' ; ?>
-                    <?= isset($stats['STL']) ? '<td class="text-center">'.$value->STL.'</td>' : '' ; ?>
-                    <?= isset($stats['BS']) ? '<td class="text-center">'.$value->BS.'</td>' : '' ; ?>
-                    <?= isset($stats['BD']) ? '<td class="text-center">'.$value->BD.'</td>' : '' ; ?>
-                    <?= isset($stats['PTS']) ? '<td class="text-center">'.$value->PTS.'</td>' : '' ; ?>
+                    <?= isset($stats['MIN']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->MIN.'</td>' : '' ; ?>
+                    <?= isset($stats['FGM']) ? '<td class="border text-center">'.$value->FGM.'</td>' : '' ; ?>
+                    <?= isset($stats['FGA']) ? '<td class="border text-center">'.$value->FGA.'</td>' : '' ; ?>
+                    <?= isset($stats['TPM']) ? '<td class="border text-center">'.$value->TPM.'</td>' : '' ; ?>
+                    <?= isset($stats['TPA']) ? '<td class="border text-center">'.$value->TPA.'</td>' : '' ; ?>
+                    <?= isset($stats['FTM']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->FTM.'</td>' : '' ; ?>
+                    <?= isset($stats['FTA']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->FTA.'</td>' : '' ; ?>
+                    <?= isset($stats['ORB']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->ORB.'</td>' : '' ; ?>
+                    <?= isset($stats['DRB']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->DRB.'</td>' : '' ; ?>
+                    <?= isset($stats['RB']) ? '<td class="border text-center">'.$value->RB.'</td>' : '' ; ?>
+                    <?= isset($stats['PF']) ? '<td class="border text-center">'.$value->PF.'</td>' : '' ; ?>
+                    <?= isset($stats['FD']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->FD.'</td>' : '' ; ?>
+                    <?= isset($stats['AST']) ? '<td class="border text-center">'.$value->AST.'</td>' : '' ; ?>
+                    <?= isset($stats['TRN']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->TRN.'</td>' : '' ; ?>
+                    <?= isset($stats['STL']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->STL.'</td>' : '' ; ?>
+                    <?= isset($stats['BS']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->BS.'</td>' : '' ; ?>
+                    <?= isset($stats['BD']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->BD.'</td>' : '' ; ?>
+                    <?= isset($stats['PTS']) ? '<td class="border text-center">'.$value->PTS.'</td>' : '' ; ?>
                 </tr>
                 <?php endforeach; ?>
                 <?php else: ?>
@@ -198,15 +201,26 @@
                 <?php endif; ?>
                 <?php if ($game->team_box): ?><!-- team -->
                 <?php foreach ($game->team_box as $value): ?>
-                <tr>
-                    <td colspan="<?= 3+count(array_filter(array(isset($stats['MIN']),isset($stats['FGM']),isset($stats['FGA']),isset($stats['TPM']),isset($stats['TPA']),isset($stats['FTM']),isset($stats['FTA'])))); ?>">Team</td>
-                    <?= isset($stats['ORB']) ? '<td class="text-center">'.$value->ORB.'</td>' : ''; ?>
-                    <?= isset($stats['DRB']) ? '<td class="text-center">'.$value->DRB.'</td>' : ''; ?>
-                    <?= isset($stats['RB']) ? '<td class="text-center">'.$value->RB.'</td>' : ''; ?>
-                    <?= isset($stats['TRN']) ? ((isset($stats['AST']) || isset($stats['PF'])) ? '<td colspan="'.count(array_filter([isset($stats['AST']), isset($stats['PF']),isset($stats['FD'])])).'"></td>' : '') : '' ; ?>
-                    <?= isset($stats['TRN']) ? '<td class="text-center">'.$value->TRN.'</td>' : ''; ?>
-                    <?= isset($stats['PTS']) ? ((isset($stats['STL']) || isset($stats['BS'])) ? '<td colspan="'.count(array_filter([isset($stats['STL']), isset($stats['BS']),isset($stats['BD'])])).'"></td>' : '') : '' ; ?>
-                    <?= isset($stats['PTS']) ? '<td class="text-center">'.$value->PTS.'</td>' : ''; ?>
+                <tr class="border">
+                    <td colspan="3">Team</td>
+                    <?= isset($stats['MIN']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['FGM']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['FGA']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['TPM']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['TPA']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['FTM']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['FTA']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['ORB']) ? '<td class="border d-none d-md-table-cell">'.$value->ORB.'</td>' : ''; ?>
+                    <?= isset($stats['DRB']) ? '<td class="border d-none d-md-table-cell">'.$value->DRB.'</td>' : ''; ?>
+                    <?= isset($stats['RB']) ? '<td class="border text-center">'.$value->RB.'</td>' : ''; ?>                    
+                    <?= isset($stats['PF']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['FD']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['AST']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['TRN']) ? '<td class="border d-none d-md-table-cell">'.$value->TRN.'</td>' : '' ; ?>
+                    <?= isset($stats['STL']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['BS']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['BD']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['PTS']) ? '<td class="border text-center">'.$value->PTS.'</td>' : ''; ?>
                 </tr>                
                 <?php endforeach; ?>
                 <?php endif; ?>
@@ -217,22 +231,23 @@
                 <?php foreach ($game->game_box_mur as $value): ?>
                 <?php if ($value->period == 'Z'): ?>
                 <tr>
-                    <th colspan="<?= isset($stats['MIN']) ? 4 : 3 ; ?>"><?= $value->period == 'Z' ? 'TOTALS' : Inflector::ordinalize($value->period).' Half'; ?></th>
-                    <?= isset($stats['FGM']) ? '<th class="text-center">'.$value->FGM.'</th>' : ''; ?>
-                    <?= isset($stats['FGA']) ? '<th class="text-center">'.$value->FGA.'</th>' : ''; ?>
-                    <?= isset($stats['TPM']) ? '<th class="text-center">'.$value->TPM.'</th>' : ''; ?>
-                    <?= isset($stats['TPA']) ? '<th class="text-center">'.$value->TPA.'</th>' : ''; ?>
-                    <?= isset($stats['FTM']) ? '<th class="text-center">'.$value->FTM.'</th>' : ''; ?>
-                    <?= isset($stats['FTA']) ? '<th class="text-center">'.$value->FTA.'</th>' : ''; ?>
-                    <?= isset($stats['ORB']) ? '<th class="text-center">'.$value->ORB.'</th>' : ''; ?>
-                    <?= isset($stats['DRB']) ? '<th class="text-center">'.$value->DRB.'</th>' : ''; ?>
-                    <?= isset($stats['RB']) ? '<th class="text-center">'.$value->RB.'</th>' : ''; ?>
-                    <?= isset($stats['PF']) ? '<th class="text-center"'.(isset($stats['FD']) ? 'colspan="2"' : '').'>'.$value->PF.'</th>' : ''; ?>
-                    <?= isset($stats['AST']) ? '<th class="text-center">'.$value->AST.'</th>' : ''; ?>
-                    <?= isset($stats['TRN']) ? '<th class="text-center">'.$value->TRN.'</th>' : ''; ?>
-                    <?= isset($stats['STL']) ? '<th class="text-center">'.$value->STL.'</th>' : ''; ?>
-                    <?= isset($stats['BS']) ? '<th class="text-center"'.(isset($stats['BD']) ? 'colspan="2"' : '').'>'.$value->BS.'</th>' : ''; ?>
-                    <?= isset($stats['PTS']) ? '<th class="text-center">'.$value->PTS.'</th>' : ''; ?>
+                    <th colspan="3"><?= $value->period == 'Z' ? 'TOTALS' : Inflector::ordinalize($value->period).' Half'; ?></th>
+                    <?= isset($stats['MIN']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['FGM']) ? '<th class="border text-center">'.$value->FGM.'</th>' : ''; ?>
+                    <?= isset($stats['FGA']) ? '<th class="border text-center">'.$value->FGA.'</th>' : ''; ?>
+                    <?= isset($stats['TPM']) ? '<th class="border text-center">'.$value->TPM.'</th>' : ''; ?>
+                    <?= isset($stats['TPA']) ? '<th class="border text-center">'.$value->TPA.'</th>' : ''; ?>
+                    <?= isset($stats['FTM']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->FTM.'</th>' : ''; ?>
+                    <?= isset($stats['FTA']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->FTA.'</th>' : ''; ?>
+                    <?= isset($stats['ORB']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->ORB.'</th>' : ''; ?>
+                    <?= isset($stats['DRB']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->DRB.'</th>' : ''; ?>
+                    <?= isset($stats['RB']) ? '<th class="border text-center">'.$value->RB.'</th>' : ''; ?>
+                    <?= isset($stats['PF']) ? '<th class="border text-center"'.(isset($stats['FD']) ? 'colspan="2"' : '').'>'.$value->PF.'</th>' : ''; ?>
+                    <?= isset($stats['AST']) ? '<th class="border text-center">'.$value->AST.'</th>' : ''; ?>
+                    <?= isset($stats['TRN']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->TRN.'</th>' : ''; ?>
+                    <?= isset($stats['STL']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->STL.'</th>' : ''; ?>
+                    <?= isset($stats['BS']) ? '<th class="border text-center d-none d-md-table-cell"'.(isset($stats['BD']) ? 'colspan="2"' : '').'>'.$value->BS.'</th>' : ''; ?>
+                    <?= isset($stats['PTS']) ? '<th class="border text-center">'.$value->PTS.'</th>' : ''; ?>
                 </tr>
                 <?php endif; ?>
                 <?php endforeach; ?>
@@ -302,64 +317,64 @@
     <?php if ($game->opponent_box || $game->game_box_opp): ?>
     <div class="col-sm-<?= $game->game_box_opp && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA'])) ? 12 : 9 ;?> table-responsive"> <!-- Opponent Box -->
         <span class="h4"><?=$game->opponents->opponent_name; ?> - <?= !empty($game->pts_opp) ? $game->pts_opp : '' ?></span>
-        <table class="table table-sm table-bordered table-striped">
+        <table class="table table-sm table-striped align-middle border">
             <thead>
-                <tr>
-                    <th rowspan="2" colspan="<?= $game->opponent_box ? 1 : (isset($stats['MIN']) ? 4 : 3) ; ?>"><?= $game->opponent_box ? '#' : '' ; ?></th>
+                <tr class="border">
+                    <th class="border-start" rowspan="2" colspan="<?= $game->opponent_box ? 1 : (isset($stats['MIN']) ? 4 : 3) ; ?>"><?= $game->opponent_box ? '#' : '' ; ?></th>
                     <?= $game->opponent_box ? '<th rowspan="2" colspan="2">Name</th>' : '' ; ?>
-                    <?= (isset($stats['MIN']) && $game->opponent_box) ? '<th rowspan="2" colspan="1">Min</th>' : '' ; ?>
-                    <th class="text-center" rowspan="<?= isset($stats['FGA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FGA']) ? 2 : 1 ;?>">FG</th>
-                    <?= isset($stats['TPM']) ? '<th class="text-center" rowspan="1" colspan="'.(isset($stats['TPA']) ? 2 : 1).'">3P</th>' : '' ; ?>
-                    <th class="text-center" rowspan="<?= isset($stats['FTA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FTA']) ? 2 : 1 ;?>">FT</th>
-                    <?= isset($stats['ORB']) ? '<th class="text-center" rowspan="1" colspan="'.(isset($stats['DRB']) ? 3 : 2).'">Rebounds</th>' : (isset($stats['RB']) ? '<th rowspan="2" colspan="1">RB</th>' : '') ; ?>
-                    <?= isset($stats['PF']) ? '<th class="text-center" rowspan="'.(isset($stats['FD']) ? 1 : 2).'" colspan="'.(isset($stats['FD']) ? 2 : 1).'">'.(isset($stats['FD']) ? 'Fouls' : 'PF').'</th>' : '' ; ?>
-                    <?= isset($stats['AST']) ? '<th class="text-center" rowspan="2" colspan="1">AS</th>' : '' ; ?>
-                    <?= isset($stats['TRN']) ? '<th class="text-center" rowspan="2" colspan="1">TO</th>' : '' ; ?>
-                    <?= isset($stats['STL']) ? '<th class="text-center" rowspan="2" colspan="1">ST</th>' : '' ; ?>
-                    <?= isset($stats['BS']) ? '<th class="text-center" rowspan="'.(isset($stats['BD']) ? 1 : 2).'" colspan="'.(isset($stats['BD']) ? 2 : 1).'">'.(isset($stats['BD']) ? 'Blocks' : 'BS').'</th>' : '' ; ?>
-                    <th class="text-center" rowspan="2" colspan="1">PTS</th>
+                    <?= (isset($stats['MIN']) && $game->opponent_box) ? '<th class="border d-none d-md-table-cell" rowspan="2" colspan="1">Min</th>' : '' ; ?>
+                    <th class="border text-center" rowspan="<?= isset($stats['FGA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FGA']) ? 2 : 1 ;?>">FG</th>
+                    <?= isset($stats['TPM']) ? '<th class="border text-center" rowspan="1" colspan="'.(isset($stats['TPA']) ? 2 : 1).'">3P</th>' : '' ; ?>
+                    <th class="border text-center d-none d-md-table-cell" rowspan="<?= isset($stats['FTA']) ? 1 : 2 ;?>" colspan="<?= isset($stats['FTA']) ? 2 : 1 ;?>">FT</th>
+                    <?= isset($stats['ORB']) ? '<th class="border text-center d-none d-md-table-cell" rowspan="1" colspan="'.(isset($stats['DRB']) ? 3 : 2).'">Rebounds</th><th class="border d-md-none"rowspan="2" colspan="1">RB</th>' : (isset($stats['RB']) ? '<th class="border" rowspan="2" colspan="1">RB</th>' : '') ; ?>
+                    <?= isset($stats['PF']) ? '<th class="border text-center" rowspan="'.(isset($stats['FD']) ? 1 : 2).'" colspan="'.(isset($stats['FD']) ? 2 : 1).'">'.(isset($stats['FD']) ? 'Fouls' : 'PF').'</th>' : '' ; ?>
+                    <?= isset($stats['AST']) ? '<th class="border text-center" rowspan="2" colspan="1">AS</th>' : '' ; ?>
+                    <?= isset($stats['TRN']) ? '<th class="border text-center d-none d-md-table-cell" rowspan="2" colspan="1">TO</th>' : '' ; ?>
+                    <?= isset($stats['STL']) ? '<th class="border text-center d-none d-md-table-cell" rowspan="2" colspan="1">ST</th>' : '' ; ?>
+                    <?= isset($stats['BS']) ? '<th class="border text-center d-none d-md-table-cell" rowspan="'.(isset($stats['BD']) ? 1 : 2).'" colspan="'.(isset($stats['BD']) ? 2 : 1).'">'.(isset($stats['BD']) ? 'Blocks' : 'BS').'</th>' : '' ; ?>
+                    <th class="border text-center" rowspan="2" colspan="1">PTS</th>
                 </tr>
                 <tr>
-                    <?= isset($stats['FGA']) ? '<th class="text-center">M</th>' : '' ; ?>
-                    <?= isset($stats['FGA']) ? '<th class="text-center">A</th>' : '' ; ?>
-                    <?= isset($stats['TPA']) ? '<th class="text-center">M</th>' : '' ; ?>
-                    <?= isset($stats['TPA']) ? '<th class="text-center">A</th>' : '' ; ?>
-                    <?= isset($stats['FTA']) ? '<th class="text-center">M</th>' : '' ; ?>
-                    <?= isset($stats['FTA']) ? '<th class="text-center">A</th>' : '' ; ?>
-                    <?= isset($stats['ORB']) ? '<th class="text-center">OR</th>' : '' ; ?>
-                    <?= isset($stats['DRB']) ? '<th class="text-center">DR</th>' : '' ; ?>
-                    <?= (isset($stats['ORB']) || isset($stats['DRB'])) ? '<th class="text-center">TOT</th>' : '' ; ?>
-                    <?= isset($stats['FD']) ? '<th class="text-center">PF</th>' : '' ; ?>
-                    <?= isset($stats['FD']) ? '<th class="text-center">FD</th>' : '' ; ?>
-                    <?= isset($stats['BD']) ? '<th class="text-center">BS</th>' : '' ; ?>
-                    <?= isset($stats['BD']) ? '<th class="text-center">BA</th>' : '' ; ?>
+                    <?= isset($stats['FGA']) ? '<th class="border text-center">M</th>' : '' ; ?>
+                    <?= isset($stats['FGA']) ? '<th class="border text-center">A</th>' : '' ; ?>
+                    <?= isset($stats['TPA']) ? '<th class="border text-center">M</th>' : '' ; ?>
+                    <?= isset($stats['TPA']) ? '<th class="border text-center">A</th>' : '' ; ?>
+                    <?= isset($stats['FTA']) ? '<th class="border text-center d-none d-md-table-cell">M</th>' : '' ; ?>
+                    <?= isset($stats['FTA']) ? '<th class="border text-center d-none d-md-table-cell">A</th>' : '' ; ?>
+                    <?= isset($stats['ORB']) ? '<th class="border text-center d-none d-md-table-cell">OR</th>' : '' ; ?>
+                    <?= isset($stats['DRB']) ? '<th class="border text-center d-none d-md-table-cell">DR</th>' : '' ; ?>
+                    <?= (isset($stats['ORB']) || isset($stats['DRB'])) ? '<th class="border text-center d-none d-md-table-cell">TOT</th>' : '' ; ?>
+                    <?= isset($stats['FD']) ? '<th class="border text-center">PF</th>' : '' ; ?>
+                    <?= isset($stats['FD']) ? '<th class="border text-center d-none d-md-table-cell">FD</th>' : '' ; ?>
+                    <?= isset($stats['BD']) ? '<th class="border text-center d-none d-md-table-cell">BS</th>' : '' ; ?>
+                    <?= isset($stats['BD']) ? '<th class="border text-center d-none d-md-table-cell">BA</th>' : '' ; ?>
                 </tr>
             </thead>
             <tbody>
                 <?php if ($game->opponent_box): ?> <!-- Individual Box -->
                 <?php foreach ($game->opponent_box as $value): ?>
-                <tr>
+                <tr class="border">
                     <?= '<td class="text-center">'.$value->jersey.'</td>' ;?>
                     <?= '<td>'.$value->name.'</td>' ;?>
                     <?= !empty($value->GS) ? '<td class="text-center">'.(empty($value->position) ? '*' : $value->position).'</td>' : '<td></td>' ;?>
-                    <?= isset($stats['MIN']) ? '<td class="text-center">'.$value->MIN.'</td>' : '' ; ?>
-                    <?= isset($stats['FGM']) ? '<td class="text-center">'.$value->FGM.'</td>' : '' ; ?>
-                    <?= isset($stats['FGA']) ? '<td class="text-center">'.$value->FGA.'</td>' : '' ; ?>
-                    <?= isset($stats['TPM']) ? '<td class="text-center">'.$value->TPM.'</td>' : '' ; ?>
-                    <?= isset($stats['TPA']) ? '<td class="text-center">'.$value->TPA.'</td>' : '' ; ?>
-                    <?= isset($stats['FTM']) ? '<td class="text-center">'.$value->FTM.'</td>' : '' ; ?>
-                    <?= isset($stats['FTA']) ? '<td class="text-center">'.$value->FTA.'</td>' : '' ; ?>
-                    <?= isset($stats['ORB']) ? '<td class="text-center">'.$value->ORB.'</td>' : '' ; ?>
-                    <?= isset($stats['DRB']) ? '<td class="text-center">'.$value->DRB.'</td>' : '' ; ?>
-                    <?= isset($stats['RB']) ? '<td class="text-center">'.$value->RB.'</td>' : '' ; ?>
-                    <?= isset($stats['PF']) ? '<td class="text-center">'.$value->PF.'</td>' : '' ; ?>
-                    <?= isset($stats['FD']) ? '<td class="text-center">'.$value->FD.'</td>' : '' ; ?>
-                    <?= isset($stats['AST']) ? '<td class="text-center">'.$value->AST.'</td>' : '' ; ?>
-                    <?= isset($stats['TRN']) ? '<td class="text-center">'.$value->TRN.'</td>' : '' ; ?>
-                    <?= isset($stats['STL']) ? '<td class="text-center">'.$value->STL.'</td>' : '' ; ?>
-                    <?= isset($stats['BS']) ? '<td class="text-center">'.$value->BS.'</td>' : '' ; ?>
-                    <?= isset($stats['BD']) ? '<td class="text-center">'.$value->BD.'</td>' : '' ; ?>
-                    <?= isset($stats['PTS']) ? '<td class="text-center">'.$value->PTS.'</td>' : '' ; ?>
+                    <?= isset($stats['MIN']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->MIN.'</td>' : '' ; ?>
+                    <?= isset($stats['FGM']) ? '<td class="border text-center">'.$value->FGM.'</td>' : '' ; ?>
+                    <?= isset($stats['FGA']) ? '<td class="border text-center">'.$value->FGA.'</td>' : '' ; ?>
+                    <?= isset($stats['TPM']) ? '<td class="border text-center">'.$value->TPM.'</td>' : '' ; ?>
+                    <?= isset($stats['TPA']) ? '<td class="border text-center">'.$value->TPA.'</td>' : '' ; ?>
+                    <?= isset($stats['FTM']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->FTM.'</td>' : '' ; ?>
+                    <?= isset($stats['FTA']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->FTA.'</td>' : '' ; ?>
+                    <?= isset($stats['ORB']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->ORB.'</td>' : '' ; ?>
+                    <?= isset($stats['DRB']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->DRB.'</td>' : '' ; ?>
+                    <?= isset($stats['RB']) ? '<td class="border text-center">'.$value->RB.'</td>' : '' ; ?>
+                    <?= isset($stats['PF']) ? '<td class="border text-center">'.$value->PF.'</td>' : '' ; ?>
+                    <?= isset($stats['FD']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->FD.'</td>' : '' ; ?>
+                    <?= isset($stats['AST']) ? '<td class="border text-center">'.$value->AST.'</td>' : '' ; ?>
+                    <?= isset($stats['TRN']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->TRN.'</td>' : '' ; ?>
+                    <?= isset($stats['STL']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->STL.'</td>' : '' ; ?>
+                    <?= isset($stats['BS']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->BS.'</td>' : '' ; ?>
+                    <?= isset($stats['BD']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->BD.'</td>' : '' ; ?>
+                    <?= isset($stats['PTS']) ? '<td class="border text-center">'.$value->PTS.'</td>' : '' ; ?>
                 </tr>
                 <?php endforeach; ?>
                 <?php else: ?>
@@ -367,15 +382,26 @@
                 <?php endif; ?>
                 <?php if ($game->team_box_opp): ?><!-- team box opp -->
                 <?php foreach ($game->team_box_opp as $value): ?>
-                <tr>
-                    <td colspan="<?= 3+count(array_filter(array(isset($stats['MIN']),isset($stats['FGM']),isset($stats['FGA']),isset($stats['TPM']),isset($stats['TPA']),isset($stats['FTM']),isset($stats['FTA'])))); ?>">Team</td>
-                    <?= isset($stats['ORB']) ? '<td class="text-center">'.$value->ORB.'</td>' : ''; ?>
-                    <?= isset($stats['DRB']) ? '<td class="text-center">'.$value->DRB.'</td>' : ''; ?>
-                    <?= isset($stats['RB']) ? '<td class="text-center">'.$value->RB.'</td>' : ''; ?>
-                    <?= isset($stats['TRN']) ? ((isset($stats['AST']) || isset($stats['PF'])) ? '<td colspan="'.count(array_filter([isset($stats['AST']), isset($stats['PF']),isset($stats['FD'])])).'"></td>' : '') : '' ; ?>
-                    <?= isset($stats['TRN']) ? '<td class="text-center">'.$value->TRN.'</td>' : ''; ?>
-                    <?= isset($stats['PTS']) ? ((isset($stats['STL']) || isset($stats['BS'])) ? '<td colspan="'.count(array_filter([isset($stats['STL']), isset($stats['BS']),isset($stats['BD'])])).'"></td>' : '') : '' ; ?>
-                    <?= isset($stats['PTS']) ? '<td class="text-center">'.$value->PTS.'</td>' : ''; ?>
+                <tr class="border">
+                    <td colspan="3">Team</td>
+                    <?= isset($stats['MIN']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['FGM']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['FGA']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['TPM']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['TPA']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['FTM']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['FTA']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['ORB']) ? '<td class="text-center border d-none d-md-table-cell">'.$value->ORB.'</td>' : ''; ?>
+                    <?= isset($stats['DRB']) ? '<td class="text-center border d-none d-md-table-cell">'.$value->DRB.'</td>' : ''; ?>
+                    <?= isset($stats['RB']) ? '<td class="border text-center">'.$value->RB.'</td>' : ''; ?>                   
+                    <?= isset($stats['PF']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['FD']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['AST']) ? '<td></td>' : '' ; ?>
+                    <?= isset($stats['TRN']) ? '<td class="border d-none d-md-table-cell">'.$value->TRN.'</td>' : '' ; ?>
+                    <?= isset($stats['STL']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['BS']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['BD']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['PTS']) ? '<td class="border text-center">'.$value->PTS.'</td>' : ''; ?>
                 </tr>                
                 <?php endforeach; ?>
                 <?php endif; ?>
@@ -384,23 +410,24 @@
             <tfoot>
                 <?php foreach ($game->game_box_opp as $value): ?>
                 <?php if ($value->period == 'Z'):?>
-                <tr>
-                    <th colspan="<?= isset($stats['MIN']) ? 4 : 3 ; ?>"><?= $value->period == 'Z' ? 'TOTALS' : Inflector::ordinalize($value->period).' Half'; ?></th>
-                    <?= isset($stats['FGM']) ? '<th class="text-center">'.$value->FGM.'</th>' : ''; ?>
-                    <?= isset($stats['FGA']) ? '<th class="text-center">'.$value->FGA.'</th>' : ''; ?>
-                    <?= isset($stats['TPM']) ? '<th class="text-center">'.$value->TPM.'</th>' : ''; ?>
-                    <?= isset($stats['TPA']) ? '<th class="text-center">'.$value->TPA.'</th>' : ''; ?>
-                    <?= isset($stats['FTM']) ? '<th class="text-center">'.$value->FTM.'</th>' : ''; ?>
-                    <?= isset($stats['FTA']) ? '<th class="text-center">'.$value->FTA.'</th>' : ''; ?>
-                    <?= isset($stats['ORB']) ? '<th class="text-center">'.$value->ORB.'</th>' : ''; ?>
-                    <?= isset($stats['DRB']) ? '<th class="text-center">'.$value->DRB.'</th>' : ''; ?>
-                    <?= isset($stats['RB']) ? '<th class="text-center">'.$value->RB.'</th>' : ''; ?>
-                    <?= isset($stats['PF']) ? '<th class="text-center"'.(isset($stats['FD']) ? 'colspan="2"' : '').'>'.$value->PF.'</thy>' : ''; ?>
-                    <?= isset($stats['AST']) ? '<th class="text-center">'.$value->AST.'</th>' : ''; ?>
-                    <?= isset($stats['TRN']) ? '<th class="text-center">'.$value->TRN.'</th>' : ''; ?>
-                    <?= isset($stats['STL']) ? '<th class="text-center">'.$value->STL.'</th>' : ''; ?>
-                    <?= isset($stats['BS']) ? '<th class="text-center"'.(isset($stats['BD']) ? 'colspan="2"' : '').'>'.$value->BS.'</th>' : ''; ?>
-                    <?= isset($stats['PTS']) ? '<th class="text-center">'.$value->PTS.'</th>' : ''; ?>
+                <tr class="border">
+                    <th colspan="3"><?= $value->period == 'Z' ? 'TOTALS' : Inflector::ordinalize($value->period).' Half'; ?></th>
+                    <?= isset($stats['MIN']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
+                    <?= isset($stats['FGM']) ? '<th class="border text-center">'.$value->FGM.'</th>' : ''; ?>
+                    <?= isset($stats['FGA']) ? '<th class="border text-center">'.$value->FGA.'</th>' : ''; ?>
+                    <?= isset($stats['TPM']) ? '<th class="border text-center">'.$value->TPM.'</th>' : ''; ?>
+                    <?= isset($stats['TPA']) ? '<th class="border text-center">'.$value->TPA.'</th>' : ''; ?>
+                    <?= isset($stats['FTM']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->FTM.'</th>' : ''; ?>
+                    <?= isset($stats['FTA']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->FTA.'</th>' : ''; ?>
+                    <?= isset($stats['ORB']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->ORB.'</th>' : ''; ?>
+                    <?= isset($stats['DRB']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->DRB.'</th>' : ''; ?>
+                    <?= isset($stats['RB']) ? '<th class="border text-center">'.$value->RB.'</th>' : ''; ?>
+                    <?= isset($stats['PF']) ? '<th class="border text-center"'.(isset($stats['FD']) ? 'colspan="2"' : '').'>'.$value->PF.'</th>' : ''; ?>
+                    <?= isset($stats['AST']) ? '<th class="border text-center">'.$value->AST.'</th>' : ''; ?>
+                    <?= isset($stats['TRN']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->TRN.'</th>' : ''; ?>
+                    <?= isset($stats['STL']) ? '<th class="border text-center d-none d-md-table-cell">'.$value->STL.'</th>' : ''; ?>
+                    <?= isset($stats['BS']) ? '<th class="border text-center d-none d-md-table-cell"'.(isset($stats['BD']) ? 'colspan="2"' : '').'>'.$value->BS.'</th>' : ''; ?>
+                    <?= isset($stats['PTS']) ? '<th class="border text-center">'.$value->PTS.'</th>' : ''; ?>
                 </tr>
                 <?php endif;?>
                 <?php endforeach; ?>
@@ -480,10 +507,10 @@
                 <?=(isset($stats['TIED']) ||isset($stats['LC'])) ? '<th rowspan="1" colspan="'.((isset($stats['TIED']) && isset($stats['LC'])) ? '2' : '1' ).'"></th>' :'';?>
             </tr>
             <tr>
-                <?=isset($stats['PNT']) ? '<th>In Paint</th>' : '' ; ?>
-                <?=isset($stats['OTO']) ? '<th>Off Turn</th>' : '' ; ?>
-                <?=isset($stats['SND']) ? '<th>2nd Chance</th>' : '' ; ?>
-                <?=isset($stats['FB']) ? '<th>Fastbreak</th>' : '' ; ?>
+                <?=isset($stats['PNT']) ? '<th>In PNT</th>' : '' ; ?>
+                <?=isset($stats['OTO']) ? '<th>Off TO</th>' : '' ; ?>
+                <?=isset($stats['SND']) ? '<th>2nd Ch</th>' : '' ; ?>
+                <?=isset($stats['FB']) ? '<th>Fast Br</th>' : '' ; ?>
                 <?=isset($stats['BN']) ? '<th>Bench</th>' : '' ; ?>
                 <?=isset($stats['TIED']) ? '<th>Tied</th>' : '' ; ?>
                 <?=isset($stats['LC']) ? '<th>Lead Ch</th>' : '' ; ?>

@@ -113,7 +113,7 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container-sm">
             <div class="row">
                 <div class="col-md-12">
                     <?php if (Session::get_flash('success')): ?>
