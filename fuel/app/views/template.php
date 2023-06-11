@@ -145,11 +145,5 @@
                 </p>
             </footer>
         </div>
-
-        <?php
-        echo Asset::js(array(
-            'bootstrap.js',
-        ));
-        ?>
     </body>
 </html>
