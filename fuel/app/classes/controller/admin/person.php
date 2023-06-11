@@ -26,10 +26,10 @@ class Controller_Admin_Person extends Controller_Admin {
         $data['person'] = Model_Person::find($id);
         
         foreach ($data['person']->team_season_roster as $season) {
-            $this->getStats($season->id);
+            $stats = Data_Personview::getStats($season->person_id);
         }
         
-        $this->template->set_global('stats', $this->stats, false);
+        $this->template->set_global('stats', $stats, false);
 
         $this->template->title = "Person";
         $this->template->content = View::forge('admin/person/view', $data);

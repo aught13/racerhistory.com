@@ -15,6 +15,11 @@ class Controller_Person extends Controller_Template {
             Session::set_flash('error', 'Could not find person #' . $id);
             Response::redirect('person');
         }
+        foreach ($data['person']->team_season_roster as $season) {
+            $stats = Data_Personview::getStats($season->person_id);
+        }
+        
+        $this->template->set_global('stats', $stats, false);
 
         $this->template->title = "Person";
         $this->template->content = View::forge('person/view', $data);

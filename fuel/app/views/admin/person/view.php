@@ -1,4 +1,12 @@
-<h2>Viewing <?= $person->display; ?></h2>
+<?php 
+/**
+ * /app/views/admin/person/view
+ * 
+ * Person View
+ *
+ */
+?>
+<h2><?= $person->display; ?></h2>
 <br>
 
 <dl class="dl-horizontal">
