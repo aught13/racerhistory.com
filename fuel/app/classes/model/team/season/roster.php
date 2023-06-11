@@ -23,7 +23,10 @@ class Model_Team_Season_Roster extends \Orm\Model {
     protected static $_has_many = [
         'stat_basket_game_person' => [
             'cascade_delete' => true
-        ]
+        ],
+        'team_season_roster_awards' => [
+            'cascade_delete' => true
+        ],
     ];
     
     protected static $_has_one = [
