@@ -18,11 +18,12 @@ class Controller_Person extends Controller_Template {
         foreach ($data['person']->team_season_roster as $season) {
             $stats = Data_Personview::getStats($season->person_id);
         }
+        $data['career'] = new Data_Stat_Basket_Career_Person($id);
         
         $this->template->set_global('stats', $stats, false);
 
         $this->template->title = "Person";
-        $this->template->content = View::forge('person/view', $data);
+        $this->template->content = View::forge('person/view', $data, false);
     }
 
 }
