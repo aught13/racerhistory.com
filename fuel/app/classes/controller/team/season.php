@@ -5,20 +5,18 @@ class Controller_Team_Season extends Controller_Template
 
     public function action_index($team = null)
     {
-        $query = $team == null ? 
+        $query = $team == null ?
             Model_Team_Season::query()
                 ->related('seasons')
-                ->order_by('seasons.start', 'desc') : 
+                ->order_by('seasons.start', 'desc') :
             Model_Team_Season::query()
                 ->where('team_id', $team)->related('seasons')
                 ->order_by('seasons.start', 'desc');
 
         $pagination = Pagination::forge(
                 'team_seasons_pagination',
-                [
-                    'total_items' => $query->count(),
-                    'uri_segment' => 'page',
-                ]
+                ['total_items' => $query->count(),
+                    'uri_segment' => 'page']
         );
 
         $seasons = $query->rows_offset($pagination->offset)
@@ -28,8 +26,7 @@ class Controller_Team_Season extends Controller_Template
         $data['team_seasons'] = $seasons;
 
         $this->template->set_global(
-            'records',
-            Model_Game::getRecords('team', 'index', $seasons)
+            'records', Model_Game::getRecords('team', 'index', $seasons)
         );
         $this->template->set_global('pagination', $pagination, false);
 
@@ -47,9 +44,10 @@ class Controller_Team_Season extends Controller_Template
         }
 
         $this->template->set_global('team_season', $data, false);
-        $this->template
-            ->set_global(
-                'record', Model_Game::getRecords('team', 'season', $id)
+        $this->template->set_global('record', 
+                                    Model_Game::getRecords('team', 
+                                                           'season', 
+                                                           $id)
         );
         $this->template
             ->set_global('stats', Data_Seasonview::getStats($id), false);
@@ -60,7 +58,7 @@ class Controller_Team_Season extends Controller_Template
                     $data->seasons->start : ($data->semester == 2 ?
                         $data->seasons->start . '-' . $data->seasons->end :
                         $data->seasons->end) . ' - ' . $data->teams->team_name
-        );
+            );
 
         $this->template->content = View::forge('team/season/view');
     }

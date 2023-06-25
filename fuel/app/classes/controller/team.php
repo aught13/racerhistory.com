@@ -1,14 +1,17 @@
 <?php
 
-class Controller_Team extends Controller_Template {
+class Controller_Team extends Controller_Template
+{
 
-    public function action_index() {
-        $data['teams'] = Model_Team::find('all');
-        $this->template->title = "Teams";
+    public function action_index()
+    {
+        $data['teams']           = Model_Team::find('all');
+        $this->template->title   = "Teams";
         $this->template->content = View::forge('team/index', $data);
     }
 
-    public function action_view($id = null) {
+    public function action_view($id = null)
+    {
         is_null($id) and Response::redirect('team');
 
         if (!$data['team'] = Model_Team::find($id)) {
@@ -16,8 +19,7 @@ class Controller_Team extends Controller_Template {
             Response::redirect('team');
         }
 
-        $this->template->title = "Team";
+        $this->template->title   = "Team";
         $this->template->content = View::forge('team/view', $data);
     }
-
 }

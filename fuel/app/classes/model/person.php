@@ -1,6 +1,7 @@
 <?php
 
-class Model_Person extends \Orm\Model {
+class Model_Person extends \Orm\Model
+{
 
     protected static $_properties = [
         'id',
@@ -14,27 +15,25 @@ class Model_Person extends \Orm\Model {
         'created_at',
         'updated_at',
     ];
-    
     protected static $_table_name = 'persons';
-    
     protected static $_observers = [
         'Orm\Observer_CreatedAt' => [
-            'events' => ['before_insert'],
+            'events'          => ['before_insert'],
             'mysql_timestamp' => true,
         ],
         'Orm\Observer_UpdatedAt' => [
-            'events' => ['before_save'],
+            'events'          => ['before_save'],
             'mysql_timestamp' => true,
         ],
     ];
-    
     protected static $_has_many = [
         'team_season_roster' => [
             'cascade_delete' => true
         ]
     ];
 
-    public static function validate($factory) {
+    public static function validate($factory)
+    {
         $val = Validation::forge($factory);
         $val->add_field('first', 'First', 'required|max_length[30]');
         $val->add_field('last', 'Last', 'required|max_length[30]');
@@ -46,5 +45,4 @@ class Model_Person extends \Orm\Model {
 
         return $val;
     }
-
 }

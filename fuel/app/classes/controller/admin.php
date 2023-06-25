@@ -10,18 +10,28 @@
  * @copyright  2010 - 2019 Fuel Development Team
  * @link       https://fuelphp.com
  */
-class Controller_Admin extends Controller_Base {
+class Controller_Admin extends Controller_Base
+{
 
     public $template = 'admin/template';
 
-    public function before() {
+    public function before()
+    {
         parent::before();
 
-        if (Request::active()->controller !== 'Controller_Admin' or!in_array(Request::active()->action, ['login', 'logout'])) {
+        if (Request::active()
+            ->controller !== 'Controller_Admin' or !in_array(
+                Request::active()
+                ->action,
+                ['login',
+                'logout'])) {
             if (Auth::check()) {
-                $admin_group_id = Config::get('auth.driver', 'Simpleauth') == 'Ormauth' ? 6 : 100;
+                $admin_group_id = Config::get('auth.driver', 'Simpleauth') == 'Ormauth'
+                        ? 6 : 100;
                 if (!Auth::member($admin_group_id)) {
-                    Session::set_flash('error', e('You don\'t have access to the admin panel'));
+                    Session::set_flash(
+                        'error',
+                        e('You don\'t have access to the admin panel'));
                     Response::redirect('/');
                 }
             } else {
@@ -30,7 +40,8 @@ class Controller_Admin extends Controller_Base {
         }
     }
 
-    public function action_login() {
+    public function action_login()
+    {
         // Already logged in
         Auth::check() and Response::redirect('admin');
 
@@ -38,33 +49,41 @@ class Controller_Admin extends Controller_Base {
 
         if (Input::method() == 'POST') {
             $val->add('email', 'Email or Username')
-                    ->add_rule('required');
+                ->add_rule('required');
             $val->add('password', 'Password')
-                    ->add_rule('required');
+                ->add_rule('required');
 
             if ($val->run()) {
                 if (!Auth::check()) {
-                    if (Auth::login(Input::post('email'), Input::post('password'))) {
+                    if (Auth::login(
+                        Input::post('email'),
+                        Input::post('password'))) {
                         // assign the user id that lasted updated this record
                         foreach (\Auth::verified() as $driver) {
                             if (($id = $driver->get_user_id()) !== false) {
                                 // credentials ok, go right in
                                 $current_user = Model\Auth_User::find($id[1]);
-                                Session::set_flash('success', e('Welcome, ' . $current_user->username));
+                                Session::set_flash(
+                                    'success',
+                                    e('Welcome, ' . $current_user->username));
                                 Response::redirect('admin');
                             }
                         }
                     } else {
-                        $this->template->set_global('login_error', 'Login failed!');
+                        $this->template
+                            ->set_global('login_error', 'Login failed!');
                     }
                 } else {
-                    $this->template->set_global('login_error', 'Already logged in!');
+                    $this->template
+                        ->set_global('login_error', 'Already logged in!');
                 }
             }
         }
 
-        $this->template->title = 'Login';
-        $this->template->content = View::forge('admin/login', array('val' => $val), false);
+        $this->template->title   = 'Login';
+        $this->template->content = View::forge(
+            'admin/login',
+            array('val' => $val), false);
     }
 
     /**
@@ -73,7 +92,8 @@ class Controller_Admin extends Controller_Base {
      * @access  public
      * @return  void
      */
-    public function action_logout() {
+    public function action_logout()
+    {
         Auth::logout();
         Response::redirect('admin');
     }
@@ -84,11 +104,11 @@ class Controller_Admin extends Controller_Base {
      * @access  public
      * @return  void
      */
-    public function action_index() {
-        $this->template->title = 'Dashboard';
+    public function action_index()
+    {
+        $this->template->title   = 'Dashboard';
         $this->template->content = View::forge('admin/dashboard');
     }
-
 }
 
 /* End of file admin.php */

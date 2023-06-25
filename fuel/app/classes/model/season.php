@@ -1,6 +1,7 @@
 <?php
 
-class Model_Season extends \Orm\Model {
+class Model_Season extends \Orm\Model
+{
 
     protected static $_properties = [
         'id',
@@ -9,26 +10,24 @@ class Model_Season extends \Orm\Model {
         'created_at',
         'updated_at',
     ];
-    
     protected static $_observers = [
         'Orm\Observer_CreatedAt' => [
-            'events' => ['before_insert'],
+            'events'          => ['before_insert'],
             'mysql_timestamp' => true,
         ],
         'Orm\Observer_UpdatedAt' => [
-            'events' => ['before_save'],
+            'events'          => ['before_save'],
             'mysql_timestamp' => true,
         ],
     ];
-    
     protected static $_has_many = ['team_season'];
 
-    public static function validate($factory) {
+    public static function validate($factory)
+    {
         $val = Validation::forge($factory);
         $val->add_field('start', 'Start', 'required|max_length[4]');
         $val->add_field('end', 'End', 'required|max_length[4]');
 
         return $val;
     }
-
 }

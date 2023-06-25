@@ -10,11 +10,13 @@
  * @copyright  2010 - 2019 Fuel Development Team
  * @link       https://fuelphp.com
  */
-class Controller_Base extends Controller_Hybrid {
-    
+class Controller_Base extends Controller_Hybrid
+{
+
     private $current_user;
 
-    public function before() {
+    public function before()
+    {
         parent::before();
 
         $this->current_user = null;
@@ -29,5 +31,4 @@ class Controller_Base extends Controller_Hybrid {
         // Set a global variable so views can use it
         View::set_global('current_user', $this->current_user);
     }
-
 }
