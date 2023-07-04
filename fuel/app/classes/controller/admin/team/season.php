@@ -41,6 +41,8 @@ class Controller_Admin_Team_Season extends Controller_Admin {
                             'team_id' => Input::post('team_id'),
                             'season_id' => Input::post('season_id'),
                             'semester' => Input::post('semester'),
+                            'league' => Input::post('league'),
+                            'league_abbr' => Input::post('league_abbr'),                    
                             'league_finish' => Input::post('league_finish'),
                             'league_torunament_finish' => Input::post('league_torunament_finish'),
                             'last_post_game' => Input::post('last_post_game'),
@@ -76,6 +78,8 @@ class Controller_Admin_Team_Season extends Controller_Admin {
             $team_season->team_id = Input::post('team_id');
             $team_season->season_id = Input::post('season_id');
             $team_season->semester = Input::post('semester');
+            $team_season->league = Input::post('league');
+            $team_season->league_abbr = Input::post('league_abbr');
             $team_season->league_finish = Input::post('league_finish');
             $team_season->league_torunament_finish = Input::post('league_torunament_finish');
             $team_season->last_post_game = Input::post('last_post_game');
@@ -96,6 +100,8 @@ class Controller_Admin_Team_Season extends Controller_Admin {
                 $team_season->team_id = $val->validated('team_id');
                 $team_season->season_id = $val->validated('season_id');
                 $team_season->semester = $val->validated('semester');
+                $team_season->league = $val->validated('league');
+                $team_season->league_abbr = $val->validated('league_abbr');
                 $team_season->league_finish = $val->validated('league_finish');
                 $team_season->league_torunament_finish = $val->validated('league_torunament_finish');
                 $team_season->last_post_game = $val->validated('last_post_game');

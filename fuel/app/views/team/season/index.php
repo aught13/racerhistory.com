@@ -54,7 +54,7 @@
                                 ) : $item->seasons->end));
                         ?>
                         </td>
-                        <td></td>
+                        <td><?= $item->league_abbr ?? '' ;?></td>
                         <td><?= $records[$item->id]['w'] ;?></td>
                         <td><?= $records[$item->id]['l'] ;?></td>
                         <td>

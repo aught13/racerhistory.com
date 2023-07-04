@@ -10,6 +10,8 @@
                     <th>Team</th>
                     <th>Season</th>
                     <th>Semester</th>
+                    <th>League</th>
+                    <th>League ABBR</th>
                     <th>League finish</th>
                     <th>League torunament finish</th>
                     <th>Last post game</th>
@@ -28,6 +30,8 @@
                         <td><?= $item->teams->team_name; ?></td>
                         <td><?= ($item->semester == 1 ? $item->seasons->start : ($item->semester == 2 ? $item->seasons->start.'-'.$item->seasons->end : $item->seasons->end)); ?></td>
                         <td><?= ($item->semester == 1 ? 'Fall' : ($item->semester == 2 ? 'Winter' : 'Spring')); ?></td>
+                        <td><?= $item->league; ?></td>
+                        <td><?= $item->league_abbr; ?></td>
                         <td><?= $item->league_finish; ?></td>
                         <td><?= $item->league_torunament_finish; ?></td>
                         <td><?= $item->last_post_game; ?></td>

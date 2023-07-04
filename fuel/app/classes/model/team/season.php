@@ -7,6 +7,8 @@ class Model_Team_Season extends \Orm\Model {
         'team_id',
         'season_id',
         'semester',
+        'league',
+        'league_abbr',
         'league_finish',
         'league_torunament_finish',
         'last_post_game',
@@ -56,6 +58,8 @@ class Model_Team_Season extends \Orm\Model {
         $val->add_field('team_id', 'Team Id', 'required|valid_string[numeric]');
         $val->add_field('season_id', 'Season Id', 'required|valid_string[numeric]');
         $val->add_field('semester', 'Semester', 'required|valid_string[numeric]');
+        $val->add_field('league', 'League', 'max_length[240]');
+        $val->add_field('league_abbr', 'League Short', 'max_length[10]');
         $val->add_field('league_finish', 'League Finish', 'max_length[240]');
         $val->add_field('league_torunament_finish', 'League Torunament Finish', 'max_length[240]');
         $val->add_field('last_post_game', 'Last Post Game', 'max_length[240]');

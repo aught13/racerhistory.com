@@ -32,6 +32,18 @@
     </div>
 
     <div class="form-group">
+        <?= Form::label('League', 'league', ['class' => 'control-label']); ?>
+
+        <?= Form::input('league', Input::post('league', isset($team_season) ? $team_season->league : ''), ['class' => 'form-control', 'placeholder' => 'League']); ?>
+    </div>
+
+    <div class="form-group">
+        <?= Form::label('League ABBR', 'league_abbr', ['class' => 'control-label']); ?>
+
+        <?= Form::input('league_abbr', Input::post('league_abbr', isset($team_season) ? $team_season->league_abbr : ''), ['class' => 'form-control', 'placeholder' => 'League ABBR']); ?>
+    </div>
+
+    <div class="form-group">
         <?= Form::label('League Finish', 'league_finish', ['class' => 'control-label']); ?>
 
         <?= Form::input('league_finish', Input::post('league_finish', isset($team_season) ? $team_season->league_finish : ''), ['class' => 'form-control', 'placeholder' => 'League finish']); ?>

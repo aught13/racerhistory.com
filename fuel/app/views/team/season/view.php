@@ -19,7 +19,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Overall</th>
+                <th style="width: 25%; white-space: nowrap">Overall</th>
                 <th>Home</th>
                 <th>Road</th>
                 <th>Neutral</th>
@@ -39,7 +39,7 @@
 <?php if (!empty($record['cw']) | !empty($record['cl']) ): ?>
         <tfoot>
             <tr>
-                <th>Conference</th>
+                <th><?= $team_season->league ;?></th>
                 <th>Home</th>
                 <th>Road</th>
                 <th>Finish</th>
@@ -74,7 +74,7 @@
 <?= !empty($team_season->team_season_notes) ? '<div class="row"><span class="col-sm-6">'.$team_season->team_season_notes.'</span></div>':''; ?>
 <hr>
     <!-- RECAP AND PREVIEW -->
-<div class="row">    
+<!--<div class="row">    
     <?php if (!empty($team_season->team_season_preview)): ?>
     <span>Preview <a href="#preview" data-toggle="collapse">^</a></span>
     <div id="preview" class="col-sm-12 collapse <?= empty($team_season->team_season_recap) ? 'in' : '' ?>">
@@ -88,7 +88,7 @@
     </div>
     <?php endif; ?>
     <?= (empty($team_season->team_season_preview) && empty($team_season->team_season_recap)) ? '<span class="col-sm-12">No Story</span>' : '' ?>
-</div>
+</div>-->
 <div class="btn-group">
     <?= Html::anchor('team/season', 'Back', ['class' => 'btn btn-default']); ?>
 </div>
