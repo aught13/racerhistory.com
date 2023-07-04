@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * /app/views/stat/basket/season/person/index
  * 
@@ -35,15 +35,26 @@
                     <th>PF</th>
                     <th>TF</th>
                     <th>PTS</th>
-                    <th></th>
                 </tr>
             </thead>
 
             <tbody>
-                <?php foreach ($stat_basket_season_people as $item): ?>
+                <?php
+                foreach (
+                    $stat_basket_season_people as $item
+                ):
+                    ?>
                     <tr>
                         <td><?= $item->team_season_roster->persons->display; ?></td>
-                        <td><?= $item->team_season_roster->team_season->seasons->start.'-'.$item->team_season_roster->team_season->seasons->end; ?></td>
+                        <td><?=
+                            Html::anchor(
+                                'stat/basket/season/person/view/' .
+                                $item->team_season_roster->id,
+                                $item->team_season_roster->team_season->seasons
+                                ->start . '-' . $item->team_season_roster
+                                ->team_season->seasons->end
+                            );
+                            ?></td>
                         <td><?= $item->GP; ?></td>
                         <td><?= $item->GS; ?></td>
                         <td><?= $item->MIN; ?></td>
@@ -63,12 +74,8 @@
                         <td><?= $item->PF; ?></td>
                         <td><?= $item->TF; ?></td>
                         <td><?= $item->PTS; ?></td>
-
-                        <td>
-                            <?= Html::anchor('stat/basket/season/person/view/' . $item->id, 'View'); ?>
-                        </td>
                     </tr>
-                <?php endforeach; ?>
+    <?php endforeach; ?>
             </tbody>
         </table>
     </div>

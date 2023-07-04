@@ -31,6 +31,17 @@ class Data_Stat_Basket_Career_Person
     public $PF;
     public $PTS;
 
+    public static function find($param = false)
+    {
+        if ($param) {
+            $return = new self($param);
+        }
+        if ($return->count == 0) {
+            return false;
+        }
+        return $return ?? false;
+    }
+        
     function __construct($person_id)
     {
 
