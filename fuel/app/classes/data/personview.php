@@ -92,6 +92,6 @@ class Data_Personview
         }
         $data['person'] = $person;
         $data['stats']  = $columns;
-        return View::forge('stat/basket/season/person/career', $data, false);
+        return View::forge('stat/basket/career/person/view', $data, false);
     }
 }

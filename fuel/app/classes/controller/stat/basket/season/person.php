@@ -5,20 +5,12 @@ class Controller_Stat_Basket_Season_Person extends Controller_Template
 
     public function action_index()
     {
-        $query = Model_Stat_Basket_Season_Person::query();
+        $data['player_season_stats'] = new Data_Stat_Basket_Season_Person();
+        $data['flag'] = false;
 
-        $pagination = Pagination::forge('stat_basket_season_people_pagination',
-                                        ['uri_segment' => 'page',]);
-
-        $data['stat_basket_season_people'] = $query->rows_offset($pagination->offset)
-            ->rows_limit($pagination->per_page)
-            ->get();
-
-        $this->template->set_global('pagination', $pagination, false);
-
-        $this->template->title   = "Player Season Stats";
-        $this->template->content = View::forge('stat/basket/season/person/index',
-                                               $data);
+        $this->template->title   = "Player Stats";
+        $this->template->content = View::forge('stat/basket/career/person/index',
+                                               $data, false);
     }
 
     public function action_view($roster_id = null)

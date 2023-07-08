@@ -1,6 +1,6 @@
 <?php
 /**
- * /app/views/stat/basket/season/person/career
+ * /app/views/stat/basket/career/person/view
  * 
  * career season stat view
  *
@@ -286,89 +286,91 @@ $person->team_season_roster &&
         </tbody> 
         <tfoot>
                 <?php if ($career): ?>
+                <?php foreach ($career as $value): ?>
                 <tr>                    
-                    <th class="border"><?= 'Total ' . $career->seasons; ?></th>
+                    <th class="border"><?= 'Total ' . $value['seasons']; ?></th>
                 <?=
-                isset($stats['GP']) ? '<th class="text-center border">' . $career->GP . '</th>'
+                isset($stats['GP']) ? '<th class="text-center border">' . $value['GP'] . '</th>'
                         : '';
                 ?>
                 <?=
-                isset($stats['GS']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $career->GS . '</th>'
+                isset($stats['GS']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $value['GS'] . '</th>'
                         : '';
                 ?>
     <?=
-    isset($stats['MIN']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $career->MIN . '</th>'
+    isset($stats['MIN']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $value['MIN'] . '</th>'
             : '';
     ?>
                     <?=
-                    isset($stats['FGM']) ? '<th class="text-center border">' . $career->FGM . '</th>'
+                    isset($stats['FGM']) ? '<th class="text-center border">' . $value['FGM'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['FGA']) ? '<th class="text-center border">' . $career->FGA . '</th>'
+                    isset($stats['FGA']) ? '<th class="text-center border">' . $value['FGA'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['TPM']) ? '<th class="text-center border">' . $career->TPM . '</th>'
+                    isset($stats['TPM']) ? '<th class="text-center border">' . $value['TPM'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['TPA']) ? '<th class="text-center border">' . $career->TPA . '</th>'
+                    isset($stats['TPA']) ? '<th class="text-center border">' . $value['TPA'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['FTM']) ? '<th class="text-center border">' . $career->FTM . '</th>'
+                    isset($stats['FTM']) ? '<th class="text-center border">' . $value['FTM'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['FTA']) ? '<th class="text-center border">' . $career->FTA . '</th>'
+                    isset($stats['FTA']) ? '<th class="text-center border">' . $value['FTA'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['ORB']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $career->ORB . '</th>'
+                    isset($stats['ORB']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $value['ORB'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['DRB']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $career->DRB . '</th>'
+                    isset($stats['DRB']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $value['DRB'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['RB']) ? '<th class="text-center border">' . $career->RB . '</th>'
+                    isset($stats['RB']) ? '<th class="text-center border">' . $value['RB'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['PF']) ? '<th class="text-center border">' . $career->PF . '</th>'
+                    isset($stats['PF']) ? '<th class="text-center border">' . $value['PF'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['FD']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $career->FD . '</th>'
+                    isset($stats['FD']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $value['FD'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['AST']) ? '<th class="text-center border">' . $career->AST . '</th>'
+                    isset($stats['AST']) ? '<th class="text-center border">' . $value['AST'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['TRN']) ? '<th class="text-center border">' . $career->TRN . '</th>'
+                    isset($stats['TRN']) ? '<th class="text-center border">' . $value['TRN'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['STL']) ? '<th class="text-center border">' . $career->STL . '</th>'
+                    isset($stats['STL']) ? '<th class="text-center border">' . $value['STL'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['BS']) ? '<th class="text-center border">' . $career->BS . '</th>'
+                    isset($stats['BS']) ? '<th class="text-center border">' . $value['BS'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['BD']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $career->BD . '</th>'
+                    isset($stats['BD']) ? '<th name="hide" class="text-center border d-none d-md-table-cell">' . $value['BD'] . '</th>'
                             : '';
                     ?>
                     <?=
-                    isset($stats['PTS']) ? '<th class="text-center border">' . $career->PTS . '</th>'
+                    isset($stats['PTS']) ? '<th class="text-center border">' . $value['PTS'] . '</th>'
                             : '';
                     ?>
                 </tr>
+                <?php endforeach; ?>
                 <?php endif; ?>
         </tfoot>
     </table>

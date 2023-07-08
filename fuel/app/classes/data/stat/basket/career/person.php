@@ -5,86 +5,147 @@
  *
  * @author patrick
  */
-class Data_Stat_Basket_Career_Person
+class Data_Stat_Basket_Career_Person implements IteratorAggregate, Countable
 {
 
-    public int $person_id;
-    public string $person_name;
-    public string $seasons;
-    public int $count;
-    public $GP;
-    public $GS;
-    public $MIN;
-    public $FGM;
-    public $FGA;
-    public $TPM;
-    public $TPA;
-    public $FTM;
-    public $FTA;
-    public $ORB;
-    public $DRB;
-    public $RB;
-    public $AST;
-    public $STL;
-    public $BS;
-    public $TRN;
-    public $PF;
-    public $PTS;
+    protected $_properties = [];
 
-    public static function find($param = false)
+    public static function find($param = false): iterable|false
     {
-        if ($param) {
-            $return = new self($param);
-        }
-        if ($return->count == 0) {
+        $return = new self($param);
+        if ($return->count() == 0) {
             return false;
         }
         return $return ?? false;
     }
-        
-    function __construct($person_id)
-    {
 
-        self::set_props($person_id);
+    function __construct($param)
+    {
+        $this->set_props($param);
     }
 
-    private function set_props($person_id)
+    private function set_props($id = false)
     {
-
-        $stats             = Model_Person::find($person_id,
-                                                ['related' => [
-                                                    'team_season_roster' => [
-                                                        'related' => ['stat_basket_season_person']
-                                                        ]
-                                                    ]
-                                                ]);
-        $this->person_id   = $person_id;
-        $this->person_name = $stats->display;
-        $count             = 0;
-        foreach ($stats->team_season_roster as $season) {
-            $years[]   = intval($season->team_season->seasons->start);
-            $years[]   = intval($season->team_season->seasons->end);
-            $count     = $season->stat_basket_season_person ? $count + 1 : $count;
-            $this->GP  += intval($season->stat_basket_season_person->GP ?? 0);
-            $this->GS  += intval($season->stat_basket_season_person->GS ?? 0);
-            $this->MIN += intval($season->stat_basket_season_person->MIN ?? 0);
-            $this->FGM += intval($season->stat_basket_season_person->FGM ?? 0);
-            $this->FGA += intval($season->stat_basket_season_person->FGA ?? 0);
-            $this->TPM += intval($season->stat_basket_season_person->TPM ?? 0);
-            $this->TPA += intval($season->stat_basket_season_person->TPA ?? 0);
-            $this->FTM += intval($season->stat_basket_season_person->FTM ?? 0);
-            $this->FTA += intval($season->stat_basket_season_person->FTA ?? 0);
-            $this->ORB += intval($season->stat_basket_season_person->ORB ?? 0);
-            $this->DRB += intval($season->stat_basket_season_person->DRB ?? 0);
-            $this->RB  += intval($season->stat_basket_season_person->RB ?? 0);
-            $this->AST += intval($season->stat_basket_season_person->AST ?? 0);
-            $this->STL += intval($season->stat_basket_season_person->STL ?? 0);
-            $this->BS  += intval($season->stat_basket_season_person->BS ?? 0);
-            $this->TRN += intval($season->stat_basket_season_person->TRN ?? 0);
-            $this->PF  += intval($season->stat_basket_season_person->PF ?? 0);
-            $this->PTS += intval($season->stat_basket_season_person->PTS ?? 0);
+        if ($id) { 
+            $persons[] = ['id' => $id];
+        } else {
+            $persons = Model_Person::find('all',['select' => ['id', 'display']]);
+        }        
+        foreach ($persons as $value) {
+            $stats = Model_Stat_Basket_Season_Person::find(
+                    'all',
+                    [
+                        'related' => ['team_season_roster'],
+                        'where'   =>
+                        [
+                            'team_season_roster.person_id' => $value['id'] 
+                        ],
+                        'from_cache' => false,
+                    ]
+            );
+            if ($stats) {
+                $name        = '';
+                $years       = [];
+                $count       = 0;
+                $GP          = 0;
+                $GS          = 0;
+                $MIN         = 0;
+                $FGM         = 0;
+                $FGA         = 0;
+                $TPM         = 0;
+                $TPA         = 0;
+                $FTM         = 0;
+                $FTA         = 0;
+                $ORB         = 0;
+                $DRB         = 0;
+                $RB          = 0;
+                $AST         = 0;
+                $STL         = 0;
+                $BS          = 0;
+                $TRN         = 0;
+                $PF          = 0;
+                $PTS         = 0;
+                foreach ($stats as $season) {
+                    $name    = $season->team_season_roster->persons->display;
+                    $years[] = intval($season->team_season_roster->team_season->seasons->start);
+                    $years[] = intval($season->team_season_roster->team_season->seasons->end);
+                    $count   = $season ? $count + 1 : $count;
+                    $GP      += intval($season->GP ?? 0);
+                    $GS      += intval($season->GS ?? 0);
+                    $MIN     += intval($season->MIN ?? 0);
+                    $FGM     += intval($season->FGM ?? 0);
+                    $FGA     += intval($season->FGA ?? 0);
+                    $TPM     += intval($season->TPM ?? 0);
+                    $TPA     += intval($season->TPA ?? 0);
+                    $FTM     += intval($season->FTM ?? 0);
+                    $FTA     += intval($season->FTA ?? 0);
+                    $ORB     += intval($season->ORB ?? 0);
+                    $DRB     += intval($season->DRB ?? 0);
+                    $RB      += intval($season->RB ?? 0);
+                    $AST     += intval($season->AST ?? 0);
+                    $STL     += intval($season->STL ?? 0);
+                    $BS      += intval($season->BS ?? 0);
+                    $TRN     += intval($season->TRN ?? 0);
+                    $PF      += intval($season->PF ?? 0);
+                    $PTS     += intval($season->PTS ?? 0);
+                }
+                $this->_properties[$value['id']] = [
+                    'id'          => $value['id'],
+                    'person_name' => $name,
+                    'start'       => min($years),
+                    'finish'      => max($years),
+                    'seasons'     => min($years) . '-' . max($years),
+                    'count'       => $count,
+                    'GP'          => $GP == 0 ? '' : $GP,
+                    'GS'          => $GS == 0 ? '' : $GS,
+                    'MIN'         => $MIN == 0 ? '' : $MIN,
+                    'FGM'         => $FGA == 0 ? '' : $FGM,
+                    'FGA'         => $FGA == 0 ? '' : $FGA,
+                    'FGP'         => $FGA == 0 ? '' : ($FGM/$FGA),
+                    'TPM'         => $TPA == 0 ? '' : $TPM,
+                    'TPA'         => $TPA == 0 ? '' : $TPA,
+                    'TPP'         => $TPA == 0 ? '' : ($TPM/$TPA),
+                    'FTM'         => $FTA == 0 ? '' : $FTM,
+                    'FTA'         => $FTA == 0 ? '' : $FTA,
+                    'FTP'         => $FTA == 0 ? '' : ($FTM/$FTA),
+                    'ORB'         => $ORB == 0 ? '' : $ORB,
+                    'DRB'         => $DRB == 0 ? '' : $DRB,
+                    'RB'          => $RB == 0 ? '' : $RB,
+                    'AST'         => $AST == 0 ? '' : $AST,
+                    'ATR'         => $TRN == 0 ? '' : ($AST/$TRN),
+                    'STL'         => $STL == 0 ? '' : $STL,
+                    'BS'          => $BS == 0 ? '' : $BS,
+                    'TRN'         => $TRN == 0 ? '' : $TRN,
+                    'PF'          => $PF == 0 ? '' : $PF,
+                    'PTS'         => $PTS
+                ];
+            }
         }
-        $this->seasons = min($years) . '-' . max($years);
-        $this->count   = $count;
+        
+        return $this;
+    }
+
+    public function count(): int
+    {
+        return count($this->_properties);
+    }
+
+    public function __get($property)
+    {
+        if (array_key_exists($property, $this->_properties)) {
+        return $this->_properties[$property];
+        }
+
+        throw new \OutOfBoundsException('Property "' . $property . '" not found for ' . get_called_class() . '.');
+    }
+    
+    public function __isset($name)
+    {
+        return isset($this->_properties[$name]);
+    }
+    
+    public function getIterator(): Traversable 
+    {
+        return new ArrayIterator($this->_properties);
     }
 }
