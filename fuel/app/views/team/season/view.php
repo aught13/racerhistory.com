@@ -288,6 +288,7 @@
         </table>
     </div>
 <?php endif; ?>
+</div>    
     <script>
             function showStats(){
                 let hide = document.getElementsByName("hide"); 

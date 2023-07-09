@@ -1769,3 +1769,7 @@ div.dtsr-creation-form div.dtsr-form-row label.dtsr-toggle-title {
     .adsense--side          { width: 100%;}
     .adsense--side:before   { content: '601'; }
 }
+/* Colors */
+.racer-blue,.hover-racer-blue:hover{color:#ECAC00!important;background-color:#002144!important}
+.racer-gold,.hover-racer-gold:hover{color:#002144!important;background-color:#ECAC00!important}
+.racer-grey,.hover-racer-grey:hover{color:#000!important;background-color:#444!important}

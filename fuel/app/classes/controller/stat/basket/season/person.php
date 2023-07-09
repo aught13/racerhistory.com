@@ -8,7 +8,8 @@ class Controller_Stat_Basket_Season_Person extends Controller_Template
         $data['player_season_stats'] = new Data_Stat_Basket_Season_Person();
         $data['flag'] = false;
 
-        $this->template->title   = "Player Stats";
+        $this->template->title   = "Player Season Stats";        
+        $this->template->sidenav = \View::forge('stat/basket/sidenav');
         $this->template->content = View::forge('stat/basket/career/person/index',
                                                $data, false);
     }

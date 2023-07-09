@@ -30,7 +30,9 @@ class Controller_Stat_Basket_Career_Person extends Controller_Template
         $data['player_season_stats'] = Data_Stat_Basket_Career_Person::find();
         $data['flag'] = true;
 
-        $this->template->title   = "Player Stats";
+        $this->template->title   = "Player Career Stats";
+        
+        $this->template->sidenav = \View::forge('stat/basket/sidenav');
         $this->template->content = View::forge('stat/basket/career/person/index',
                                                $data, false);
     }
