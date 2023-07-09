@@ -7,9 +7,10 @@ class Controller_Game extends Controller_Template
 
     public function action_index()
     {
-        $data['games']           = Model_Game::find('all');
-        $this->template->title   = "Games";
-        $this->template->content = View::forge('game/index', $data);
+        Fuel\Core\Response::redirect('team/season/');
+//        $data['games']           = Model_Game::find('all');
+//        $this->template->title   = "Games";
+//        $this->template->content = View::forge('game/index', $data);
     }
 
     public function action_view($id = null)
