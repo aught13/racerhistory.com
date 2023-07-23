@@ -117,7 +117,10 @@
                 <?= ($game->ref_1 ?? false && ($game->ref_2 ?? false || $game->ref_3 ?? false)) ? 'Referees:' : ''?>
                 <?= !empty($game->ref_1 ?? null) ? $game->ref_1 : ''; ?><?= ($game->ref_1 ?? false && ($game->ref_2 ?? false || $game->ref_3 ?? false)) ? ', ' : ''?><?= !empty($game->ref_2 ?? null) ? $game->ref_2 : ''; ?><?= $game->ref_3 ?? false ? ', ' : ''; ?><?= $game->ref_3 ?? ''; ?>
             </div>
-            
+            <!-- Notes -->
+            <div>
+                <span><?= $game->game_notes; ?></span>
+            </div>
         </div>
         <div class="col-md-4">
              <!-- Time -->
@@ -550,17 +553,16 @@
 </div>
 <?php endif; ?>
 <hr> <!-- Recap/preview -->
-<dl>
-    <dt>Game preview</dt>
-    <dd><?= $game->game_preview; ?></dd>
-    <br>
-    <dt>Game recap</dt>
-    <dd><?= $game->game_recap; ?></dd>
-    <br>
-    <dt>Game notes</dt>
-    <dd><?= $game->game_notes; ?></dd>
-    <br>
-</dl>
+<?php
+//<dl>
+//    <dt>Game preview</dt>
+//    <dd><?= $game->game_preview; ></dd>
+//    <br>
+//    <dt>Game recap</dt>
+//    <dd>//<?= $game->game_recap; ></dd>
+//    <br>
+//</dl>
+?>
 <div class="btn-group">
     <?= Html::anchor('team/season/view/'. $game->team_season_id, 'Back', ['class' => 'btn btn-default']); ?>
 </div>
