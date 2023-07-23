@@ -13,22 +13,13 @@ class Controller_Team_Season extends Controller_Template
                 ->where('team_id', $team)->related('seasons')
                 ->order_by('seasons.start', 'desc');
 
-        $pagination = Pagination::forge(
-                'team_seasons_pagination',
-                ['total_items' => $query->count(),
-                    'uri_segment' => 'page']
-        );
-
-        $seasons = $query->rows_offset($pagination->offset)
-            ->rows_limit($pagination->per_page)
-            ->get();
+        $seasons = $query->get();
 
         $data['team_seasons'] = $seasons;
 
         $this->template->set_global(
             'records', Model_Game::getRecords('team', 'index', $seasons)
         );
-        $this->template->set_global('pagination', $pagination, false);
 
         $this->template->title   = "Team Seasons";
         $this->template->content = View::forge('team/season/index', $data);
