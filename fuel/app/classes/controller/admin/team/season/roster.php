@@ -77,7 +77,7 @@ class Controller_Admin_Team_Season_Roster extends Controller_Admin {
             if ($team_season_roster->save()) {
                 Session::set_flash('success', e('Updated team_season_roster #' . $id));
 
-                Response::redirect('admin/team/season/roster');
+                Response::redirect('admin/team/season/view/'.$team_season_roster->team_season_id);
             } else {
                 Session::set_flash('error', e('Could not update team_season_roster #' . $id));
             }
