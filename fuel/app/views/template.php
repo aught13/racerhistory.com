@@ -23,22 +23,22 @@
 
     <body class="racer-grey">
         <div class="container-fluid sticky-top racer-gold">
-            <div class="container-lg navbar navbar-expand-lg ">
+            <div class="container-lg navbar navbar-expand-lg py-0">
                 <a id="scroll" class="navbar-brand d-none" href="<?= $current_user ?? false  ? '/admin' : ''; ?>/"><img class=""style="width: 100%; max-width: 540px; height: 100%; max-height: 29px" alt="Racerhistory.com"src="/assets/img/logo.png"></img></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                   <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav">
-                        <li class="nav-item racer-gold <?= Uri::segment(2) == 'season' ? 'active' : '' ?>">
-                            <?= Html::anchor('team/season', 'Seasons', ['class' => 'nav-link']) ?>
+                        <li class="nav-item racer-gold">
+                            <?= Html::anchor('team/season', 'Seasons', ['class' => (Uri::segment(2) == 'season' ? 'active' : '').' nav-link']) ?>
                         </li>
-                        <li class="nav-item racer-gold <?= Uri::segment(1) == 'person' ? 'active' : '' ?>">
-                            <?= Html::anchor('person', 'People', ['class' => 'nav-link']) ?>
+                        <li class="nav-item racer-gold">
+                            <?= Html::anchor('person', 'People', ['class' => (Uri::segment(1) == 'person' ? 'active' : '').' nav-link']) ?>
                         </li>
-                        <li class="nav-item racer-gold <?= Uri::segment(1) == 'stat' ? 'active' : '' ?> dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Stats<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
+                        <li class="nav-item racer-gold dropdown">
+                            <a class="nav-link dropdown-toggle  <?= Uri::segment(1) == 'stat' ? 'active' : '' ?>" href="#" data-bs-toggle="dropdown">Stats<b class="caret"></b></a>
+                            <ul class="dropdown-menu racer-gold">
                                 <li class="racer-gold <?= (Uri::segment(1) == 'stat' && (Uri::segment(2) == false || Uri::segment(2) == 'create' || Uri::segment(2) == 'edit')) ? 'active' : '' ?>">
                                     <?= Html::anchor('stat/basket/season/person', 'Season', ['class' => 'dropdown-item']) ?>
                                 </li>
@@ -67,7 +67,7 @@
         </div>        
         <?php if (isset($sidenav)): ?>
         <div class="container-fluid bg-light border">
-            <div class="container-lg navbar navbar-expand-lg">
+            <div class="container-lg navbar navbar-expand-lg py-0">
                 <div class="">
                     <?= $sidenav; ?>
                 </div>
@@ -94,7 +94,7 @@
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="col-md-12 bg-light">
+                <div class="col-md-12 bg-light" style="min-height: 500px;">
                     <?php echo $content; ?>
                 </div>
             </div>  
