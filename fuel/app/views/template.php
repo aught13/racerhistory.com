@@ -10,12 +10,14 @@
 
         <!-- Bootstrap 5 CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+        <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/date-1.5.1/fh-3.4.0/r-2.5.0/sc-2.2.0/sb-1.5.0/sl-1.7.0/sr-1.3.0/datatables.min.css" rel="stylesheet"/>
+         <?= Asset::css('datatables.css'); ?>
         <!-- Bootstrap 5 JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <?= Asset::css('datatables.css'); ?>
-        <?= Asset::js('datatables.min.js'); ?>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/date-1.5.1/fh-3.4.0/r-2.5.0/sc-2.2.0/sb-1.5.0/sl-1.7.0/sr-1.3.0/datatables.min.js"></script>
         <?= Asset::js('scroll.js'); ?>
     </head>
 
