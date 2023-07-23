@@ -564,6 +564,6 @@
 //</dl>
 ?>
 <div class="btn-group">
-    <?= Html::anchor('team/season/view/'. $game->team_season_id, 'Back', ['class' => 'btn btn-default']); ?>
+    <button type="button" class="btn" onclick="history.back()">Back</button>
 </div>
 

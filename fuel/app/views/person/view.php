@@ -11,7 +11,9 @@
     <span class="h3"><?= implode(',' , $teams['teams']); ?></span> 
     <span class="h3"><?= $teams['seasons'] ;?></span> 
 </div>
-<br>
+<div class="btn-group">
+    <button type="button" class="btn" onclick="history.back()">Back</button>
+</div>
 <h2>Teams</h2>
 <?php if ($teams['rosters']): ?>
     <div class="table-responsive">
