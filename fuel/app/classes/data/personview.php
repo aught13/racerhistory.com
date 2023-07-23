@@ -26,6 +26,7 @@ class Data_Personview
                 ]);
         if ($query_teams) {
             foreach ($query_teams as $value) {
+                $rosters[$value->team_season->seasons->end] = $value;
                 $teams[]   = $value->team_season->teams->team_name;
                 $seasons[] = $value->team_season->semester == 1 || 2 ?
                     intval($value->team_season->seasons->start) : null;
@@ -33,9 +34,10 @@ class Data_Personview
                     intval($value->team_season->seasons->end) : null;
             }
         }
-        
-        $data['teams']   = array_unique($teams);
-        $data['seasons'] = min($seasons) . '-' . max($seasons);
+        asort($rosters);
+        $data['rosters'] = $rosters;
+        $data['teams']   = array_unique($teams ?? []);
+        $seasons ?? false ? $data['seasons'] = min($seasons) . '-' . max($seasons) : $data['seasons'] = null;
         
         return $data;
     }

@@ -9,11 +9,11 @@
 <div class="row">
     <span class="h1"><?= $person->display; ?></span> 
     <span class="h3"><?= implode(',' , $teams['teams']); ?></span> 
-    <span class="h3"><?= $teams['seasons'] ;?></span>    
+    <span class="h3"><?= $teams['seasons'] ;?></span> 
 </div>
 <br>
 <h2>Teams</h2>
-<?php if ($person->team_season_roster): ?>
+<?php if ($teams['rosters']): ?>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -30,7 +30,7 @@
             <tbody>
                 <?php
                 foreach (
-                    $person->team_season_roster as $item
+                    $teams['rosters'] as $item
                 ):
                     ?>
                     <tr>
