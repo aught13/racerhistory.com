@@ -41,6 +41,7 @@ class Data_Stat_Basket_Career_Person implements IteratorAggregate, Countable
                             'team_season_roster.person_id' => $value['id'] 
                         ],
                         'from_cache' => false,
+                        'order-by' => ['PTS', 'desc'],
                     ]
             );
             if ($stats) {
@@ -121,7 +122,7 @@ class Data_Stat_Basket_Career_Person implements IteratorAggregate, Countable
                 ];
             }
         }
-        
+        usort($this->_properties, fn($a, $b) => $b['PTS'] <=> $a['PTS']);
         return $this;
     }
 
