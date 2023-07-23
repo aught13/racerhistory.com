@@ -14,26 +14,23 @@
         <div class="table-responsive">
             <table id="seasons" class="cell-border compact hover nowrap stats_table spinner-border">
                 <thead>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th colspan="3">Overall</th>
-                        <th colspan="3">Conference</th>
-                        <th colspan="3"></th>
+                    <tr><th rowspan="2"></th>
+                        <th rowspan="2">Team</th>
+                        <th rowspan="2">Season</th>
+                        <th rowspan="2">Conf</th>                        
+                        <th colspan="3" rowspan="1">Overall</th>
+                        <th colspan="3" rowspan="1">Conference</th>
+                        <th rowspan="2">Conf finish</th>
+                        <th rowspan="2">Conf Tourn finish</th>
+                        <th rowspan="2">Postseason</th>
                     </tr>
                     <tr>
-                        <th></th>
-                        <th>Team</th>
-                        <th>Season</th>
-                        <th>Conf</th>
                         <th>W</th>
                         <th>L</th>
                         <th>W-L%</th>
                         <th>W</th>
                         <th>L</th>
                         <th>W-L%</th>
-                        <th>Conf finish</th>
-                        <th>Conf Tourn finish</th>
-                        <th>Postseason</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,17 +97,6 @@
     <p>No Team Seasons.</p>
 <?php endif; ?>
 <script>
-//    new DataTable('#seasons', {
-//        paging: false,
-//        order: [[1, 'asc']],
-//        fixedHeader: {headerOffset: 42},
-//        buttons: [ {
-//            extend: 'searchBuilder',
-//            text: 'Filter Results'
-//        } ],
-//        dom: 'RB<t>'
-//    });
-
 $(document).ready(function() {
     var h = $('#seasons').removeClass('spinner-border');
     var t = $('#seasons').DataTable({

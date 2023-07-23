@@ -3,14 +3,10 @@
 class Controller_Team_Season extends Controller_Template
 {
 
-    public function action_index($team = null)
+    public function action_index()
     {
-        $query = $team == null ?
-            Model_Team_Season::query()
+        $query = Model_Team_Season::query()
                 ->related('seasons')
-                ->order_by('seasons.start', 'desc') :
-            Model_Team_Season::query()
-                ->where('team_id', $team)->related('seasons')
                 ->order_by('seasons.start', 'desc');
 
         $seasons = $query->get();
@@ -50,7 +46,10 @@ class Controller_Team_Season extends Controller_Template
                         $data->seasons->start . '-' . $data->seasons->end :
                         $data->seasons->end) . ' - ' . $data->teams->team_name
             );
-
+        $nav = Data_Seasonview::getNav($id, $data->team_id);
+        if ($nav) {
+            $this->template->sidenav = View::forge('team/season/sidenav',$nav,false);
+        }
         $this->template->content = View::forge('team/season/view');
     }
 }
