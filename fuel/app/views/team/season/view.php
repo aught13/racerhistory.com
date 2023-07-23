@@ -90,7 +90,7 @@
     <?= (empty($team_season->team_season_preview) && empty($team_season->team_season_recap)) ? '<span class="col-sm-12">No Story</span>' : '' ?>
 </div>-->
 <div class="btn-group">
-    <?= Html::anchor('team/season', 'Back', ['class' => 'btn btn-default']); ?>
+    <button type="button" class="btn" onclick="history.back()">Back</button>
 </div>
     <!-- SEASON GAMES -->
 <?php if (isset($team_season->games)): ?>

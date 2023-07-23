@@ -75,7 +75,7 @@ class Data_Stat_Basket_Career_Person implements IteratorAggregate, Countable
                     $GS      += intval($season->GS ?? 0);
                     $MIN     += intval($season->MIN ?? 0);
                     $FGM     += intval($season->FGM ?? 0);
-                    $FGA     += intval($season->FGA ?? 0);
+                    $FGA     += intval(is_null($season->FGA) ? 99999 : $season->FGA);
                     $TPM     += intval($season->TPM ?? 0);
                     $TPA     += intval($season->TPA ?? 0);
                     $FTM     += intval($season->FTM ?? 0);
@@ -90,6 +90,7 @@ class Data_Stat_Basket_Career_Person implements IteratorAggregate, Countable
                     $PF      += intval($season->PF ?? 0);
                     $PTS     += intval($season->PTS ?? 0);
                 }
+                
                 $this->_properties[$value['id']] = [
                     'id'          => $value['id'],
                     'person_name' => $name,
@@ -101,7 +102,7 @@ class Data_Stat_Basket_Career_Person implements IteratorAggregate, Countable
                     'GS'          => $GS == 0 ? '' : $GS,
                     'MIN'         => $MIN == 0 ? '' : $MIN,
                     'FGM'         => $FGA == 0 ? '' : $FGM,
-                    'FGA'         => $FGA == 0 ? '' : $FGA,
+                    'FGA'         => $FGA == 0 ? '' : ($FGA > 99998 ? '' : $FGA),
                     'FGP'         => $FGA == 0 ? '' : ($FGM/$FGA),
                     'TPM'         => $TPA == 0 ? '' : $TPM,
                     'TPA'         => $TPA == 0 ? '' : $TPA,
