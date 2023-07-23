@@ -109,7 +109,55 @@ class Data_Gameview
         $data['techs'] = Data_Gameview::getTechs($game);
         $data['stats'] = Data_Gameview::getStats($game);
         $data['game']  = $gamedata;
+        $data['nav']   = Data_Gameview::getNav($game);
 
         return $data;
+    }
+    /*  
+     * getNav
+     * 
+     * var $game = int Model_Game id
+     * var $team = int Model_team_Season team_id
+     * 
+     * Fetch all game id and date by a given team ordered by date
+     * retrieve the rows before and after for next/prev navigation
+     * 
+     * returns $data['previous' => int, 'current => int, 'next' => int]
+     * 
+     * seems like there should be a more elegant solution but it gets the job done
+     * 
+     */
+    
+    public static function getNav($game)
+    {        
+        $games = Model_Game::query()
+            ->select('id' , 'game_date')
+            ->order_by('game_date', 'ASC')
+            ->from_cache(false)
+            ->get();
+        
+//      loop over $games 
+//      set 'next' and return $data[] array if 'current' is set
+//      set 'current' and skip to the next iteration if matching to $game
+//      set 'previous' otherwise
+// 
+//      loop ends when 'previous', 'next', and 'current' or no more rows
+        if ($games) {
+            foreach ($games as $value) {
+                if (isset($data['current']) ?? false){
+                    $data['next'] = $value->id;
+                    return $data;
+                }
+                if ($value->id == $game) {
+                    $data['current'] = $value->id;
+                    continue;
+                }
+                $data['previous'] = $value->id;
+            }
+//      if we couldn't set 'next' or 'previous' we still return what we have 
+            return $data;
+        }
+//      if there was somehting to return we wouldn't be here - return false
+        return false;        
     }
 }

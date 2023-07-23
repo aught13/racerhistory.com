@@ -28,7 +28,7 @@ class Controller_Game extends Controller_Template
             ' ' . $this->data['game']->opponents->opponent_name . 
             ' - ' . 
             date_format(date_create($this->data['game']->game_date), "m/d/Y");
-        
+        $this->template->sidenav = View::forge('game/sidenav', $this->data, false);
         $this->template->content = View::forge('game/view', $this->data, false);
     }
 }
