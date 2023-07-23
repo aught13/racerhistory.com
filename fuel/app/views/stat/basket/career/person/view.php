@@ -7,14 +7,14 @@
  */
 ?>
 <div class="col-sm-<?=
-$person->team_season_roster &&
+$season &&
  (isset($stats['FGA']) || isset($stats['FTA']) || isset($stats['TPA'])) ? 12 : 9;
 ?>table-responsive"> 
     <table class="table table-sm table-striped border">
         <thead>
             <tr>
                 <?=
-                $person->team_season_roster ?
+                $season ?
                     '<th rowspan="2" colspan="1">Season</th>' : '';
                 ?>
                 <?=
@@ -27,7 +27,7 @@ $person->team_season_roster &&
                         : '';
                 ?>
                 <?=
-                (isset($stats['MIN']) && $person->team_season_roster) ?
+                (isset($stats['MIN']) && $season) ?
                     '<th name="hide" class="text-center border d-none d-md-table-cell" rowspan="2" colspan="1">Min</th>'
                         : '';
                 ?>
@@ -150,135 +150,130 @@ $person->team_season_roster &&
             </tr>
         </thead>
         <tbody>
-                <?php if ($person->team_season_roster): ?> <!-- Individual Box -->
+                <?php if ($season): ?> <!-- Individual Box -->
                     <?php
-                    foreach (
-                        $person->team_season_roster as $value
-                    ):
-                        if ($value->stat_basket_season_person):
-                            ?>
+                    foreach ($season as $value): ?>
                         <tr>                    
                             <td class="border d-none d-xl-table-cell">
                         <?=
-                        ($value->team_season->semester == 1 ?
-                            $value->team_season->seasons->start : ($value->team_season->semester
+                        ($value->team_season_roster->team_season->semester == 1 ?
+                            $value->team_season_roster->team_season->seasons->start : ($value->team_season_roster->team_season->semester
                             == 2 ?
-                                $value->team_season->seasons->start .
+                                $value->team_season_roster->team_season->seasons->start .
                                 '-' .
                                 date_format(
                                     DateTime::createFromFormat(
-                                        'Y', $value->team_season->seasons->end
+                                        'Y', $value->team_season_roster->team_season->seasons->end
                                     ), 'y'
-                                ) : $value->team_season->seasons->end)
+                                ) : $value->team_season_roster->team_season->seasons->end)
                         ) . ' - ' .
-                        $value->team_season->teams->team_name
+                        $value->team_season_roster->team_season->teams->team_name
                         ?>
                             </td>
                             <td class="border d-xl-none">
                                 <?=
-                                ($value->team_season->semester == 1 ?
-                                    $value->team_season->seasons->start : ($value->team_season->semester
+                                ($value->team_season_roster->team_season->semester == 1 ?
+                                    $value->team_season_roster->team_season->seasons->start : ($value->team_season_roster->team_season->semester
                                     == 2 ?
                                         date_format(
                                             DateTime::createFromFormat(
                                                 'Y',
-                                                $value->team_season->seasons->start
+                                                $value->team_season_roster->team_season->seasons->start
                                             ), 'y'
                                         ) . '-' .
                                         date_format(
                                             DateTime::createFromFormat(
                                                 'Y',
-                                                $value->team_season->seasons->end
+                                                $value->team_season_roster->team_season->seasons->end
                                             ), 'y'
-                                        ) : $value->team_season->seasons->end)
+                                        ) : $value->team_season_roster->team_season->seasons->end)
                                 ) . ' - ' .
-                                $value->team_season->teams->abbr;
+                                $value->team_season_roster->team_season->teams->abbr;
                                 ?>
                             </td>
                                 <?=
                                 isset($stats['GP']) ?
                                     '<td class="text-center border">' .
-                                    $value->stat_basket_season_person->GP .
+                                    $value->GP .
                                     '</td>' : '';
                                 ?>
                                 <?=
-                                isset($stats['GS']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->stat_basket_season_person->GS . '</td>'
+                                isset($stats['GS']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->GS . '</td>'
                                         : '';
                                 ?>
                             <?=
-                            isset($stats['MIN']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->stat_basket_season_person->MIN . '</td>'
+                            isset($stats['MIN']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->MIN . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['FGM']) ? '<td class="text-center border">' . $value->stat_basket_season_person->FGM . '</td>'
+                            isset($stats['FGM']) ? '<td class="text-center border">' . $value->FGM . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['FGA']) ? '<td class="text-center border">' . $value->stat_basket_season_person->FGA . '</td>'
+                            isset($stats['FGA']) ? '<td class="text-center border">' . $value->FGA . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['TPM']) ? '<td class="text-center border">' . $value->stat_basket_season_person->TPM . '</td>'
+                            isset($stats['TPM']) ? '<td class="text-center border">' . $value->TPM . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['TPA']) ? '<td class="text-center border">' . $value->stat_basket_season_person->TPA . '</td>'
+                            isset($stats['TPA']) ? '<td class="text-center border">' . $value->TPA . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['FTM']) ? '<td class="text-center border">' . $value->stat_basket_season_person->FTM . '</td>'
+                            isset($stats['FTM']) ? '<td class="text-center border">' . $value->FTM . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['FTA']) ? '<td class="text-center border">' . $value->stat_basket_season_person->FTA . '</td>'
+                            isset($stats['FTA']) ? '<td class="text-center border">' . $value->FTA . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['ORB']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->stat_basket_season_person->ORB . '</td>'
+                            isset($stats['ORB']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->ORB . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['DRB']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->stat_basket_season_person->DRB . '</td>'
+                            isset($stats['DRB']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->DRB . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['RB']) ? '<td class="text-center border">' . $value->stat_basket_season_person->RB . '</td>'
+                            isset($stats['RB']) ? '<td class="text-center border">' . $value->RB . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['PF']) ? '<td class="text-center border">' . $value->stat_basket_season_person->PF . '</td>'
+                            isset($stats['PF']) ? '<td class="text-center border">' . $value->PF . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['FD']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->stat_basket_season_person->FD . '</td>'
+                            isset($stats['FD']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->FD . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['AST']) ? '<td class="text-center border">' . $value->stat_basket_season_person->AST . '</td>'
+                            isset($stats['AST']) ? '<td class="text-center border">' . $value->AST . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['TRN']) ? '<td class="text-center border">' . $value->stat_basket_season_person->TRN . '</td>'
+                            isset($stats['TRN']) ? '<td class="text-center border">' . $value->TRN . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['STL']) ? '<td class="text-center border">' . $value->stat_basket_season_person->STL . '</td>'
+                            isset($stats['STL']) ? '<td class="text-center border">' . $value->STL . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['BS']) ? '<td class="text-center border">' . $value->stat_basket_season_person->BS . '</td>'
+                            isset($stats['BS']) ? '<td class="text-center border">' . $value->BS . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['BD']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->stat_basket_season_person->BD . '</td>'
+                            isset($stats['BD']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">' . $value->BD . '</td>'
                                     : '';
                             ?>
                             <?=
-                            isset($stats['PTS']) ? '<td class="text-center border">' . $value->stat_basket_season_person->PTS . '</td>'
+                            isset($stats['PTS']) ? '<td class="text-center border">' . $value->PTS . '</td>'
                                     : '';
                             ?>
                         </tr>
-                        <?php endif; ?>
                     <?php endforeach; ?>
                 <?php else: ?>
                 <tr></tr>

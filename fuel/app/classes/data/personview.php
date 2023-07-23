@@ -85,13 +85,40 @@ class Data_Personview
         return View::forge('stat/basket/season/person/view', $data);
     }
     
+    /*
+     * getCareer() Build the career stat table for a person
+     * 
+     * (obj)$person = Model_Person 
+     * (arr)$columns = stat columns for display
+     * 
+     * returns stat/basket/career/person/view
+     */
     public static function getCareer($person, $columns)
     {
         if (!$data['career'] = Data_Stat_Basket_Career_Person::find($person->id)) {
             return false;
         }
+        $data['season'] = Data_Personview::teamSeasons($person);
         $data['person'] = $person;
         $data['stats']  = $columns;
         return View::forge('stat/basket/career/person/view', $data, false);
+    }
+    
+    /*
+     * teamSeasons()
+     * (obj)$person = Model_Person
+     * 
+     * returns sorted array of stat_basket_season_person objects
+     */
+    public static function teamSeasons($person)
+    {
+        $data = [];
+        if ($person->team_season_roster) {
+            foreach ($person->team_season_roster as $value) {
+                $data[$value->team_season->seasons->end] = $value->stat_basket_season_person;
+            }
+            asort($data);
+        }
+        return $data;
     }
 }
