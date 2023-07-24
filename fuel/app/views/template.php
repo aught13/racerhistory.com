@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="auto">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,19 +7,19 @@
         <link rel="shortcut icon" href="https://racerhistory.com/favicon.ico">
 
         <title><?= $title; ?></title>
-
-        <!-- Bootstrap 5 CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap 5.3.0, dataTables 1.13.5 Bootstrap-Icons 1.10.5 Custom CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/date-1.5.1/fh-3.4.0/r-2.5.0/sc-2.2.0/sb-1.5.0/sl-1.7.0/sr-1.3.0/datatables.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> 
-        <?= Asset::css('datatables.css'); ?>
-        <!-- Bootstrap 5 JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> 
+        <?= Asset::css('custom.css'); ?>
+        <!-- Custom Bootstrap 5.3.0, jQuery 3.6.1, dataTables 1.13.5, pdfMake 0.2.7 Javascript-->
+        <?= Asset::js('custom.js'); ?>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
         <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-colvis-2.4.1/b-html5-2.4.1/b-print-2.4.1/date-1.5.1/fh-3.4.0/r-2.5.0/sc-2.2.0/sb-1.5.0/sl-1.7.0/sr-1.3.0/datatables.min.js"></script>
-        <?= Asset::js('scroll.js'); ?>
+        
     </head>
 
     <body class="racer-grey">
@@ -67,7 +67,7 @@
             </div>
         </div>        
         <?php if (isset($sidenav)): ?>
-        <div class="container-fluid bg-light border">
+        <div class="container-fluid racer-gold">
             <div class="container-lg navbar navbar-expand-lg py-0">
                 <div class="">
                     <?= $sidenav; ?>
@@ -75,7 +75,7 @@
             </div>
         </div>
         <?php endif; ?>
-        <div class="container-lg">
+        <div class="container-lg bg-light">
             <div class="row">
                 <div class="col-md-12">
                     <?php if (Session::get_flash('success')): ?>
@@ -95,7 +95,7 @@
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="col-md-12 bg-light" style="min-height: 500px;">
+                <div class="col-md-12 " style="min-height: 500px;">
                     <?php echo $content; ?>
                 </div>
             </div>  

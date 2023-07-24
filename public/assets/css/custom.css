@@ -14,56 +14,29 @@ table.dataTable {
   clear: both;
   border-collapse: separate;
   border-spacing: 0;
-  /*
-   * Header and footer styles
-   */
-  /*
-   * Body styles
-   */
 }
-
 table.dataTable thead .sorting {
   padding: 4px 11px 4px 1px !important;
 }
 table.dataTable thead .sorting_asc {
-  background-color: #f0e68c;
   padding: 4px 11px 4px 1px !important;
 }
 table.dataTable thead .sorting_desc {
-  background-color: #f0e68c;
   padding: 4px 11px 4px 1px !important;
 }
-
-table.dataTable tbody tr {
-  background-color: #ffffff;
-}
-table.dataTable tbody tr.selected {
-  background-color: #B0BED9;
-}
-table.dataTable tbody th,
-table.dataTable tbody td {
-  padding: 8px 10px;
-}
-
-table.dataTable.nowrap th, table.dataTable.nowrap td {
-  white-space: nowrap;
-}
-
 table.dataTable.compact thead th,
 table.dataTable.compact thead td {
-  padding: 4px;
+  padding: 3px;
 }
 table.dataTable.compact tfoot th,
 table.dataTable.compact tfoot td {
-  padding: 4px;
+  padding: 3px;
 }
 table.dataTable.compact tbody th,
 table.dataTable.compact tbody td {
-  padding: 4px;
+  padding: 3px;
 }
-
-
-.stats_table{border:1pxsolid#747678!important;border-collapse:collapse!important;border-spacing:0!important;font-size:.73em!important;font-family:"Lucida Console","Courier New",monospace!important;line-height:1!important}
+.stats_table{border:1px solid#747678!important;border-collapse:collapse!important;border-spacing:0!important;font-size:.73em!important;font-family:"Lucida Console","Courier New",monospace!important;line-height:1!important}
 .stats_table tr{vertical-align:top}.stats_table th,.stats_table td{border-style:solid;border-bottom-style:dotted;border-color:#ddd;border-width:1px;padding:4px 3px;vertical-align:middle}
 .stats_table tr:last-child>td,.stats_table tr:last-child>th,.stats_table thead th,.stats_table .thead>*,.stats_table .over_header th,.stats_table tr+tr.thead>td{border-bottom-color:#747678;border-bottom-style:solid}
 .stats_table tbody .thead>*{border-top:1px solid #747678}
@@ -92,4 +65,10 @@ table.dataTable.compact tbody td {
 /* Colors */
 .racer-blue,.hover-racer-blue:hover{color:#ECAC00!important;background-color:#002144!important}
 .racer-gold,.hover-racer-gold:hover{color:#002144!important;background-color:#ECAC00!important}
-.racer-grey,.hover-racer-grey:hover{color:#000!important;background-color:#444!important}
+.racer-grey,.hover-racer-grey:hover{color:#000;background-color:#444}
+
+@media (prefers-color-scheme: dark) {
+  .racer-gold,.hover-racer-gold:hover{color:#000!important;background-color:#ECAC00!important}
+  .bg-light{color:#adb5bd!important;background-color:#212529!important }
+}
+
