@@ -152,7 +152,8 @@ $season &&
         <tbody>
                 <?php if ($season): ?> <!-- Individual Box -->
                     <?php
-                    foreach ($season as $value): ?>
+                    foreach ($season as $value): 
+                        if ($value->team_season_roster ?? false) :?>
                         <tr>                    
                             <td class="border d-none d-xl-table-cell">
                         <?=
@@ -274,6 +275,7 @@ $season &&
                                     : '';
                             ?>
                         </tr>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 <?php else: ?>
                 <tr></tr>
