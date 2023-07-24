@@ -16,7 +16,7 @@ if ($player_season_stats):
 <div class="table_container">
     <h2>Listing <?= $flag ? 'Career Statistics' : 'Individual Season Statistics'; ?></h2>
     <div class="table-responsive">
-        <table id="stats" class="cell-border compact hover order-column nowrap stats_table spinner-grow" >
+        <table id="stats" class="table table-striped table-bordered compact table-hover order-column stats_table nowrap spinner-border" >
             <thead>
                 <tr>
                     <th></th>
@@ -102,7 +102,7 @@ if ($player_season_stats):
 <?php endif; ?>
 <script>
 $(document).ready(function() {
-    var h = $('#stats').removeClass('spinner-grow');
+    var h = $('#stats').removeClass('spinner-border');
     var t = $('#stats').DataTable({
         pageLength: 100,
         stateSave: true,
@@ -170,7 +170,7 @@ $(document).ready(function() {
             cell.innerHTML = i + 1;
         });
     }).draw();
-    h.className += " spinner-grow";
-    h.className = h.className.replace(" spinner-grow", "");
+    h.className += " spinner-border";
+    h.className = h.className.replace(" spinner-border", "");
 });
 </script>

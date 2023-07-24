@@ -27,17 +27,33 @@ class Data_Personview
         if ($query_teams) {
             foreach ($query_teams as $value) {
                 $rosters[$value->team_season->seasons->end] = $value;
-                $teams[]   = $value->team_season->teams->team_name;
-                $seasons[] = $value->team_season->semester == 1 || 2 ?
-                    intval($value->team_season->seasons->start) : null;
-                $seasons[]  = $value->team_season->semester == 2 || 3 ?
-                    intval($value->team_season->seasons->end) : null;
+                $teams[] = $value->team_season->teams->team_name;
+                $value->team_season->semester == 1 || 2 ?
+                    $starts[] = intval($value->team_season->seasons->start) : '';
+                $value->team_season->semester == 2 || 3 ?
+                    $ends[]   = intval($value->team_season->seasons->end) : '';
             }
         }
         asort($rosters);
         $data['rosters'] = $rosters;
         $data['teams']   = array_unique($teams ?? []);
-        $seasons ?? false ? $data['seasons'] = min($seasons) . '-' . max($seasons) : $data['seasons'] = null;
+        $starts ?? false && $ends ?? false ? 
+            $data['seasons'] = min($starts).' - '.max($ends) : 
+                ($starts ?? false && count($starts) > 1 ? 
+                    $data['seasons'] = min($starts).' - '.max($starts) : 
+                        ($starts ?? false ? 
+                            $data['seasons'] = min($starts) : 
+                                ($ends ?? false && count($ends) > 1 ? 
+                                    $data['seasons'] = min($ends).' - '.max($ends) : 
+                                        ($ends ?? false ? 
+                                            $data['seasons'] = min($ends) : 
+                                                ''
+                                        )
+                                )
+                        )
+                );
+        $starts ?? false && $ends ?? false ? $starts[] = max($ends) : '';
+        $starts ?? false ? $data['years'] = $starts : $data['years'] = $ends;
         
         return $data;
     }

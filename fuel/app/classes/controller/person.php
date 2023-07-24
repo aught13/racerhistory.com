@@ -5,7 +5,7 @@ class Controller_Person extends Controller_Template
 
     public function action_index()
     {
-        $data['people']          = Model_Person::find('all');
+        $data['people']          = Model_Person::find('all',['order_by'=>['last'=>'asc']]);
         foreach ($data['people'] as $value) {
             $data['teams'][$value->id] = Data_Personview::getTeams($value->id);
         }

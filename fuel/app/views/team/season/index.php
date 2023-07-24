@@ -7,12 +7,10 @@
  */
 ?>
 <h2>Seasons</h2>
-<br>
-
 <?php if ($team_seasons): ?>
-    <div class="table-container">
+    <div class="table_container">
         <div class="table-responsive">
-            <table id="seasons" class="cell-border compact hover nowrap stats_table spinner-border">
+            <table id="seasons" class="table table-striped table-bordered compact table-hover nowrap spinner-border">
                 <thead>
                     <tr><th rowspan="2"></th>
                         <th rowspan="2">Team</th>
