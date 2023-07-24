@@ -2,33 +2,51 @@
 
 class Controller_Admin_Team_Season extends Controller_Admin {
 
-    public function action_index() {
-        $query = Model_Team_Season::query();
+    public function action_index() {        
+        $query = Model_Team_Season::query()
+                ->related('seasons')
+                ->order_by('seasons.start', 'desc');
 
-        $pagination = Pagination::forge('team_seasons_pagination', array(
-                    'total_items' => $query->count(),
-                    'uri_segment' => 'page',
-        ));
+        $seasons = $query->get();
 
-        $data['team_seasons'] = $query->rows_offset($pagination->offset)
-                ->rows_limit($pagination->per_page)
-                ->get();
+        $data['team_seasons'] = $seasons;
 
-        $this->template->set_global('pagination', $pagination, false);
+        $this->template->set_global(
+            'records', Model_Game::getRecords('team', 'index', $seasons)
+        );
 
-        $this->template->title = "Team Seasons";
+        $this->template->title   = "Team Seasons";
         $this->template->content = View::forge('admin/team/season/index', $data);
     }
 
     public function action_view($id = null) {
-        $data = Model_Team_Season::find($id);
-        
+        is_null($id) and Response::redirect('admin/team/season');
+
+        if (!$data = Model_Team_Season::find($id)) {
+            Session::set_flash('error', 'Could not find team_season #' . $id);
+            Response::redirect('admin/team/season');
+        }
+
         $this->template->set_global('team_season', $data, false);
-        $this->template->set_global('record', Model_Game::getRecords('team', 'season', $id));
-        $this->template->set_global('stats', Data_Seasonview::getStats($id), false);
-        
-        $this->template->title = ($data->semester == 1 ? $data->seasons->start : ($data->semester == 2 ? $data->seasons->start.'-'.$data->seasons->end : $data->seasons->end).' - '.$data->teams->team_name);
-        
+        $this->template->set_global('record', 
+                                    Model_Game::getRecords('team', 
+                                                           'season', 
+                                                           $id)
+        );
+        $this->template
+            ->set_global('stats', Data_Seasonview::getStats($id), false);
+        $this->template
+            ->set_global(
+                'title',
+                $data->semester == 1 ?
+                    $data->seasons->start : ($data->semester == 2 ?
+                        $data->seasons->start . '-' . $data->seasons->end :
+                        $data->seasons->end) . ' - ' . $data->teams->team_name
+            );
+        $nav = Data_Seasonview::getNav($id, $data->team_id);
+        if ($nav) {
+            $this->template->sidenav = View::forge('team/season/sidenav',$nav,false);
+        }
         $this->template->content = View::forge('admin/team/season/view');
     }
 
