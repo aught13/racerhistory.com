@@ -5,16 +5,7 @@ class Controller_Admin_Opponent extends Controller_Admin {
     public function action_index() {
         $query = Model_Opponent::query();
 
-        $pagination = Pagination::forge('opponents_pagination', [
-                    'total_items' => $query->count(),
-                    'uri_segment' => 'page',
-        ]);
-
-        $data['opponents'] = $query->rows_offset($pagination->offset)
-                ->rows_limit($pagination->per_page)
-                ->get();
-
-        $this->template->set_global('pagination', $pagination, false);
+        $data['opponents'] = $query->get();
 
         $this->template->title = "Opponents";
         $this->template->content = View::forge('admin/opponent/index', $data);

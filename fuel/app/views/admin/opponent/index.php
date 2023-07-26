@@ -37,7 +37,7 @@
         </table>
     </div>
 
-    <?= $pagination ?>
+    
 <?php else: ?>
     <p>No Opponents.</p>
 <?php endif; ?>
