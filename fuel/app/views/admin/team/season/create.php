@@ -6,39 +6,39 @@
         <?= render('admin/team/season/_form', ['teams' => $teams, 'seasons' => $seasons], false); ?>
     </div>
 </div>
-<div id="TeamModal" class="modal fade" role="dialog">
+<div id="TeamModal" class="modal" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-bs-dismiss="TeamModal">&times;</button>
         <h4 class="modal-title">New Place</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/team/_form_ajax'); ?>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-bs-dismiss="TeamModal">Close</button>
       </div>
     </div>
 
   </div>
 </div>
-<div id="SeasonModal" class="modal fade" role="dialog">
+<div id="SeasonModal" class="modal" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-bs-dismiss="SeasonModal">&times;</button>
         <h4 class="modal-title">New Place</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/season/_form_ajax'); ?>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-bs-dismiss="SeasonModal">Close</button>
       </div>
     </div>
 

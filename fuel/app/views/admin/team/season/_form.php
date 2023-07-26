@@ -7,7 +7,7 @@
             <?= Form::select('team_id', Input::post('team_id', isset($team_season) ? $team_season->team_id : ''), $teams, ['class' => 'form-control', 'placeholder' => 'Team id']); ?>
             <?php if(\Fuel\Core\Uri::segment(4) == 'create') : ?>
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#TeamModal">New</button>
+                    <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#TeamModal">New</button>
                 </div>
             <?php endif; ?> 
         </div>    
@@ -19,7 +19,7 @@
             <?= Form::select('season_id', Input::post('season_id', isset($team_season) ? $team_season->season_id : ''), $seasons, ['class' => 'form-control', 'placeholder' => 'Season id']); ?>
             <?php if(\Fuel\Core\Uri::segment(4) == 'create') : ?>
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#SeasonModal">New</button>
+                    <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#SeasonModal">New</button>
                 </div>
             <?php endif; ?> 
         </div>    
