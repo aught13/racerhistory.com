@@ -135,6 +135,7 @@
     </div>
 </div>
 <hr><!-- Begin Stats -->
+
 <div class="row"><!-- Murray Stats -->
     <?php if ($game->person_box || $game->game_box_mur): ?>
     <div class="col-sm-<?= $game->game_box_mur && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA'])) ? 12 : 9 ;?> table-responsive"> <!-- Murray Box -->
@@ -172,9 +173,21 @@
                     <?= isset($stats['BD']) ? '<th class="border text-center d-none d-md-table-cell">BA</th>' : '' ; ?>
                 </tr>
             </thead>
-            <tbody>
-                <?php if ($game->person_box): ?> <!-- Individual Box -->
-                <?php foreach ($game->person_box as $value): ?>
+            <tbody><!-- Individual Box -->
+                <?php if ($game->person_box): ?> 
+                <?php 
+                /*
+                 * Sort the ind box by PTS and weather the player started
+                 */
+                foreach ($game->person_box as $row) {
+                    foreach ($row as $key => $value){
+                        ${$key}[]  = $value; 
+                    }  
+                }
+                array_multisort($GS, SORT_DESC, $PTS, SORT_DESC, $game->person_box);
+                unset($PTS);
+                unset($GS);?>
+                <?php foreach ($game->person_box as $value):  ?>
                 <tr class="border">
                     <?= '<td class="text-center">'.$value->team_season_roster->roster_number.'</td>' ;?>
                     <?= '<td>'.$value->team_season_roster->persons->display.'</td>' ;?>
@@ -213,13 +226,13 @@
                     <?= isset($stats['TPA']) ? '<td></td>' : '' ; ?>
                     <?= isset($stats['FTM']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
                     <?= isset($stats['FTA']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
-                    <?= isset($stats['ORB']) ? '<td class="border d-none d-md-table-cell">'.$value->ORB.'</td>' : ''; ?>
-                    <?= isset($stats['DRB']) ? '<td class="border d-none d-md-table-cell">'.$value->DRB.'</td>' : ''; ?>
+                    <?= isset($stats['ORB']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->ORB.'</td>' : ''; ?>
+                    <?= isset($stats['DRB']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->DRB.'</td>' : ''; ?>
                     <?= isset($stats['RB']) ? '<td class="border text-center">'.$value->RB.'</td>' : ''; ?>                    
                     <?= isset($stats['PF']) ? '<td></td>' : '' ; ?>
                     <?= isset($stats['FD']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
                     <?= isset($stats['AST']) ? '<td></td>' : '' ; ?>
-                    <?= isset($stats['TRN']) ? '<td class="border d-none d-md-table-cell">'.$value->TRN.'</td>' : '' ; ?>
+                    <?= isset($stats['TRN']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->TRN.'</td>' : '' ; ?>
                     <?= isset($stats['STL']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
                     <?= isset($stats['BS']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
                     <?= isset($stats['BD']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
@@ -355,6 +368,16 @@
             </thead>
             <tbody>
                 <?php if ($game->opponent_box): ?> <!-- Individual Box -->
+                <?php
+                /*
+                 * Sort the ind box by PTS and weather the player started
+                 */
+                foreach ($game->opponent_box as $row) {
+                    foreach ($row as $key => $value){
+                        ${$key}[]  = $value; 
+                    }  
+                }
+                array_multisort($GS, SORT_DESC, $PTS, SORT_DESC, $game->opponent_box);?>
                 <?php foreach ($game->opponent_box as $value): ?>
                 <tr class="border">
                     <?= '<td class="text-center">'.$value->jersey.'</td>' ;?>
@@ -400,7 +423,7 @@
                     <?= isset($stats['PF']) ? '<td></td>' : '' ; ?>
                     <?= isset($stats['FD']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
                     <?= isset($stats['AST']) ? '<td></td>' : '' ; ?>
-                    <?= isset($stats['TRN']) ? '<td class="border d-none d-md-table-cell">'.$value->TRN.'</td>' : '' ; ?>
+                    <?= isset($stats['TRN']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->TRN.'</td>' : '' ; ?>
                     <?= isset($stats['STL']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
                     <?= isset($stats['BS']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
                     <?= isset($stats['BD']) ? '<td class="d-none d-md-table-cell"></td>' : '' ; ?>
