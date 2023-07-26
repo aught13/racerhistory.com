@@ -314,9 +314,24 @@ class Model_Game extends \Orm\Model
 
                     case 'index' :
                         foreach ($param as $value) {
-                            $records[$value->id] = Model_Game::getRecords('team',
-                                                                     'season',
-                                                                     $value->id);
+                            $records[$value->id]['w']   = Model_Game::query()
+                                ->where('team_season_id', $value->id)
+                                ->where('w', 1)->count();
+                            $records[$value->id]['l']   = Model_Game::query()
+                                ->where('team_season_id', $value->id)
+                                ->where('l', 1)->count();
+                            $records[$value->id]['cw']  = Model_Game::query()
+                                    ->where('team_season_id', $value->id)
+                                    ->where('w', 1)
+                                    ->related('game_types')
+                                    ->where('game_types.conf', 1)
+                                    ->where('game_types.post', 0)->count();
+                            $records[$value->id]['cl']  = Model_Game::query()
+                                    ->where('team_season_id', $value->id)
+                                    ->where('l', 1)
+                                    ->related('game_types')
+                                    ->where('game_types.conf', 1)
+                                    ->where('game_types.post', 0)->count();
                         }
                         return $records;
                         break;
