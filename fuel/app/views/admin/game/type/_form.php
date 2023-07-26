@@ -18,6 +18,12 @@
 
         <?= Form::input('conf', Input::post('conf', isset($game_type) ? $game_type->conf : ''), array('class' => 'form-control', 'placeholder' => 'Conf')); ?>
     </div>
+    
+    <div class="form-group">
+        <?= Form::label('Indicator', 'ind', array('class' => 'control-label')); ?>
+
+        <?= Form::input('ind', Input::post('ind', isset($game_type) ? $game_type->ind : ''), array('class' => 'form-control', 'placeholder' => 'Indicator')); ?>
+    </div>
 
     <div class="form-group">
         <?= Form::submit('submit', 'Save', array('class' => 'btn btn-primary')); ?>

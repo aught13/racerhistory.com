@@ -141,15 +141,15 @@ class Model_Game extends \Orm\Model
         $val = \Fuel\Core\Validation::forge($param);
         $val->add_field(
             'ref_1', 'Ref 1',
-            'valid_string[alpha,spaces,singlequotes]|max_length[162]'
+            'valid_string[alpha,spaces,singlequotes,dashes,dots]|max_length[162]'
         );
         $val->add_field(
             'ref_2', 'Ref 2',
-            'valid_string[alpha,spaces,singlequotes]|max_length[162]'
+            'valid_string[alpha,spaces,singlequotes,dashes,dots]|max_length[162]'
         );
         $val->add_field(
             'ref_3', 'Ref 3',
-            'valid_string[alpha,spaces,singlequotes]|max_length[162]'
+            'valid_string[alpha,spaces,singlequotes,dashes,dots]|max_length[162]'
         );
 
         return $val;

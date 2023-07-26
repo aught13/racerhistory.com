@@ -20,6 +20,12 @@
     </div>
 
     <div class="form-group">
+        <?= Form::label('Indicator', 'ind', array('class' => 'control-label')); ?>
+
+        <?= Form::input('ind', Input::post('ind', isset($game_type) ? $game_type->conf : ''), array('class' => 'form-control', 'placeholder' => 'Indicator')); ?>
+    </div>
+    
+    <div class="form-group">
         <?= Form::submit('ajax', 'Save', array('class' => 'btn btn-primary')); ?>
     </div>
 </fieldset>

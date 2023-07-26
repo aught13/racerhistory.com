@@ -6,19 +6,19 @@
         <?= render('admin/team/season/roster/_form', ['teams' => $teams, 'people' => $persons], false); ?>
     </div>
 </div>
-<div id="PersonModal" class="modal fade" role="dialog">
+<div id="PersonModal" class="modal" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         <h4 class="modal-title">New Person</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/person/_form') ?>
       <div class="modal-footer">
-        <button id="close-modal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="close-modal" type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
 

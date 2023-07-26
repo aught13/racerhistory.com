@@ -20,7 +20,7 @@
             <?= Form::select('person_id', Input::post('person_id', isset($team_season_roster) ? $team_season_roster->person_id : ''), $people, ['class' => 'form-control', 'placeholder' => 'Person id']); ?>
             <?php if(\Fuel\Core\Uri::segment(5) == 'create') : ?>
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#PersonModal">New</button>
+                    <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#PersonModal">New</button>
                 </div>
             <?php endif; ?> 
         </div>    

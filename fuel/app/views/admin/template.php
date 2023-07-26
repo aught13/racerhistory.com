@@ -24,7 +24,6 @@
 
 
     <body class="racer-grey">
-    <?php if ($current_user): ?>
         <div class="container-fluid sticky-top racer-gold">
             <div class="container-lg navbar navbar-expand-lg py-0">
                 <a id="scroll" class="navbar-brand d-none" href="<?= $current_user ?? false  ? '/admin' : ''; ?>/"><img class=""style="width: 100%; max-width: 540px; height: 100%; max-height: 29px" alt="Racerhistory.com"src="/assets/img/logo.png"></img></a>
@@ -74,7 +73,7 @@
             </div>
         </div>
         <?php endif; ?>
-        <?php endif; ?>
+        
         <div class="container-lg bg-light">
             <div class="row">
                 <div class="col-md-12">
@@ -100,6 +99,7 @@
                 </div>
             </div>  
         </div>
+
         <footer class="container-fluid racer-blue">
             <div class="container-lg racer-blue">
                 <div> © 2007-<?= date("Y"); ?> RacerHistory.com &amp; Patrick Foltz. All Rights Reserved.

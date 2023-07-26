@@ -6,20 +6,20 @@
         <?= render('admin/game/_form', $options, false); ?>
     </div>
 </div>
-<div id="PlaceModal" class="modal fade" role="dialog">
+<div id="PlaceModal" class="modal" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         <h4 class="modal-title">New Place</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/place/_form_ajax'); ?>
       </div>
       <div class="modal-footer">
-        <button id="close-modal-place" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="close-modal-place" type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -57,20 +57,20 @@
         });
     });
 </script>
-<div id="OppModal" class="modal fade" role="dialog">
+<div id="OppModal" class="modal" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         <h4 class="modal-title">New Opponent</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/opponent/_form_ajax',$options); ?>
       </div>
       <div class="modal-footer">
-        <button id="close-modal-opp" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="close-modal-opp" type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -102,20 +102,20 @@
         })
     });
 </script>
-<div id="SiteModal" class="modal fade" role="dialog">
+<div id="SiteModal" class="modal" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         <h4 class="modal-title">New Site</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/site/_form_ajax', $options); ?>
       </div>
       <div class="modal-footer">
-        <button id="close-modal-site" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="close-modal-site" type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -147,20 +147,20 @@
         })
         });
 </script>
-<div id="TypeModal" class="modal fade" role="dialog">
+<div id="TypeModal" class="modal" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         <h4 class="modal-title">New Game Type</h4>
       </div>
       <div class="modal-body">
         <?= render('admin/game/type/_form_ajax'); ?>
       </div>
       <div class="modal-footer">
-        <button id="close-modal-type" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="close-modal-type" type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
 

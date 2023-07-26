@@ -66,7 +66,7 @@ class Controller_Admin_Game extends Controller_Admin {
         $this->template->set_global('options' ,$this->set_opts(), false);
 
         $this->template->title = "Games";
-        $this->template->content = View::forge('admin/game/create', $this->set_opts(), false);
+        $this->template->content = View::forge('admin/game/create');
     }
     
     private function set_opts() {
@@ -79,6 +79,7 @@ class Controller_Admin_Game extends Controller_Admin {
         foreach ($season as $value) {
             $seasons[$value->id] = $value->seasons->start . '-' . $value->seasons->end . ' - ' . $value->teams->team_name;
         }
+        asort($seasons);
         $game_type = Model_Game_Type::find('all');
         foreach ($game_type as $value) {
             $game_types[$value->id] = $value->game_type_name;
@@ -87,14 +88,17 @@ class Controller_Admin_Game extends Controller_Admin {
         foreach ($opponent as $value) {
             $opponents[$value->id] = $value->opponent_name . ' ' . ($value->places ? $value->places->place_state : '');
         }
+        asort($opponents);
         $place = Model_Place::find('all', ['order_by' => ['place_name' => 'desc']]);
         foreach ($place as $value) {
             $places[$value->id] = $value->place_name . ', ' . $value->place_state;
         }
+        asort($places);
         $site = Model_Site::find('all');
         foreach ($site as $value) {
             $sites[$value->id] = $value->places->place_name . ', ' . $value->places->place_state . ' - ' . $value->site_name;
         }
+        asort($sites);
         $data = ['seasons' => $seasons, 'game_types' => $game_types, 'opponents' => $opponents, 'places' => $places, 'sites' => $sites];
         return $data;
     }

@@ -36,6 +36,7 @@ class Controller_Admin_Game_Type extends Controller_Admin {
                             'game_type_name' => Input::post('game_type_name'),
                             'post' => Input::post('post'),
                             'conf' => Input::post('conf'),
+                            'ind'  => Input::post('ind')
                 ]);
 
                 if ($game_type and $game_type->save()) {
@@ -62,6 +63,7 @@ class Controller_Admin_Game_Type extends Controller_Admin {
             $game_type->game_type_name = Input::post('game_type_name');
             $game_type->post = Input::post('post');
             $game_type->conf = Input::post('conf');
+            $game_type->ind  = Input::post('ind');
 
             if ($game_type->save()) {
                 Session::set_flash('success', e('Updated game_type #' . $id));
@@ -75,6 +77,7 @@ class Controller_Admin_Game_Type extends Controller_Admin {
                 $game_type->game_type_name = $val->validated('game_type_name');
                 $game_type->post = $val->validated('post');
                 $game_type->conf = $val->validated('conf');
+                $game_type->ind  = $val->validated('ind');
 
                 Session::set_flash('error', $val->error());
             }

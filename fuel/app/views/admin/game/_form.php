@@ -5,11 +5,11 @@
         <?= Form::label('Team Season', 'season', ['class' => 'control-label']); ?>
         <div class='input-group'>
             <?= Form::select('team_season_id', Input::post('season', isset($game) ? $game->team_season_id : (isset($season) ? $season->id : '')),$options['seasons'], ['class' => 'form-control', 'placeholder' => 'Season']); ?>
-            <?php if(\Fuel\Core\Uri::segment(3) === 'create') : ?>
+            
                 <div class="input-group-btn">
                     <?= Html::anchor('admin/team/season/create', 'New', ['class' => 'btn btn-danger']); ?>
                 </div>
-            <?php endif; ?> 
+            
         </div>    
     </div>
 
@@ -29,11 +29,11 @@
         <?= Form::label('Game type', 'game_type_id', ['class' => 'control-label']); ?>
         <div class='input-group'>
             <?= Form::select('game_type_id', Input::post('game_type_id', isset($game) ? $game->game_type_id : ''),$options['game_types'], ['class' => 'form-control', 'placeholder' => 'Game type id']); ?>
-            <?php if(\Fuel\Core\Uri::segment(3) === 'create') : ?>
+            
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#TypeModal">New</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#TypeModal">New</button>
                 </div>
-            <?php endif; ?>
+            
         </div>    
     </div>
 
@@ -41,11 +41,11 @@
         <?= Form::label('Opponent', 'opponent_id', ['class' => 'control-label']); ?>
         <div class='input-group'>
             <?= Form::select('opponent_id', Input::post('opponent_id', isset($game) ? $game->opponent_id : ''),$options['opponents'], ['class' => 'form-control', 'placeholder' => 'Opponent id']); ?>
-            <?php if(\Fuel\Core\Uri::segment(3) === 'create') : ?>
+            
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#OppModal">New</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#OppModal">New</button>
                 </div>
-            <?php endif; ?>
+           
         </div>    
     </div>
 
@@ -53,11 +53,11 @@
         <?= Form::label('Place', 'place_id', ['class' => 'control-label']); ?>
         <div class='input-group'>
             <?= Form::select('place_id', Input::post('place_id', isset($game) ? $game->place_id : ''),$options['places'], ['class' => 'form-control', 'placeholder' => 'Place id']); ?>
-            <?php if(\Fuel\Core\Uri::segment(3) === 'create') : ?>
+            
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#PlaceModal">New</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#PlaceModal">New</button>
                 </div>
-            <?php endif; ?>
+            
         </div>    
     </div>
 
@@ -65,11 +65,11 @@
         <?= Form::label('Site', 'site_id', ['class' => 'control-label']); ?>
         <div class='input-group'>
             <?= Form::select('site_id', Input::post('site_id', isset($game) ? $game->site_id : ''),$options['sites'], ['class' => 'form-control', 'placeholder' => 'Site id']); ?>
-            <?php if(\Fuel\Core\Uri::segment(3) === 'create') : ?>
+            
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#SiteModal">New</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#SiteModal">New</button>
                 </div>
-            <?php endif; ?>
+            
         </div> 
     </div>
 

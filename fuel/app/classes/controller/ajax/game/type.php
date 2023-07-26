@@ -13,6 +13,7 @@ class Controller_Ajax_Game_Type extends Controller_Ajax
                         'game_type_name' => Input::post('game_type_name'),
                         'post'           => Input::post('post'),
                         'conf'           => Input::post('conf'),
+                        'ind'            => Input::post('ind')
                 ]);
 
                 if ($game_type and $game_type->save()) {
@@ -20,7 +21,8 @@ class Controller_Ajax_Game_Type extends Controller_Ajax
                     $this->response(
                         ['message'       => 'Success, Added game type #' . $game_type->id . '.',
                         'game_type_id'   => $game_type->id,
-                        'game_type_name' => $game_type->game_type_name], 
+                        'game_type_name' => $game_type->game_type_name, 
+                        'ind'            => $game_type->ind],
                         200);
                 } else {
 

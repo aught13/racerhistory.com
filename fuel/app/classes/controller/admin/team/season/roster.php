@@ -129,8 +129,9 @@ class Controller_Admin_Team_Season_Roster extends Controller_Admin {
         $person = Model_Person::find('all');
         $persons[] = '';
         foreach ($person as $value) {
-            $persons[$value->id] = $value->display;
+            $persons[$value->id] = $value->last.', '.$value->first;
         }
+        asort($persons);
         $data['teams'] = $teams;
         $data['persons'] = $persons;
         
