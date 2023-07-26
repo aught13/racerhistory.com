@@ -15,7 +15,7 @@ class Data_Gameview
         if ($query->person_box) {
             foreach ($query->person_box as $result) {
                 foreach ($result as $key => $value) {
-                    if ($value >= 0) {
+                    if (!empty($value) || $value == '0') {
                         $stats[$key] = true;
                     }
                 }

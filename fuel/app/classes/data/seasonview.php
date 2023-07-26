@@ -11,6 +11,7 @@ class Data_Seasonview
     public static function getStats($season)
     {
         $stats        = [];
+        $persons      = [];
         $query_team   = Model_Stat_Basket_Season_Team::query()
             ->where('team_season_id', $season);
         $query_person = Model_Team_Season_Roster::query()
@@ -20,20 +21,21 @@ class Data_Seasonview
         if ($query_person->count() > 0) {
             foreach ($query_person->get() as $result) {
                 if ($result->stat_basket_season_person) {
+                    $persons[] = $result->stat_basket_season_person;
                     foreach ($result->stat_basket_season_person as $key =>
                             $value) {
-                        if ($value >= 0) {
+                        if (!empty($value) || $value == '0') {
                             $stats[$key] = true;
                         }
                     }
                 }
             }
         }
-        $stats['person'] = $query_person->get();
+        $stats['person'] = $persons;
         if ($query_team->count() > 0) {
             foreach ($query_team->get() as $result) {
                 foreach ($result as $key => $value) {
-                    if ($value >= 0) {
+                    if (!empty($value) || $value == '0') {
                         $stats[$key] = true;
                     }
                 }
