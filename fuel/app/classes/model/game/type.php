@@ -6,6 +6,7 @@ class Model_Game_Type extends \Orm\Model
 		'game_type_name',
 		'post',
 		'conf',
+                'ind'
 	]; 
         
         protected static $_has_many = ['games'];
@@ -19,6 +20,7 @@ class Model_Game_Type extends \Orm\Model
 		$val->add_field('game_type_name', 'Game Type Name', 'required|max_length[162]');
 		$val->add_field('post', 'Post', 'required|valid_string[numeric]');
 		$val->add_field('conf', 'Conf', 'required|valid_string[numeric]');
+                $val->add_field('ind', 'Indicator', 'valid_string[alpha, lowercase, specials, punctuation, dashes]');
 
 		return $val;
 	}

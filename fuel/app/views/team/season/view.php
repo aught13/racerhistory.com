@@ -108,19 +108,23 @@
                 </tr>
             </thead>
             <tbody>
+                <?php $types= []; ?>
                 <?php foreach ($team_season->games as $item): ?>
                     <tr>
                         <td><?= $item->game_date; ?></td>
-                        <td class="d-flex justify-content-end"><span class="d-none d-lg-inline"><?= $item->mur_rk; ?>&nbsp; </span><span class="d-none d-lg-inline">Racers&nbsp;</span><span> <?= $item->hrn == '1' ? 'Vs' : ($item->hrn == '2' ? '@' : 'Vs'); ?></span></td>
-                        <td><span class="d-none d-lg-inline"><?= $item->opp_rk; ?>&nbsp;</span><span class="d-none d-md-inline"><?= $item->opponents->opponent_name; ?></span><span class="d-md-none"><?= $item->opponents->opponent_short; ?></span></td>
-                        <td><?= (($item->game_types->conf == '1' && $item->game_types->post == '1')? 't' : ($item->game_types->post == '1' ? '^' : ($item->game_types->conf == '1' ? '*' : ''))); ?></td>
+                        <td class="d-flex justify-content-end"><span class="d-none d-lg-inline"><?= $item->mur_rk ? '#'.$item->mur_rk :''; ?>&nbsp; </span><span class="d-none d-lg-inline">Racers&nbsp;</span><span> <?= $item->hrn == '1' ? 'Vs' : ($item->hrn == '2' ? '@' : 'Vs'); ?></span></td>
+                        <td><span class="d-none d-lg-inline"><?= $item->opp_rk ? '#'.$item->opp_rk :''; ?>&nbsp;</span><span class="d-none d-md-inline"><?= $item->opponents->opponent_name; ?></span><span class="d-md-none"><?= $item->opponents->opponent_short; ?></span></td>
+                        <td><sup><?= (($item->game_types->conf == '1' || $item->game_types->post == '1')? $item->game_types->ind ?? '' : ''); ?></sup></td>
                         <td class="d-none d-lg-table-cell"><?= $item->places->place_name; ?>, <?= $item->places->place_state; ?></td>
                         <td><?= $item->w == '1' ? 'W' : ($item->l == '1' ? 'L' : ''); ?></td>
-                        <td><?= Html::anchor('game/view/' . $item->id, $item->pts_mur.' - '.$item->pts_opp); ?><?= ($item->ot == '1' ? '<span class="d-none d-sm-inline"> OT</span>' : (empty($item->ot) ? '' : '<span class="d-none d-sm-inline"> '.$item->ot.' OT</span>')); ?></td>
+                        <td><?= Html::anchor('game/view/' . $item->id, $item->pts_mur.' - '.$item->pts_opp); ?><?= ($item->ot == '1' ? '<span class="d-none d-sm-inline"><sup> OT</sup></span>' : (empty($item->ot) ? '' : '<span class="d-none d-sm-inline"><sup> '.$item->ot.' OT</sup></span>')); ?></td>
                     </tr>
+                    <?php  ($item->game_types->conf == '1' || $item->game_types->post == '1')?
+                        $types[$item->game_types->id] = $item->game_types->ind.' - '.$item->game_types->game_type_name : ''; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
+        <span><sub><?= !$types ?: implode(' ', $types);?></sub></span>
     </div>
 <?php else: ?>
     <p>No Games.</p>
