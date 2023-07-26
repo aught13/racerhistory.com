@@ -34,7 +34,7 @@ class Data_Personview
                     $ends[]   = intval($value->team_season->seasons->end) : '';
             }
         }
-        asort($rosters);
+        ksort($rosters);
         $data['rosters'] = $rosters;
         $data['teams']   = array_unique($teams ?? []);
         $starts ?? false && $ends ?? false ? 
@@ -53,6 +53,7 @@ class Data_Personview
                         )
                 );
         $starts ?? false && $ends ?? false ? $starts[] = max($ends) : '';
+        $starts ?? false ? asort($starts) : '';
         $starts ?? false ? $data['years'] = $starts : $data['years'] = $ends;
         
         return $data;
