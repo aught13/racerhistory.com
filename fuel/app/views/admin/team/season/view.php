@@ -269,44 +269,42 @@
             <tbody>
                 <?php if ($stats['person']): ?> <!-- Individual Box -->
                 <?php foreach ($stats['person'] as $value): ?>
-                <?php if ($value->stat_basket_season_person): ?>
                 <tr> 
-                    <?= '<td>'.$value->persons->display.'</td>' ;?>
-                    <?= isset($stats['GP']) ? '<td class="text-center border">'.$value->stat_basket_season_person->GP.'</td>' : '' ; ?>
-                    <?= isset($stats['GS']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->stat_basket_season_person->GS.'</td>' : '' ; ?>
-                    <?= isset($stats['MIN']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->stat_basket_season_person->MIN.'</td>' : '' ; ?>
-                    <?= isset($stats['FGM']) ? '<td class="text-center border">'.$value->stat_basket_season_person->FGM.'</td>' : '' ; ?>
-                    <?= isset($stats['FGA']) ? '<td class="text-center border">'.$value->stat_basket_season_person->FGA.'</td>' : '' ; ?>
-                    <?= isset($stats['TPM']) ? '<td class="text-center border">'.$value->stat_basket_season_person->TPM.'</td>' : '' ; ?>
-                    <?= isset($stats['TPA']) ? '<td class="text-center border">'.$value->stat_basket_season_person->TPA.'</td>' : '' ; ?>
-                    <?= isset($stats['FTM']) ? '<td class="text-center border">'.$value->stat_basket_season_person->FTM.'</td>' : '' ; ?>
-                    <?= isset($stats['FTA']) ? '<td class="text-center border">'.$value->stat_basket_season_person->FTA.'</td>' : '' ; ?>
-                    <?= isset($stats['ORB']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->stat_basket_season_person->ORB.'</td>' : '' ; ?>
-                    <?= isset($stats['DRB']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->stat_basket_season_person->DRB.'</td>' : '' ; ?>
-                    <?= isset($stats['RB']) ? '<td class="text-center border ">'.$value->stat_basket_season_person->RB.'</td>' : '' ; ?>
-                    <?= isset($stats['PF']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->stat_basket_season_person->PF.'</td>' : '' ; ?>
-                    <?= isset($stats['FD']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->stat_basket_season_person->FD.'</td>' : '' ; ?>
-                    <?= isset($stats['AST']) ? '<td class="text-center border ">'.$value->stat_basket_season_person->AST.'</td>' : '' ; ?>
-                    <?= isset($stats['TRN']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->stat_basket_season_person->TRN.'</td>' : '' ; ?>
-                    <?= isset($stats['STL']) ? '<td class="text-center border ">'.$value->stat_basket_season_person->STL.'</td>' : '' ; ?>
-                    <?= isset($stats['BS']) ? '<td class="text-center border ">'.$value->stat_basket_season_person->BS.'</td>' : '' ; ?>
-                    <?= isset($stats['BD']) ? 'name="hide" <td class="text-center border d-none d-md-table-cell">'.$value->stat_basket_season_person->BD.'</td>' : '' ; ?>
-                    <?= isset($stats['PTS']) ? '<td class="text-center border ">'.$value->stat_basket_season_person->PTS.'</td>' : '' ; ?>
+                    <?= '<td>'.$value->team_season_roster->persons->display.'</td>' ;?>
+                    <?= isset($stats['GP']) ? '<td class="text-center border">'.$value->GP.'</td>' : '' ; ?>
+                    <?= isset($stats['GS']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->GS.'</td>' : '' ; ?>
+                    <?= isset($stats['MIN']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->MIN.'</td>' : '' ; ?>
+                    <?= isset($stats['FGM']) ? '<td class="text-center border">'.$value->FGM.'</td>' : '' ; ?>
+                    <?= isset($stats['FGA']) ? '<td class="text-center border">'.$value->FGA.'</td>' : '' ; ?>
+                    <?= isset($stats['TPM']) ? '<td class="text-center border">'.$value->TPM.'</td>' : '' ; ?>
+                    <?= isset($stats['TPA']) ? '<td class="text-center border">'.$value->TPA.'</td>' : '' ; ?>
+                    <?= isset($stats['FTM']) ? '<td class="text-center border">'.$value->FTM.'</td>' : '' ; ?>
+                    <?= isset($stats['FTA']) ? '<td class="text-center border">'.$value->FTA.'</td>' : '' ; ?>
+                    <?= isset($stats['ORB']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->ORB.'</td>' : '' ; ?>
+                    <?= isset($stats['DRB']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->DRB.'</td>' : '' ; ?>
+                    <?= isset($stats['RB']) ? '<td class="text-center border ">'.$value->RB.'</td>' : '' ; ?>
+                    <?= isset($stats['PF']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->PF.'</td>' : '' ; ?>
+                    <?= isset($stats['FD']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->FD.'</td>' : '' ; ?>
+                    <?= isset($stats['AST']) ? '<td class="text-center border ">'.$value->AST.'</td>' : '' ; ?>
+                    <?= isset($stats['TRN']) ? '<td name="hide" class="text-center border d-none d-md-table-cell">'.$value->TRN.'</td>' : '' ; ?>
+                    <?= isset($stats['STL']) ? '<td class="text-center border ">'.$value->STL.'</td>' : '' ; ?>
+                    <?= isset($stats['BS']) ? '<td class="text-center border ">'.$value->BS.'</td>' : '' ; ?>
+                    <?= isset($stats['BD']) ? 'name="hide" <td class="text-center border d-none d-md-table-cell">'.$value->BD.'</td>' : '' ; ?>
+                    <?= isset($stats['PTS']) ? '<td class="text-center border ">'.$value->PTS.'</td>' : '' ; ?>
                     <td><?=
                             Html::anchor(
-                                'admin/stat/basket/season/opponent/edit/' . $value->id, 'edit',
+                                'admin/stat/basket/season/person/edit/' . $value->id, 'edit',
                                 ['class' => '']
                             );
                             ?>|<?=
                             Html::anchor(
-                                'admin/stat/basket/season/opponent/delete/' . $value->id, 'Delete',
+                                'admin/stat/basket/season/person/delete/' . $value->id, 'Delete',
                                 [
                                     'onclick' => "return confirm('Are you sure?')"]
                             );
                             ?>
                     </td>
                 </tr>
-                <?php endif; ?>
                 <?php endforeach; ?>
                 <?php else: ?>
                 <tr></tr>
