@@ -10,7 +10,7 @@ class Data_Stat_Basket_Career_Person implements IteratorAggregate, Countable
 
     protected $_properties = [];
 
-    public static function find($param = false): iterable|false
+    public static function find($param = false)
     {
         $return = new self($param);
         if ($return->count() == 0) {
