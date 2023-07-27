@@ -30,15 +30,15 @@
                     <th>ORB</th>
                     <th>DRB</th>
                     <th>RB</th>
-                    <th>AST</th>
-                    <th>STL</th>
-                    <th>BLK</th>
-                    <th>BLD</th>
-                    <th>TO</th>
                     <th>PF</th>
                     <th>FD</th>
-                    <th>TF</th>
                     <th>PTS</th>
+                    <th>AST</th>
+                    <th>TO</th>
+                    <th>ST</th>
+                    <th>BS</th>
+                    <th>BA</th>
+                    <th>TF</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,15 +54,15 @@
                     <td><?= Form::input('ORB', Input::post('ORB', isset($stat_basket_game_person) ? $stat_basket_game_person->ORB : ''), ['size'=>'2']); ?></td>
                     <td><?= Form::input('DRB', Input::post('DRB', isset($stat_basket_game_person) ? $stat_basket_game_person->DRB : ''), ['size'=>'2']); ?></td>
                     <td><?= Form::input('RB', Input::post('RB', isset($stat_basket_game_person) ? $stat_basket_game_person->RB : ''), ['size'=>'2']); ?></td>
+                    <td><?= Form::input('PF', Input::post('PF', isset($stat_basket_game_person) ? $stat_basket_game_person->PF : ''), ['size'=>'1']); ?></td>
+                    <td><?= Form::input('FD', Input::post('FD', isset($stat_basket_game_person) ? $stat_basket_game_person->FD : ''), ['size'=>'2']); ?></td>
+                    <td><?= Form::input('PTS', Input::post('PTS', isset($stat_basket_game_person) ? $stat_basket_game_person->PTS : ''), ['size'=>'3']); ?></td>
                     <td><?= Form::input('AST', Input::post('AST', isset($stat_basket_game_person) ? $stat_basket_game_person->AST : ''), ['size'=>'2']); ?></td>
+                    <td><?= Form::input('TRN', Input::post('TRN', isset($stat_basket_game_person) ? $stat_basket_game_person->TRN : ''), ['size'=>'2']); ?></td>
                     <td><?= Form::input('STL', Input::post('STL', isset($stat_basket_game_person) ? $stat_basket_game_person->STL : ''), ['size'=>'2']); ?></td>
                     <td><?= Form::input('BS', Input::post('BS', isset($stat_basket_game_person) ? $stat_basket_game_person->BS : ''), ['size'=>'2']); ?></td>
                     <td><?= Form::input('BD', Input::post('BD', isset($stat_basket_game_person) ? $stat_basket_game_person->BD : ''), ['size'=>'2']); ?></td>
-                    <td><?= Form::input('TRN', Input::post('TRN', isset($stat_basket_game_person) ? $stat_basket_game_person->TRN : ''), ['size'=>'2']); ?></td>
-                    <td><?= Form::input('PF', Input::post('PF', isset($stat_basket_game_person) ? $stat_basket_game_person->PF : ''), ['size'=>'1']); ?></td>
-                    <td><?= Form::input('FD', Input::post('FD', isset($stat_basket_game_person) ? $stat_basket_game_person->FD : ''), ['size'=>'2']); ?></td>
                     <td><?= Form::input('TF', Input::post('TF', isset($stat_basket_game_person) ? $stat_basket_game_person->TF : ''), ['size'=>'1']); ?></td>
-                    <td><?= Form::input('PTS', Input::post('PTS', isset($stat_basket_game_person) ? $stat_basket_game_person->PTS : ''), ['size'=>'3']); ?></td>
                 </tr>
             </tbody>
         </table>
