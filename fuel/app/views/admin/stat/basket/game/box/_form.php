@@ -72,9 +72,27 @@
     </div>
 
     <div class="form-group">
+        <?= Form::label('PF', 'PF', ['class' => 'control-label']); ?>
+
+        <?= Form::input('PF', Input::post('PF', isset($stat_basket_game_box) ? $stat_basket_game_box->PF : ''), ['class' => 'form-control', 'placeholder' => 'PF']); ?>
+    </div>
+
+    <div class="form-group">
+        <?= Form::label('PTS', 'PTS', ['class' => 'control-label']); ?>
+
+        <?= Form::input('PTS', Input::post('PTS', isset($stat_basket_game_box) ? $stat_basket_game_box->PTS : ''), ['class' => 'form-control', 'placeholder' => 'PTS']); ?>
+    </div>
+
+    <div class="form-group">
         <?= Form::label('AST', 'AST', ['class' => 'control-label']); ?>
 
         <?= Form::input('AST', Input::post('AST', isset($stat_basket_game_box) ? $stat_basket_game_box->AST : ''), ['class' => 'form-control', 'placeholder' => 'AST']); ?>
+    </div>
+
+    <div class="form-group">
+        <?= Form::label('TRN', 'TRN', ['class' => 'control-label']); ?>
+
+        <?= Form::input('TRN', Input::post('TRN', isset($stat_basket_game_box) ? $stat_basket_game_box->TRN : ''), ['class' => 'form-control', 'placeholder' => 'TRN']); ?>
     </div>
 
     <div class="form-group">
@@ -90,39 +108,21 @@
     </div>
 
     <div class="form-group">
-        <?= Form::label('TRN', 'TRN', ['class' => 'control-label']); ?>
-
-        <?= Form::input('TRN', Input::post('TRN', isset($stat_basket_game_box) ? $stat_basket_game_box->TRN : ''), ['class' => 'form-control', 'placeholder' => 'TRN']); ?>
-    </div>
-
-    <div class="form-group">
-        <?= Form::label('PF', 'PF', ['class' => 'control-label']); ?>
-
-        <?= Form::input('PF', Input::post('PF', isset($stat_basket_game_box) ? $stat_basket_game_box->PF : ''), ['class' => 'form-control', 'placeholder' => 'PF']); ?>
-    </div>
-
-    <div class="form-group">
         <?= Form::label('TF', 'TF', ['class' => 'control-label']); ?>
 
         <?= Form::input('TF', Input::post('TF', isset($stat_basket_game_box) ? $stat_basket_game_box->TF : ''), ['class' => 'form-control', 'placeholder' => 'TF']); ?>
     </div>
 
     <div class="form-group">
-        <?= Form::label('PTS', 'PTS', ['class' => 'control-label']); ?>
+        <?= Form::label('OTO', 'OTO', ['class' => 'control-label']); ?>
 
-        <?= Form::input('PTS', Input::post('PTS', isset($stat_basket_game_box) ? $stat_basket_game_box->PTS : ''), ['class' => 'form-control', 'placeholder' => 'PTS']); ?>
+        <?= Form::input('OTO', Input::post('OTO', isset($stat_basket_game_box) ? $stat_basket_game_box->OTO : ''), ['class' => 'form-control', 'placeholder' => 'OTO']); ?>
     </div>
 
     <div class="form-group">
         <?= Form::label('PNT', 'PNT', ['class' => 'control-label']); ?>
 
         <?= Form::input('PNT', Input::post('PNT', isset($stat_basket_game_box) ? $stat_basket_game_box->PNT : ''), ['class' => 'form-control', 'placeholder' => 'PNT']); ?>
-    </div>
-
-    <div class="form-group">
-        <?= Form::label('OTO', 'OTO', ['class' => 'control-label']); ?>
-
-        <?= Form::input('OTO', Input::post('OTO', isset($stat_basket_game_box) ? $stat_basket_game_box->OTO : ''), ['class' => 'form-control', 'placeholder' => 'OTO']); ?>
     </div>
 
     <div class="form-group">
