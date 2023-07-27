@@ -215,12 +215,12 @@ return array(
 		 * ---------------------------------------------------------------------
 		 */
 
-		// 'csrf_autoload'            => false,
-		// 'csrf_autoload_methods'    => array('post', 'put', 'delete'),
-		// 'csrf_bad_request_on_fail' => false,
-		// 'csrf_auto_token'          => false,
-		// 'csrf_token_key'           => 'fuel_csrf_token',
-		// 'csrf_expiration'          => 0,
+		 'csrf_autoload'            => true,
+		 'csrf_autoload_methods'    => array('post', 'put', 'delete'),
+		 'csrf_bad_request_on_fail' => false,
+		 'csrf_auto_token'          => true,
+		 'csrf_token_key'           => 'fuel_csrf_token',
+		 'csrf_expiration'          => 0,
 
 		/**
 		 * ---------------------------------------------------------------------
@@ -228,7 +228,7 @@ return array(
 		 * ---------------------------------------------------------------------
 		 */
 
-		// 'token_salt' => 'put your salt value here to make the token more secure',
+		 'token_salt' => 'Elk@Bywflh+bVhm_cVNjJ4G)22(lw@+7Qq)hWXcSoZNdhrMbbv9n=G7Sik-(9(AN6Ruo#GF!tM-F#OVGaVWj0oTw+0cBNm3bfiMV=YfDoE=B-v@=#X-6/U2WP=WfvOay',
 
 		/**
 		 * ---------------------------------------------------------------------
@@ -242,7 +242,7 @@ return array(
 		 * ---------------------------------------------------------------------
 		 */
 
-		// 'allow_x_headers' => false,
+		 'allow_x_headers' => false,
 
 		/**
 		 * ---------------------------------------------------------------------
