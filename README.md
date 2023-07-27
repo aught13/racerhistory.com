@@ -1,6 +1,6 @@
 # Racerhistory.com
 
-* Version: 0.5 [under development]
+* Version: 1.0 
 * [Website](https://racerhistory.com)
 
 Built using Fuelphp
@@ -15,8 +15,8 @@ Racerhistory.com is being developed as an online repository for Murray State Uni
 
 ## Roadmap
 
-* Create backend for new site -- 90% complete with 0.5
-* Create frontend for new site
+* Create backend for new site -- functionally complete with 1.0
+* Create frontend for new site -- View team seasons, people, and basketball stats with 1.0 
 * Split out indivual sport sections from common parts and create modules
 * Add additional sports
 
