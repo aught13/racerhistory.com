@@ -83,7 +83,7 @@ class Data_Gameview
             $e     = 0;
             $r     = 0;
             foreach ($query->get() as $value) {
-                $techs['mur'][$value->name] = $value->TF;
+                $techs['mur'][$value->team_season_roster->persons->display] = $value->TF;
                 $r                          += $value->TF;
                 $e++;
             }
