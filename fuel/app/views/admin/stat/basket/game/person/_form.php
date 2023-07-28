@@ -70,7 +70,7 @@
 </div>
     <div class="form-group">
         <?= Form::submit('submit', 'Save', ['class' => 'btn btn-primary']); ?>
-
+        <?= Form::submit('submitand', 'Save & Add Another', ['class' => 'btn btn-primary']); ?>
         <div class="pull-right">
             <?php if (Uri::segment(3) === 'edit'): ?>
                 <div class="btn-group">

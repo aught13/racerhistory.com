@@ -29,6 +29,7 @@ class Controller_Admin_Stat_Basket_Game_Person extends Controller_Admin {
     public function action_create($game = null) {
         
         $statgame = Model_Game::find($game);
+        $add = Input::post('submitand') ?: false;
         
         if (Input::method() == 'POST') {
             $val = Model_Stat_Basket_Game_Person::validate('create');
@@ -62,7 +63,9 @@ class Controller_Admin_Stat_Basket_Game_Person extends Controller_Admin {
                 ]);
                 
                 if ($stat_basket_game_person and $stat_basket_game_person->save()) {
-                    Session::set_flash('success', e('Added stat_basket_game_person #' . $stat_basket_game_person->id . '.'));                    
+                    Session::set_flash('success', e('Added stat_basket_game_person #' . $stat_basket_game_person->id . '.')); 
+                    $_POST = [];
+                    $add ? Response::redirect('admin/stat/basket/game/person/create/' .$game) : '';                   
                     Response::redirect('admin/game/view/'.$statgame->id);                    
                 } else {
                     Session::set_flash('error', e('Could not save stat_basket_game_person.'));                    
