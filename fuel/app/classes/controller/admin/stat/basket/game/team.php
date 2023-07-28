@@ -40,7 +40,7 @@ class Controller_Admin_Stat_Basket_Game_Team extends Controller_Admin {
         $this->template->content = View::forge('admin/stat/basket/game/team/create');
     }
 
-    public function action_edit($id = null) {
+    public function action_edit($id = null, $opp = null) {
         $stat_basket_game_team = Model_Stat_Basket_Game_Team::find($id);
         $game = $stat_basket_game_team->game_id;
         $val = Model_Stat_Basket_Game_Team::validate('edit');
@@ -77,6 +77,9 @@ class Controller_Admin_Stat_Basket_Game_Team extends Controller_Admin {
             }
             
             $this->template->set_global('stat_basket_game_team', $stat_basket_game_team, false);            
+        }
+        if (isset($opp)) {
+            $this->template->set_global('opp', 1 , false);
         }
         $this->template->set_global('game', $game, false);
         $this->template->title = "Team stats";

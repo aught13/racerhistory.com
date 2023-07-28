@@ -146,15 +146,12 @@ class Controller_Admin_Game extends Controller_Admin {
             $game->team_season_id = Input::post('team_season_id');
             $game->game_date = Input::post('game_date');
             $game->game_time = Input::post('game_time');
-            $game->game_duration = Input::post('game_duration');
             $game->game_type_id = Input::post('game_type_id');
             $game->opponent_id = Input::post('opponent_id');
             $game->place_id = Input::post('place_id');
             $game->site_id = Input::post('site_id');
             $game->hrn = Input::post('hrn');
             $game->post = Input::post('post');
-            $game->mur_rk = Input::post('mur_rk');
-            $game->opp_rk = Input::post('opp_rk');
             $game->periods = Input::post('periods');
 
             if ($game->save()) {
@@ -172,15 +169,12 @@ class Controller_Admin_Game extends Controller_Admin {
                 $game->team_season_id = $val->validated('team_season_id');
                 $game->game_date = $val->validated('game_date');
                 $game->game_time = $val->validated('game_time');
-                $game->game_duration = $val->validated('game_duration');
                 $game->game_type_id = $val->validated('game_type_id');
                 $game->opponent_id = $val->validated('opponent_id');
                 $game->place_id = $val->validated('place_id');
                 $game->site_id = $val->validated('site_id');
                 $game->hrn = $val->validated('hrn');
                 $game->post = $val->validated('post');
-                $game->mur_rk = $val->validated('mur_rk');
-                $game->opp_rk = $val->validated('opp_rk');
                 $game->periods = $val->validated('periods');
 
                 Session::set_flash('error', $val->error());

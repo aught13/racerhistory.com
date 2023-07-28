@@ -382,7 +382,7 @@
                     <?= isset($stats['TRN']) ? '<td class="text-center">'.$value->TRN.'</td>' : ''; ?>
                     <?= isset($stats['PTS']) ? ((isset($stats['STL']) || isset($stats['BS'])) ? '<td colspan="'.count(array_filter([isset($stats['STL']), isset($stats['BS']),isset($stats['BD'])])).'"></td>' : '') : '' ; ?>
                     <?= isset($stats['PTS']) ? '<td class="text-center">'.$value->PTS.'</td>' : ''; ?>
-                    <th><?= Html::anchor('admin/stat/basket/game/team/edit/' . $value->id, 'edit', ['class' => '']); ?>|<?= Html::anchor('admin/stat/basket/game/team/delete/' . $value->id, 'Delete', ['onclick' => "return confirm('Are you sure?')"]); ?></th>
+                    <th><?= Html::anchor('admin/stat/basket/game/team/edit/' . $value->id . '/1', 'edit', ['class' => '']); ?>|<?= Html::anchor('admin/stat/basket/game/team/delete/' . $value->id, 'Delete', ['onclick' => "return confirm('Are you sure?')"]); ?></th>
                 </tr>                
                 <?php endforeach; ?>
                 <?php endif; ?>
