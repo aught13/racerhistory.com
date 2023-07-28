@@ -250,7 +250,7 @@
     <?php endif; ?>
     <?= Html::anchor('admin/stat/basket/game/person/create/' . $game->id, 'Add Player Box', ['class' => 'btn btn-success']); ?>
     <?= Html::anchor('admin/stat/basket/game/box/create/' . $game->id, 'Add Game Box', ['class' => 'btn btn-success']); ?>
-    <?= ($game->team_box_opp ? '' : Html::anchor('admin/stat/basket/game/team/create/' . $game->id, 'Add Team Box', ['class' => 'btn btn-success'])); ?>
+    <?= ($game->team_box ? '' : Html::anchor('admin/stat/basket/game/team/create/' . $game->id, 'Add Team Box', ['class' => 'btn btn-success'])); ?>
     <?php if ($game->game_box_mur && (isset($stats['FGA']) ||isset($stats['FTA']) ||isset($stats['TPA']))): ?>
     <div class="col-sm-12"><!-- Murray Shooting -->        
         <table class="table table-condensed table-striped">
