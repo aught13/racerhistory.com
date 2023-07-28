@@ -193,8 +193,8 @@
                 <?php else: ?>
                 <tr></tr>
                 <?php endif; ?>
-                <?php if ($game->team_box_opp): ?><!-- team -->
-                <?php foreach ($game->team_box_opp as $value): ?>
+                <?php if ($game->team_box): ?><!-- team -->
+                <?php foreach ($game->team_box as $value): ?>
                 <tr>
                     <td colspan="<?= 3+count(array_filter(array(isset($stats['MIN']),isset($stats['FGM']),isset($stats['FGA']),isset($stats['TPM']),isset($stats['TPA']),isset($stats['FTM']),isset($stats['FTA'])))); ?>">Team</td>
                     <?= isset($stats['ORB']) ? '<td class="text-center">'.$value->ORB.'</td>' : ''; ?>
