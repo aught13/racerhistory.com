@@ -65,7 +65,7 @@ class Controller_Admin_Stat_Basket_Game_Opponent extends Controller_Admin {
                 ]);
                 
                 if ($stat_basket_game_opponent and $stat_basket_game_opponent->save()) {
-                    Session::set_flash('success', e('Added stat_basket_game_opponent #' . $stat_basket_game_opponent->id . '.')); 
+                    Session::set_flash('success', e('Added Opponent Player Stat for ' . $stat_basket_game_opponent->name . '.')); 
                     $_POST = [];
                     $add ? Response::redirect('admin/stat/basket/game/opponent/create/' .$id) : '';
                     Response::redirect('admin/game/view/' .$id);                    

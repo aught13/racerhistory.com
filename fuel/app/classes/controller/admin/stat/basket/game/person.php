@@ -63,7 +63,7 @@ class Controller_Admin_Stat_Basket_Game_Person extends Controller_Admin {
                 ]);
                 
                 if ($stat_basket_game_person and $stat_basket_game_person->save()) {
-                    Session::set_flash('success', e('Added stat_basket_game_person #' . $stat_basket_game_person->id . '.')); 
+                    Session::set_flash('success', e('Added Player Stat for ' . $stat_basket_game_person->team_season_roster->persons->display . '.')); 
                     $_POST = [];
                     $add ? Response::redirect('admin/stat/basket/game/person/create/' .$game) : '';                   
                     Response::redirect('admin/game/view/'.$statgame->id);                    

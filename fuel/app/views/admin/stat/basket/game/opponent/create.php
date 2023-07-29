@@ -1,4 +1,4 @@
-<h2>New Stat_basket_game_opponent</h2>
+<h2>New Opponent Player Stat</h2>
 <br>
 
 <div class="row">
