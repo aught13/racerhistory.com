@@ -193,11 +193,11 @@
                     <?= '<td>'.$value->team_season_roster->persons->display.'</td>' ;?>
                     <?= !empty($value->GS) ? '<td class="text-center">'.(empty($value->team_season_roster->roster_position) ? '*' : $value->team_season_roster->roster_position).'</td>' : '<td></td>' ;?>
                     <?= isset($stats['MIN']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->MIN.'</td>' : '' ; ?>
-                    <?= isset($stats['FGM']) ? '<td class="border text-center">'.$value->FGM.'</td>' : '' ; ?>
+                    <td class="border text-center"><?= $value->FGM; ?></td> 
                     <?= isset($stats['FGA']) ? '<td class="border text-center">'.$value->FGA.'</td>' : '' ; ?>
                     <?= isset($stats['TPM']) ? '<td class="border text-center">'.$value->TPM.'</td>' : '' ; ?>
                     <?= isset($stats['TPA']) ? '<td class="border text-center">'.$value->TPA.'</td>' : '' ; ?>
-                    <?= isset($stats['FTM']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->FTM.'</td>' : '' ; ?>
+                    <td class="border text-center d-none d-md-table-cell"><?= $value->FTM; ?></td>
                     <?= isset($stats['FTA']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->FTA.'</td>' : '' ; ?>
                     <?= isset($stats['ORB']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->ORB.'</td>' : '' ; ?>
                     <?= isset($stats['DRB']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->DRB.'</td>' : '' ; ?>
@@ -209,7 +209,7 @@
                     <?= isset($stats['STL']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->STL.'</td>' : '' ; ?>
                     <?= isset($stats['BS']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->BS.'</td>' : '' ; ?>
                     <?= isset($stats['BD']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->BD.'</td>' : '' ; ?>
-                    <?= isset($stats['PTS']) ? '<td class="border text-center">'.$value->PTS.'</td>' : '' ; ?>
+                    <td class="border text-center"><?=$value->PTS; ?></td>
                 </tr>
                 <?php endforeach; ?>
                 <?php else: ?>
@@ -384,11 +384,11 @@
                     <?= '<td>'.$value->name.'</td>' ;?>
                     <?= !empty($value->GS) ? '<td class="text-center">'.(empty($value->position) ? '*' : $value->position).'</td>' : '<td></td>' ;?>
                     <?= isset($stats['MIN']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->MIN.'</td>' : '' ; ?>
-                    <?= isset($stats['FGM']) ? '<td class="border text-center">'.$value->FGM.'</td>' : '' ; ?>
+                    <td class="border text-center"><?= $value->FGM ; ?></td>
                     <?= isset($stats['FGA']) ? '<td class="border text-center">'.$value->FGA.'</td>' : '' ; ?>
                     <?= isset($stats['TPM']) ? '<td class="border text-center">'.$value->TPM.'</td>' : '' ; ?>
                     <?= isset($stats['TPA']) ? '<td class="border text-center">'.$value->TPA.'</td>' : '' ; ?>
-                    <?= isset($stats['FTM']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->FTM.'</td>' : '' ; ?>
+                    <td class="border text-center d-none d-md-table-cell"><?= $value->FTM ; ?></td>
                     <?= isset($stats['FTA']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->FTA.'</td>' : '' ; ?>
                     <?= isset($stats['ORB']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->ORB.'</td>' : '' ; ?>
                     <?= isset($stats['DRB']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->DRB.'</td>' : '' ; ?>
@@ -400,7 +400,7 @@
                     <?= isset($stats['STL']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->STL.'</td>' : '' ; ?>
                     <?= isset($stats['BS']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->BS.'</td>' : '' ; ?>
                     <?= isset($stats['BD']) ? '<td class="border text-center d-none d-md-table-cell">'.$value->BD.'</td>' : '' ; ?>
-                    <?= isset($stats['PTS']) ? '<td class="border text-center">'.$value->PTS.'</td>' : '' ; ?>
+                    <td class="border text-center"><?= $value->PTS ; ?></td>
                 </tr>
                 <?php endforeach; ?>
                 <?php else: ?>
