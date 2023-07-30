@@ -16,6 +16,10 @@ class Data_Personview
 
     public static function getTeams($person = null)
     {
+        $rosters = [];
+        $teams = [];
+        $starts = [];
+        $ends = [];        
         $query_teams = Model_Team_Season_Roster::find(
                 'all', 
                 [
@@ -26,7 +30,7 @@ class Data_Personview
                 ]);
         if ($query_teams) {
             foreach ($query_teams as $value) {
-                $rosters[$value->team_season->seasons->end] = $value;
+                $value->team_season->seasons->end ? $rosters[$value->team_season->seasons->end] = $value : '';
                 $teams[] = $value->team_season->teams->team_name;
                 $value->team_season->semester == 1 || 2 ?
                     $starts[] = intval($value->team_season->seasons->start) : '';
