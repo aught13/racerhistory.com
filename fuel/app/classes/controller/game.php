@@ -7,10 +7,18 @@ class Controller_Game extends Controller_Template
 
     public function action_index()
     {
-        Fuel\Core\Response::redirect('team/season/');
-//        $data['games']           = Model_Game::find('all');
-//        $this->template->title   = "Games";
-//        $this->template->content = View::forge('game/index', $data);
+        // Get the team_id from the query string
+        $team_id = Input::get('team_id');
+
+        // Get all games for the specified team
+        $games = Model_Game::query()
+            ->related('team_season')
+            ->related('team_season.team')
+            ->where('team_season.team.id', $team_id)
+            ->get();
+
+        // Pass the games to the view
+        $this->template->content = View::forge('games/index', ['games' => $games]);
     }
 
     public function action_view($id = null)
