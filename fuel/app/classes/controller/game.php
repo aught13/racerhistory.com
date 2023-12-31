@@ -5,10 +5,10 @@ class Controller_Game extends Controller_Template
 
     private $data = [];
 
-    public function action_index()
+    public function action_index($team_id)
     {
         // Get the team_id from the query string
-        $team_id = Input::get('team_id');
+        is_null($team_id) and Response::redirect('team/season/');
 
         // Get all games for the specified team
         $games = Model_Game::query()
