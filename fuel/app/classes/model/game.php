@@ -346,4 +346,38 @@ class Model_Game extends \Orm\Model
                 break;
         }
     }
+    
+    public static function calculate_streaks($games) 
+    {
+        $streak = 0;
+        $streak_type = '';
+        foreach ($games as $game) {
+            if ($game->w == 1 && $game->l == 0) {
+                if ($streak_type == 'W') {
+                    $streak++;
+                } else {
+                    $streak_type = 'W';
+                    $streak = 1;
+                }
+            } elseif ($game->w == 0 && $game->l == 1) {
+                if ($streak_type == 'L') {
+                    $streak++;
+                } else {
+                    $streak_type = 'L';
+                    $streak = 1;
+                }
+            } elseif ($game->w == 0 && $game->l == 0) {
+                if ($streak_type == 'T') {
+                    $streak++;
+                } else {
+                    $streak_type = 'T';
+                    $streak = 1;
+                }
+            }
+            $game->streak_type = $streak_type;
+            $game->streak = $streak;
+        }
+        return $games;
+    }
+
 }

@@ -1,76 +1,174 @@
-<h2>Listing <span class='muted'>Games</span></h2>
+<h2>Listing Games</h2>
 <br>
-<?php if ($games): ?>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>Id</th>
-			<th>Team season id</th>
-			<th>Game date</th>
-			<th>Game time</th>
-			<th>Game duration</th>
-			<th>Game type id</th>
-			<th>Opponent id</th>
-			<th>Place id</th>
-			<th>Site id</th>
-			<th>Hrn</th>
-			<th>Post</th>
-			<th>W</th>
-			<th>L</th>
-			<th>Pts mur</th>
-			<th>Pts opp</th>
-			<th>Mur rk</th>
-			<th>Opp rk</th>
-			<th>Periods</th>
-			<th>Ot</th>
-			<th>Attendance</th>
-			<th>Game preview</th>
-			<th>Game recap</th>
-			<th>Game notes</th>
-			<th>&nbsp;</th>
-		</tr>
-	</thead>
-	<tbody>
-<?php foreach ($games as $item): ?>		<tr>
 
-			<td><?php echo $item->id; ?></td>
-			<td><?php echo $item->team_season_id; ?></td>
-			<td><?php echo $item->game_date; ?></td>
-			<td><?php echo $item->game_time; ?></td>
-			<td><?php echo $item->game_duration; ?></td>
-			<td><?php echo $item->game_type_id; ?></td>
-			<td><?php echo $item->opponent_id; ?></td>
-			<td><?php echo $item->place_id; ?></td>
-			<td><?php echo $item->site_id; ?></td>
-			<td><?php echo $item->hrn; ?></td>
-			<td><?php echo $item->post; ?></td>
-			<td><?php echo $item->w; ?></td>
-			<td><?php echo $item->l; ?></td>
-			<td><?php echo $item->pts_mur; ?></td>
-			<td><?php echo $item->pts_opp; ?></td>
-			<td><?php echo $item->mur_rk; ?></td>
-			<td><?php echo $item->opp_rk; ?></td>
-			<td><?php echo $item->periods; ?></td>
-			<td><?php echo $item->ot; ?></td>
-			<td><?php echo $item->attendance; ?></td>
-			<td><?php echo $item->game_preview; ?></td>
-			<td><?php echo $item->game_recap; ?></td>
-			<td><?php echo $item->game_notes; ?></td>
-			<td>
-				<div class="btn-toolbar">
-					<div class="btn-group">
-						<?php echo Html::anchor('game/view/'.$item->id, '<i class="icon-eye-open"></i> View', array('class' => 'btn btn-default btn-sm')); ?>						<?php echo Html::anchor('game/edit/'.$item->id, '<i class="icon-wrench"></i> Edit', array('class' => 'btn btn-default btn-sm')); ?>						<?php echo Html::anchor('game/delete/'.$item->id, '<i class="icon-trash icon-white"></i> Delete', array('class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Are you sure?')")); ?>					</div>
-				</div>
+<?php if (count($games) > 0) : ?>
+    <div class="table-responsive">
+        <table  id="myTable" class="table table-striped table-bordered compact table-hover order-column stats_table nowrap spinner-border">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>SEASON</th>
+                    <th>DATE</th>
+                    <th>RK</th>
+                    <th>SITE</th>
+                    <th>ORK</th>
+                    <th>OPP</th>
+                    <th>TYP</th>
+                    <th>LOC</th>
+                    <th>W/L</th>
+                    <th>STR</th>
+                    <th>MUR</th>
+                    <th>OPP</th>
+                    <th>OT</th>
+                    <th>MARGIN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $types = []; ?>
+                <?php foreach ($games as $item) : ?>
+                    <tr>
+                        <td></td>
+                        <td><?= $item->team_season->seasons->start.'-'.
+                                $item->team_season->seasons->end; ?>
+                        </td>
+                        <td><?= Html::anchor('game/view/' .
+                                $item->id, $item->game_date); ?>
+                        </td>
+                        <td class="d-flex justify-content-end">
+                            <span class="d-none d-lg-inline">
+                                <?= $item->mur_rk ? '#'.$item->mur_rk : ''; ?>&nbsp;
+                            </span>
+                        </td>
+                        <td><?= $item->hrn == '1' ? 'H' :
+                                        ($item->hrn == '2' ? 'R' : 'N'); ?></td>
+                        <td>
+                            <span class="d-none d-lg-inline">
+                                <?= $item->opp_rk ? '#'.$item->opp_rk : ''; ?>&nbsp;
+                            </span>
+                        </td>
+                        <td><span class="d-none d-md-inline">
+                                        <?= $item->opponents->opponent_name; ?>
+                            </span>
+                            <span class="d-md-none">
+                                <?= $item->opponents->opponent_short; ?>
+                            </span>
+                        </td>
+                        <td>
+                            <sup><?= (($item->game_types->conf == '1' ||
+                                    $item->game_types->post == '1') ?
+                                    $item->game_types->ind ?? '' : ''); ?>
+                            </sup>
+                        </td>
+                        <td class="d-none d-lg-table-cell">
+                                <?= $item->places->place_name; ?>, 
+                                        <?= $item->places->place_state; ?>
+                        </td>
+                        <td><?= $item->w == '1' ? 'W' :
+                                                ($item->l == '1' ? 'L' : ''); ?>
+                        </td>
+                        <td><?= $item->streak ?>                            
+                        </td>
+                        <td><?= $item->pts_mur; ?>
+                        </td>
+                        <td><?= $item->pts_opp; ?>
+                        </td>
+                        <td><?= ($item->ot == '1' ?
+                                '<span class="d-none d-sm-inline"><sup> OT</sup></span>' :
+                                (empty($item->ot) ? '' :
+                                '<span class="d-none d-sm-inline"><sup> '.
+                                $item->ot.' OT</sup></span>')); ?>
+                        </td>
+                        <td><?= $item->pts_mur == '' ? '' :
+                                        (intval($item->pts_mur) -
+                                intval($item->pts_opp));?>
+                        </td>
+                    </tr>
+                    <?php  ($item->game_types->conf == '1' ||
+                        $item->game_types->post == '1') ?
+                        $types[$item->game_types->id] = $item->game_types->ind.
+                            ' - '.$item->game_types->game_type_name : ''; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <span><sub><?= !count($types) === 0 ?: implode(' ', $types);?></sub></span>
+    </div>
 
-			</td>
-		</tr>
-<?php endforeach; ?>	</tbody>
-</table>
+    <script>
+        $(document).ready(function() {
+            var h = $('#myTable').removeClass('spinner-border');
+            var t = $('#myTable').DataTable({
+                order: [[ 2, 'desc' ]], 
+                pageLength: 100,
+                stateSave: true,
+                fixedHeader : {
+                    headerOffset: 46
+                    },
+                stateLoadCallback: function (settings) {
+                    const url = new URL(window.location.href);
+                    let state = url.searchParams.get($(this).attr('id') + '_state');
+                    //check the current url to see if we've got a state to restore
+                    if (!state) { return null; }
+                    //if we got the state, decode it and add current timestamp
+                    state = JSON.parse(atob(state));
+                    state['time'] = Date.now();
+                    return state;
+                },
+                stateSaveCallback: function (settings, data) {
+                    //encode current state to base64
+                    const object = {start:data.start, length:data.length, page:data.page, searchBuilder:data.searchBuilder, order:data.order};
+                    const state = btoa(JSON.stringify(object));
+                    //get query part of the url
+                    let searchParams = new URLSearchParams(window.location.search);
+                    //add encoded state into query part
+                    searchParams.set($(this).attr('id') + '_state', state);
+                    //form url with new query parameter
+                    const newRelativePathQuery = window.location.pathname + '?' + searchParams.toString();
+                    //push new url into history object, this will change the current url without need of reload
+                    history.pushState(null, '', newRelativePathQuery);
+                },
+                buttons: [{
+                        extend: 'copyHtml5',
+                        text: 'Copy to Clipboard',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Save as PDF',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    'colvis',
+                    {
+                        extend: 'searchBuilder',
+                        text: 'Filter Results'
+                    },
+                ],
+                dom: 'Bl<t>pr',
+                columnDefs: [{
+                    "orderSequence": ["desc", "asc"],
+                    "targets": ['_all']
+                }],
+                select: {
+                    style: 'multi'
+                }
+            });
 
-<?php else: ?>
-<p>No Games.</p>
+            t.on('order.dt search.dt', function() {
+                t.column(0, {
+                    search: 'applied',
+                    order: 'applied'
+                }).nodes().each(function(cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+            h.className += " spinner-border";
+            h.className = h.className.replace(" spinner-border", "");
+        });
 
-<?php endif; ?><p>
-	<?php echo Html::anchor('game/create', 'Add new Game', array('class' => 'btn btn-success')); ?>
-
-</p>
+    </script>
+<?php else : ?>
+    <!-- NO GAMES -->
+<?php endif; ?>

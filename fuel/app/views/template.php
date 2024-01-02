@@ -48,6 +48,9 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item racer-gold">
+                            <?= Html::anchor('game/all/2', 'Games', ['class' => (Uri::segment(1) == 'game' ? 'active' : '').' nav-link']) ?>
+                        </li>
                     </ul>
                 </div>
             </div>
