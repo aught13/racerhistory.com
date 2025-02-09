@@ -266,7 +266,7 @@ class Model_Game extends \Orm\Model
                                 ->where('game_types.post', 0)->count();
                         $record['crw'] = Model_Game::query()
                                 ->where('team_season_id', $param)
-                                ->where('w', 1)->where('hrn', 1)
+                                ->where('w', 1)->where('hrn', 2)
                                 ->related('game_types')
                                 ->where('game_types.conf', 1)
                                 ->where('game_types.post', 0)->count();
@@ -285,7 +285,7 @@ class Model_Game extends \Orm\Model
                         $record['chl'] = Model_Game::query()
                                 ->where('team_season_id', $param)
                                 ->where('l', 1)
-                                ->where('hrn', 2)
+                                ->where('hrn', 1)
                                 ->related('game_types')
                                 ->where('game_types.conf', 1)
                                 ->where('game_types.post', 0)->count();
